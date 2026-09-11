@@ -15,7 +15,7 @@ dependencies:
   widgetbook: ^3.25.0
   widgetbook_annotation: ^3.11.0
   bitcr_ui:
-    path: ../packages/bitcr_ui
+    path: ../
 
 dev_dependencies:
   flutter_test:
