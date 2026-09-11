@@ -129,3 +129,23 @@ MaterialApp(
 Illustrations stay app-owned: components like `EmptyState` take an asset path
 and resolve it against the host app's bundle. Pass `assetPackage: 'bitcr_ui'`
 only for artwork that ships inside the library.
+
+## Continuous integration
+
+Pull requests and pushes to `main` run [Flutter CI](.github/workflows/ci.yml)
+on the stable Flutter channel. It analyzes both packages, runs the library's
+tests, checks that generated catalog entries are current, and builds the web
+catalog. The catalog uses its committed lockfile. The workflow only validates;
+it does not publish the library or deploy the catalog.
+
+[Dependabot](.github/dependabot.yml) checks both Dart packages on Mondays at
+08:30 Europe/Vienna, grouping patch and minor updates. Major updates remain
+separate. GitHub Actions updates are grouped monthly, on the first day at the
+same time. Assignments follow the [organization registry](https://github.com/BitcreditProtocol/.github/blob/master/dependabot-assignees.yml).
+
+## License
+
+Bitcredit code is covered by the [MIT license](LICENSE). The bundled Geist
+fonts retain the SIL Open Font License 1.1. The [package license](packages/bitcr_ui/LICENSE)
+includes both notices so consumers receive the font license with the library.
+The font notice comes from [Geist's upstream license](https://github.com/vercel/geist-font/blob/10dc7658f13c38a474cde201bb09a4617267545b/OFL.txt).

@@ -1,0 +1,61 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Analyze, test and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          channel: stable
+          cache: true
+
+      - name: Record Flutter and Dart versions
+        run: flutter --version
+
+      - name: Prepare the library
+        working-directory: packages/bitcr_ui
+        run: flutter pub get
+
+      - name: Analyze the library
+        working-directory: packages/bitcr_ui
+        run: flutter analyze --no-pub
+
+      - name: Test the library
+        working-directory: packages/bitcr_ui
+        run: flutter test --no-pub
+
+      - name: Prepare the catalog
+        working-directory: widgetbook
+        run: flutter pub get --enforce-lockfile
+
+      - name: Check generated catalog entries
+        working-directory: widgetbook
+        run: |
+          dart run build_runner build --delete-conflicting-outputs
+          git diff --exit-code -- lib/main.directories.g.dart
+
+      - name: Analyze the catalog
+        working-directory: widgetbook
+        run: flutter analyze --no-pub
+
+      - name: Build the web catalog
+        working-directory: widgetbook
+        run: flutter build web --release --no-pub
