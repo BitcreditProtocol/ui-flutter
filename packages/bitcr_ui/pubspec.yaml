@@ -1,0 +1,48 @@
+name: bitcr_ui
+description: "Shared Bitcredit UI components and design tokens, used by wallet, dashboard and ebills."
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.13.1
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Re-exported from lib/bitcr_ui.dart: components whose icon is part of their
+  # design bake it in, and apps get the same pinned set for their own icons.
+  lucide_icons_flutter: ^3.1.7
+
+  # Encodes the module grid behind QrCode/AnimatedQrCode. Pure Dart — no
+  # platform channels, so it costs consuming apps nothing at build time.
+  qr_flutter: ^4.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  fonts:
+    - family: Geist
+      fonts:
+        - asset: fonts/Geist-Thin.ttf
+          weight: 100
+        - asset: fonts/Geist-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/Geist-Light.ttf
+          weight: 300
+        - asset: fonts/Geist-Regular.ttf
+          weight: 400
+        - asset: fonts/Geist-Medium.ttf
+          weight: 500
+        - asset: fonts/Geist-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Geist-Bold.ttf
+          weight: 700
+        - asset: fonts/Geist-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/Geist-Black.ttf
+          weight: 900

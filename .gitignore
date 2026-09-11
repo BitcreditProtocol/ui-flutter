@@ -1,0 +1,6 @@
+# Per-package .gitignore files cover the Dart/Flutter artifacts. This one is
+# just for repo-level editor state.
+.idea/
+*.iml
+.vscode/
+.DS_Store
