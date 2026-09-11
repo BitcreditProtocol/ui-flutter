@@ -44,7 +44,7 @@ packages:
   bitcr_ui:
     dependency: "direct main"
     description:
-      path: "../packages/bitcr_ui"
+      path: ".."
       relative: true
     source: path
     version: "0.0.1"
