@@ -1,6 +1,30 @@
-# Per-package .gitignore files cover the Dart/Flutter artifacts. This one is
-# just for repo-level editor state.
-.idea/
-*.iml
-.vscode/
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
 .DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Editor state stays out; the catalog under widgetbook/ has its own .gitignore
+# for the artifacts an application package produces.
+.vscode/
+
+# Flutter/Dart/Pub related
+# Libraries should not include pubspec.lock, per https://dart.dev/guides/libraries/private-files#pubspeclock.
+/pubspec.lock
+**/doc/api/
+.dart_tool/
+.flutter-plugins-dependencies
+/build/
+/coverage/
