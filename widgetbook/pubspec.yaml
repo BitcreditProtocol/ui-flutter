@@ -1,0 +1,33 @@
+name: bitcr_ui_widgetbook
+description: "Component catalog for bitcr_ui — run it, don't ship it."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  widgetbook: ^3.25.0
+  widgetbook_annotation: ^3.11.0
+  bitcr_ui:
+    path: ../packages/bitcr_ui
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  widgetbook_generator: ^3.24.0
+  build_runner: ^2.16.1
+
+flutter:
+  uses-material-design: true
+
+  # Illustrations stay app-owned: components take an asset path and resolve it
+  # against the host bundle, so the catalog supplies its own copies here.
+  assets:
+    - assets/images/
