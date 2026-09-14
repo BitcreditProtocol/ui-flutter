@@ -45,6 +45,7 @@ class AppTextField extends StatefulWidget {
     this.onSubmitted,
     this.onEditingComplete,
     this.semanticsLabel,
+    this.identifier,
   });
 
   final TextEditingController controller;
@@ -77,6 +78,7 @@ class AppTextField extends StatefulWidget {
   final ValueChanged<String>? onSubmitted;
   final VoidCallback? onEditingComplete;
   final String? semanticsLabel;
+  final String? identifier;
 
   static const double minHeight = 52;
 
@@ -119,9 +121,7 @@ class _AppTextFieldState extends State<AppTextField> {
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.focusNode != widget.focusNode) {
-      (oldWidget.focusNode ?? _ownedFocusNode)?.removeListener(
-        _onFocusChanged,
-      );
+      (oldWidget.focusNode ?? _ownedFocusNode)?.removeListener(_onFocusChanged);
       _focusNode.addListener(_onFocusChanged);
       _isFocused = _focusNode.hasFocus;
     }
@@ -192,9 +192,7 @@ class _AppTextFieldState extends State<AppTextField> {
       mainAxisSize: MainAxisSize.min,
       children: [
         ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: AppTextField.minHeight,
-          ),
+          constraints: const BoxConstraints(minHeight: AppTextField.minHeight),
           child: Container(
             padding: AppTextField._contentPadding,
             decoration: BoxDecoration(
@@ -203,6 +201,7 @@ class _AppTextFieldState extends State<AppTextField> {
               border: Border.all(color: borderColor),
             ),
             child: Semantics(
+              identifier: widget.identifier,
               label: widget.semanticsLabel ?? widget.label,
               textField: true,
               child: Row(
@@ -211,11 +210,7 @@ class _AppTextFieldState extends State<AppTextField> {
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: _focusNode.requestFocus,
-                      child: Icon(
-                        widget.icon,
-                        size: 20,
-                        color: colors.text300,
-                      ),
+                      child: Icon(widget.icon, size: 20, color: colors.text300),
                     ),
                     const SizedBox(width: 8),
                   ],
@@ -327,8 +322,12 @@ class _AppTextFieldState extends State<AppTextField> {
       onSubmitted: widget.onSubmitted,
       onEditingComplete: widget.onEditingComplete,
       onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-      buildCounter:
-          (_, {required currentLength, required isFocused, maxLength}) => null,
+      buildCounter: (
+        _, {
+        required currentLength,
+        required isFocused,
+        maxLength,
+      }) => null,
       cursorColor: colors.text300,
       style: textStyles.textSmMedium(
         color: widget.enabled ? colors.text300 : colors.text200,
@@ -346,7 +345,6 @@ class _AppTextFieldState extends State<AppTextField> {
       ),
     );
   }
-
 }
 
 class _IconButton extends StatelessWidget {

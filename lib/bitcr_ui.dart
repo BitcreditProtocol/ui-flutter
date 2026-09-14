@@ -31,6 +31,7 @@ export 'src/patterns/qr_matrix.dart';
 export 'src/patterns/seed_phrase_grid.dart';
 export 'src/patterns/seed_word.dart';
 export 'src/theme/colors.dart';
+export 'src/theme/fonts.dart';
 export 'src/theme/page_transitions.dart';
 export 'src/theme/radii.dart';
 export 'src/theme/text_styles.dart';

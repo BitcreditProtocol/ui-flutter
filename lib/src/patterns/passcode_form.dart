@@ -15,6 +15,7 @@ class PasscodeForm extends StatefulWidget {
     required this.value,
     this.length = 4,
     this.autoFocus = false,
+    this.identifier,
   });
 
   final void Function(int index, String value) onChanged;
@@ -22,6 +23,7 @@ class PasscodeForm extends StatefulWidget {
   final String value;
   final int length;
   final bool autoFocus;
+  final String? identifier;
 
   @override
   State<PasscodeForm> createState() => _PasscodeFormState();
@@ -170,24 +172,27 @@ class _PasscodeFormState extends State<PasscodeForm>
             },
           ),
           Positioned.fill(
-            child: TextField(
-              controller: _controller,
-              focusNode: _focusNode,
-              autofocus: false,
-              maxLength: widget.length,
-              showCursor: false,
-              style: const TextStyle(color: Colors.transparent, fontSize: 1),
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(widget.length),
-              ],
-              decoration: const InputDecoration(
-                counterText: '',
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.zero,
+            child: Semantics(
+              identifier: widget.identifier,
+              child: TextField(
+                controller: _controller,
+                focusNode: _focusNode,
+                autofocus: false,
+                maxLength: widget.length,
+                showCursor: false,
+                style: const TextStyle(color: Colors.transparent, fontSize: 1),
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(widget.length),
+                ],
+                decoration: const InputDecoration(
+                  counterText: '',
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.zero,
+                ),
+                onChanged: _handleTextChanged,
               ),
-              onChanged: _handleTextChanged,
             ),
           ),
         ],
