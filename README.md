@@ -91,12 +91,26 @@ up under a `components` folder in the catalog.
 | `BitcrTextStyles` | the type scale; read with `context.bitcrText.textLgMedium()` |
 | `BitcrRadius` | the corner-radius scale |
 | `BitcrTheme` | `ThemeData` with the above wired up — `BitcrTheme.light` / `.dark` |
+| `BitcrFonts` | the Geist family name and the bundle key for each weight |
 
 The Geist font ships inside `fonts/`, so all three apps get identical typography
 without their own copies. `BitcrTheme` addresses it as `packages/bitcr_ui/Geist`
 — that prefix is Flutter's namespace for an asset owned by a dependency, built
 from the *package name*, not from where the package sits on disk. It stays
 `packages/bitcr_ui/…` no matter how the repo is laid out.
+
+An app that needs the TTF bytes rather than the family — embedding Geist in a
+generated PDF, say — should load them through `BitcrFonts` instead of retyping
+that namespace:
+
+```dart
+pw.Font.ttf(await rootBundle.load(BitcrFonts.regular))
+```
+
+Both are the same strings a rename would invalidate, and a `rootBundle` miss
+throws at runtime where it is easy to swallow. `test/font_assets_test.dart`
+loads every weight so a stale key fails the suite instead of quietly costing
+some downstream document its typeface.
 
 ## Consuming it from an app
 

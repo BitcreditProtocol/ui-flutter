@@ -1,4 +1,5 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
+import 'package:bitcr_ui/src/theme/fonts.dart';
 import 'package:bitcr_ui/src/theme/page_transitions.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ import 'package:flutter/material.dart';
 /// )
 /// ```
 abstract final class BitcrTheme {
-  static const String fontFamily = 'packages/bitcr_ui/Geist';
+  static const String fontFamily = BitcrFonts.family;
 
   static ThemeData get light => of(BitcrColors.light, Brightness.light);
 
@@ -28,8 +29,6 @@ abstract final class BitcrTheme {
       brightness: brightness,
       fontFamily: fontFamily,
       visualDensity: VisualDensity.standard,
-      // Every platform, so the motion is the design's rather than each OS's.
-      // An app that wants the platform default back can `copyWith` it.
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {
           TargetPlatform.iOS: BitcrPageTransitionsBuilder(),
