@@ -80,10 +80,19 @@ class SettingsSectionItem extends StatelessWidget {
             child: Icon(icon, size: 20, color: contentColor),
           );
 
+    // Bounded and right-aligned. Unbounded it won a `Row` against the label,
+    // which is `Flexible`: a value long enough -- a currency's name rather
+    // than its code -- ellipsed the label away and then overflowed the row.
+    // The label is the one that has to survive.
     final valueSlot = value != null
-        ? Text(
-            value!,
-            style: context.bitcrText.textSmRegular(color: colors.text200),
+        ? Flexible(
+            child: Text(
+              value!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.end,
+              style: context.bitcrText.textSmRegular(color: colors.text200),
+            ),
           )
         : trailing;
 
@@ -99,9 +108,7 @@ class SettingsSectionItem extends StatelessWidget {
                 Flexible(
                   child: Text(
                     label,
-                    style: context.bitcrText.textMdMedium(
-                      color: contentColor,
-                    ),
+                    style: context.bitcrText.textMdMedium(color: contentColor),
                   ),
                 ),
                 if (showDot) ...[const SizedBox(width: 8), const BackupDot()],
@@ -118,19 +125,36 @@ class SettingsSectionItem extends StatelessWidget {
       ),
     );
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: enabled ? onTap : null,
-      child: bordered
-          ? Container(
-              decoration: BoxDecoration(
-                color: colors.elevation200,
-                borderRadius: BorderRadius.circular(BitcrRadius.md),
-              ),
-              child: content,
-            )
-          : content,
+    // An ink response rather than a bare `GestureDetector`: without one the
+    // row does not light up under a pointer or answer a press, so on a
+    // desktop it reads as text rather than as a control. `InkWell` gives the
+    // hover only where there is a pointer to hover with, so a phone sees no
+    // more than the press it already had.
+    //
+    // Transparent `Material`, so the splash paints over the row's own fill
+    // instead of behind it -- an ink response draws on its nearest `Material`
+    // ancestor, which without this one is whatever sits under the card.
+    final tappable = Material(
+      type: MaterialType.transparency,
+      borderRadius: bordered
+          ? BorderRadius.circular(BitcrRadius.md)
+          : null,
+      clipBehavior: bordered ? Clip.antiAlias : Clip.none,
+      child: InkWell(
+        onTap: enabled ? onTap : null,
+        child: content,
+      ),
     );
+
+    return bordered
+        ? Container(
+            decoration: BoxDecoration(
+              color: colors.elevation200,
+              borderRadius: BorderRadius.circular(BitcrRadius.md),
+            ),
+            child: tappable,
+          )
+        : tappable;
   }
 }
 
@@ -169,6 +193,9 @@ class SettingsSectionCard extends StatelessWidget {
         color: BitcrColors.of(context).elevation200,
         borderRadius: BorderRadius.circular(BitcrRadius.md),
       ),
+      // Clipped, so the ink on the first and last rows does not square off
+      // the corners the card has just rounded.
+      clipBehavior: Clip.antiAlias,
       child: Column(children: children),
     );
   }

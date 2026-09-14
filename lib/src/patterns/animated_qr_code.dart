@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:bitcr_ui/src/patterns/bcqr_protocol.dart';
 import 'package:bitcr_ui/src/patterns/qr_code.dart';
@@ -9,10 +10,17 @@ import 'package:flutter/material.dart';
 
 /// Initial time each chunk QR is shown before advancing to the next one.
 const Duration _kInitialFrameDuration = Duration(milliseconds: 200);
+
 /// Amount to slow the animation on each step after the initial pace.
 const Duration _kFrameDurationStep = Duration(milliseconds: 100);
+
 /// Maximum delay between frame changes once the animation slows down.
 const Duration _kMaxFrameDuration = Duration(milliseconds: 700);
+
+/// Gap between the code and its progress bar, and the bar's own height —
+/// reserved out of the available height so the square never overflows it.
+const double _kProgressGap = 12;
+const double _kProgressHeight = 6;
 
 /// An animated QR code that cycles through chunked [BCQR frames] for data too
 /// large to fit in a single QR code, with a progress bar showing where in the
@@ -33,6 +41,7 @@ class AnimatedQrCode extends StatefulWidget {
     this.enlargeOnTap = true,
     this.fullscreenWrapper,
     this.backgroundColor,
+    this.errorBuilder,
   });
 
   final String data;
@@ -43,6 +52,10 @@ class AnimatedQrCode extends StatefulWidget {
   final QrFullscreenWrapper? fullscreenWrapper;
   final Color? backgroundColor;
 
+  /// See [QrCode.errorBuilder]. Reached only if a single chunk fails, which
+  /// [kBcqrChunkSize] is set well clear of.
+  final WidgetBuilder? errorBuilder;
+
   @override
   State<AnimatedQrCode> createState() => _AnimatedQrCodeState();
 }
@@ -50,6 +63,7 @@ class AnimatedQrCode extends StatefulWidget {
 class _AnimatedQrCodeState extends State<AnimatedQrCode> {
   late List<String> _frames;
   List<QrMatrix?>? _frameMatrices;
+  bool _encoding = true;
   int _currentFrame = 0;
   int _animationStep = 0;
   Timer? _timer;
@@ -85,11 +99,15 @@ class _AnimatedQrCodeState extends State<AnimatedQrCode> {
   void _buildFrames() {
     _frames = buildChunkedQrFrames(widget.data);
 
+    setState(() => _encoding = true);
     unawaited(
       compute(encodeQrMatrices, _frames).then((matrices) {
         if (!mounted) return;
 
-        setState(() => _frameMatrices = matrices);
+        setState(() {
+          _frameMatrices = matrices;
+          _encoding = false;
+        });
         _scheduleNextFrame();
       }),
     );
@@ -156,31 +174,57 @@ class _AnimatedQrCodeState extends State<AnimatedQrCode> {
         padding:
             widget.padding ??
             const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AspectRatio(
-              aspectRatio: 1,
-              child: Container(
-                decoration: BoxDecoration(color: bg),
-                padding: widget.contentPadding,
-                child: RepaintBoundary(
-                  child: matrix == null
-                      ? const Center(child: CircularProgressIndicator())
-                      : CustomPaint(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            // Sized from whichever side is shorter, not from the width. An
+            // `AspectRatio` takes the width when the height is loose, so in a
+            // box wider than it is tall -- a landscape window, which is what
+            // `showQrCodeFullscreen` hands this on a desktop -- the square came
+            // out taller than the space and the column overflowed.
+            final reserved = isAnimated
+                ? _kProgressGap + _kProgressHeight
+                : 0.0;
+            final available = constraints.hasBoundedHeight
+                ? constraints.maxHeight - reserved
+                : double.infinity;
+            final side = math.min(constraints.maxWidth, available);
+
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox.square(
+                  dimension: side,
+                  child: Container(
+                    decoration: BoxDecoration(color: bg),
+                    padding: widget.contentPadding,
+                    child: RepaintBoundary(
+                      child: switch ((_encoding, matrix)) {
+                        (true, _) => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        (false, final matrix?) => CustomPaint(
                           painter: QrMatrixPainter(matrix: matrix, color: fg),
                         ),
+                        (false, null) =>
+                          widget.errorBuilder?.call(context) ??
+                              const QrCodeUnavailable(),
+                      },
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            if (isAnimated) ...[
-              const SizedBox(height: 12),
-              _ChunkProgressIndicator(
-                currentChunk: _currentFrame,
-                totalChunks: _frames.length,
-              ),
-            ],
-          ],
+                if (isAnimated) ...[
+                  const SizedBox(height: _kProgressGap),
+                  SizedBox(
+                    width: side,
+                    child: _ChunkProgressIndicator(
+                      currentChunk: _currentFrame,
+                      totalChunks: _frames.length,
+                    ),
+                  ),
+                ],
+              ],
+            );
+          },
         ),
       ),
     );

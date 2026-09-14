@@ -45,6 +45,7 @@ class BottomDrawer extends StatelessWidget {
     required this.child,
     this.onClose,
     this.closeSemanticLabel,
+    this.closeTooltip,
     this.trail,
     this.contentSpacing = 32,
   });
@@ -59,6 +60,10 @@ class BottomDrawer extends StatelessWidget {
 
   /// Accessibility label for the close button — the app's copy.
   final String? closeSemanticLabel;
+
+  /// Hover label for the close button, for the pointer platforms. Defaults to
+  /// [closeSemanticLabel], which says the same thing.
+  final String? closeTooltip;
 
   /// An optional action in the topbar's trailing slot.
   final Widget? trail;
@@ -88,6 +93,7 @@ class BottomDrawer extends StatelessWidget {
             lead: TopbarActionButton(
               icon: LucideIcons.x300,
               semanticLabel: closeSemanticLabel,
+              tooltip: closeTooltip ?? closeSemanticLabel,
               onPressed: onClose ?? () => Navigator.of(context).pop(),
             ),
             middle: Text(

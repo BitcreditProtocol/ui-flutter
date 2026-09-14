@@ -159,6 +159,10 @@ class TruncatedTextPopover extends StatefulWidget {
 }
 
 class _TruncatedTextPopoverState extends State<TruncatedTextPopover> {
+  /// Reaches the rendered text so the post-frame measurement can read the
+  /// width it was given. See [build].
+  final GlobalKey _textKey = GlobalKey();
+
   static const _minMaxLength = 4;
 
   bool _hasLayoutOverflow = false;
@@ -252,60 +256,70 @@ class _TruncatedTextPopoverState extends State<TruncatedTextPopover> {
 
   @override
   Widget build(BuildContext context) {
-    final textWidget = LayoutBuilder(
-      builder: (context, constraints) {
-        final textDirection = Directionality.of(context);
-        // Measure with what the Text below actually renders with, not with
-        // `widget.style` alone: the family (Geist) comes from the ambient
-        // DefaultTextStyle, and the user's text scale from the MediaQuery.
-        // Measuring without either compares Geist-at-scale layout against
-        // fallback-font-at-1x metrics, so the overflow check misfires.
-        final measuredStyle = DefaultTextStyle.of(
-          context,
-        ).style.merge(widget.style);
-        final textScaler = MediaQuery.textScalerOf(context);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (!mounted) return;
-          final tp = TextPainter(
-            text: TextSpan(text: _displayText, style: measuredStyle),
-            maxLines: widget.maxLines,
-            textDirection: textDirection,
-            textScaler: textScaler,
-          )..layout(maxWidth: constraints.maxWidth);
-          final overflows =
-              tp.didExceedMaxLines || tp.width > constraints.maxWidth + 0.5;
+    final textDirection = Directionality.of(context);
+    // Measure with what the Text below actually renders with, not with
+    // `widget.style` alone: the family (Geist) comes from the ambient
+    // DefaultTextStyle, and the user's text scale from the MediaQuery.
+    // Measuring without either compares Geist-at-scale layout against
+    // fallback-font-at-1x metrics, so the overflow check misfires.
+    final measuredStyle = DefaultTextStyle.of(context).style.merge(widget.style);
+    final textScaler = MediaQuery.textScalerOf(context);
 
-          // Character-count truncation assumes a roughly fixed glyph width,
-          // which varies by platform font metrics. If the computed string
-          // still doesn't fit the real layout, shrink it further so Flutter's
-          // own ellipsis never has to clip on top of our "…" and double up.
-          if (_usesMaxLengthTruncation &&
-              overflows &&
-              _currentMaxLength > _minMaxLength) {
-            setState(() {
-              _currentMaxLength -= 1;
-              _compute();
-            });
-            return;
-          }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
 
-          if (!_usesMaxLengthTruncation && overflows != _hasLayoutOverflow) {
-            setState(() => _hasLayoutOverflow = overflows);
-          }
+      // The width the Text was given, read back off the laid-out box rather
+      // than through a `LayoutBuilder`. A `LayoutBuilder` cannot answer an
+      // intrinsic-dimension query -- it throws -- so wrapping the text in one
+      // put this widget out of reach of every parent that sizes itself by
+      // asking its children how big they want to be: `MenuAnchor`,
+      // `IntrinsicWidth`/`IntrinsicHeight`, `DataTable`. The measurement was
+      // already happening in this callback; the builder was only ever there
+      // to hand over `constraints.maxWidth`, and `RenderBox.constraints` is
+      // the same number after layout.
+      final box = _textKey.currentContext?.findRenderObject() as RenderBox?;
+      if (box == null || !box.hasSize) return;
+      final maxWidth = box.constraints.maxWidth;
+
+      final tp = TextPainter(
+        text: TextSpan(text: _displayText, style: measuredStyle),
+        maxLines: widget.maxLines,
+        textDirection: textDirection,
+        textScaler: textScaler,
+      )..layout(maxWidth: maxWidth);
+      final overflows =
+          tp.didExceedMaxLines || tp.width > maxWidth + 0.5;
+
+      // Character-count truncation assumes a roughly fixed glyph width,
+      // which varies by platform font metrics. If the computed string
+      // still doesn't fit the real layout, shrink it further so Flutter's
+      // own ellipsis never has to clip on top of our "…" and double up.
+      if (_usesMaxLengthTruncation &&
+          overflows &&
+          _currentMaxLength > _minMaxLength) {
+        setState(() {
+          _currentMaxLength -= 1;
+          _compute();
         });
+        return;
+      }
 
-        return Text(
-          _displayText,
-          style: _shouldShowPopover && widget.underlineOnTruncate
-              ? (widget.style ?? const TextStyle()).copyWith(
-                  decoration: TextDecoration.underline,
-                  decorationStyle: TextDecorationStyle.dashed,
-                )
-              : widget.style,
-          maxLines: widget.maxLines,
-          overflow: TextOverflow.ellipsis,
-        );
-      },
+      if (!_usesMaxLengthTruncation && overflows != _hasLayoutOverflow) {
+        setState(() => _hasLayoutOverflow = overflows);
+      }
+    });
+
+    final textWidget = Text(
+      _displayText,
+      key: _textKey,
+      style: _shouldShowPopover && widget.underlineOnTruncate
+          ? (widget.style ?? const TextStyle()).copyWith(
+              decoration: TextDecoration.underline,
+              decorationStyle: TextDecorationStyle.dashed,
+            )
+          : widget.style,
+      maxLines: widget.maxLines,
+      overflow: TextOverflow.ellipsis,
     );
 
     return Row(

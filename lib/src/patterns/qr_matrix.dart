@@ -16,9 +16,20 @@ class QrMatrix {
 }
 
 /// Runs the QR Reed-Solomon encode for [data] and returns a transferable
-/// [QrMatrix]. Top-level so it can be passed to `compute` — the encode is
-/// CPU-heavy enough for large payloads that running it on the UI isolate
-/// blocks frame rendering (visible as jank/freezes during navigation).
+/// [QrMatrix], or null when [data] cannot be encoded at all.
+///
+/// Top-level so it can be passed to `compute` — the encode is CPU-heavy enough
+/// for large payloads that running it on the UI isolate blocks frame rendering
+/// (visible as jank/freezes during navigation).
+///
+/// Null rather than a throw for the one failure that is a property of the
+/// input: past the largest QR version — somewhere between 2,000 and 3,000
+/// characters at [qrf.QrErrorCorrectLevel.L] — there is no code to draw. That
+/// arrives as an `InputTooLongException` from the [qrf.QrImage] construction
+/// rather than from [qrf.QrValidator], which reports its own failures through
+/// [qrf.QrValidationResult.isValid] instead. Callers run this through
+/// `compute`, where a throw becomes a rejected future that is easy to leave
+/// unhandled — and then the widget waiting on it waits for ever.
 QrMatrix? encodeQrMatrix(String data) {
   final validation = qrf.QrValidator.validate(
     data: data,
@@ -29,7 +40,13 @@ QrMatrix? encodeQrMatrix(String data) {
   final qrCode = validation.qrCode;
   if (!validation.isValid || qrCode == null) return null;
 
-  final qrImage = qrf.QrImage(qrCode);
+  final qrf.QrImage qrImage;
+  try {
+    qrImage = qrf.QrImage(qrCode);
+  } on Object {
+    return null;
+  }
+
   final n = qrCode.moduleCount;
   final modules = Uint8List(n * n);
 
