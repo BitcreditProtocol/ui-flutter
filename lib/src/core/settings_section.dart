@@ -81,9 +81,14 @@ class SettingsSectionItem extends StatelessWidget {
           );
 
     final valueSlot = value != null
-        ? Text(
-            value!,
-            style: context.bitcrText.textSmRegular(color: colors.text200),
+        ? Flexible(
+            child: Text(
+              value!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.end,
+              style: context.bitcrText.textSmRegular(color: colors.text200),
+            ),
           )
         : trailing;
 
@@ -99,9 +104,7 @@ class SettingsSectionItem extends StatelessWidget {
                 Flexible(
                   child: Text(
                     label,
-                    style: context.bitcrText.textMdMedium(
-                      color: contentColor,
-                    ),
+                    style: context.bitcrText.textMdMedium(color: contentColor),
                   ),
                 ),
                 if (showDot) ...[const SizedBox(width: 8), const BackupDot()],
@@ -118,19 +121,27 @@ class SettingsSectionItem extends StatelessWidget {
       ),
     );
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: enabled ? onTap : null,
-      child: bordered
-          ? Container(
-              decoration: BoxDecoration(
-                color: colors.elevation200,
-                borderRadius: BorderRadius.circular(BitcrRadius.md),
-              ),
-              child: content,
-            )
-          : content,
+    final tappable = Material(
+      type: MaterialType.transparency,
+      borderRadius: bordered
+          ? BorderRadius.circular(BitcrRadius.md)
+          : null,
+      clipBehavior: bordered ? Clip.antiAlias : Clip.none,
+      child: InkWell(
+        onTap: enabled ? onTap : null,
+        child: content,
+      ),
     );
+
+    return bordered
+        ? Container(
+            decoration: BoxDecoration(
+              color: colors.elevation200,
+              borderRadius: BorderRadius.circular(BitcrRadius.md),
+            ),
+            child: tappable,
+          )
+        : tappable;
   }
 }
 
@@ -169,6 +180,9 @@ class SettingsSectionCard extends StatelessWidget {
         color: BitcrColors.of(context).elevation200,
         borderRadius: BorderRadius.circular(BitcrRadius.md),
       ),
+      // Clipped, so the ink on the first and last rows does not square off
+      // the corners the card has just rounded.
+      clipBehavior: Clip.antiAlias,
       child: Column(children: children),
     );
   }

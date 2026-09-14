@@ -45,30 +45,22 @@ class BottomDrawer extends StatelessWidget {
     required this.child,
     this.onClose,
     this.closeSemanticLabel,
+    this.closeTooltip,
     this.trail,
     this.contentSpacing = 32,
   });
 
-  /// The app's translated heading.
   final String title;
-
   final Widget child;
-
-  /// Defaults to popping the current route.
   final VoidCallback? onClose;
-
-  /// Accessibility label for the close button — the app's copy.
   final String? closeSemanticLabel;
-
-  /// An optional action in the topbar's trailing slot.
+  final String? closeTooltip;
   final Widget? trail;
-
   final double contentSpacing;
 
   @override
   Widget build(BuildContext context) {
     final colors = BitcrColors.of(context);
-    // Clear the keyboard when it's up, the home indicator when it isn't.
     final bottomInset = MediaQuery.viewInsetsOf(context).bottom;
     final safeBottom = MediaQuery.viewPaddingOf(context).bottom;
     final bottomPadding = math.max(bottomInset, safeBottom) + 24;
@@ -88,6 +80,7 @@ class BottomDrawer extends StatelessWidget {
             lead: TopbarActionButton(
               icon: LucideIcons.x300,
               semanticLabel: closeSemanticLabel,
+              tooltip: closeTooltip ?? closeSemanticLabel,
               onPressed: onClose ?? () => Navigator.of(context).pop(),
             ),
             middle: Text(
@@ -123,8 +116,6 @@ Future<T?> showBottomDrawer<T>(
     backgroundColor: BitcrColors.of(context).elevation50,
     isScrollControlled: isScrollControlled,
     useSafeArea: true,
-    // Push onto the root navigator so the sheet and its scrim cover the shell's
-    // bottom navigation bar instead of being clipped above it.
     useRootNavigator: true,
     sheetAnimationStyle: opensKeyboard ? imeSheetAnimationStyle : null,
     shape: const RoundedRectangleBorder(

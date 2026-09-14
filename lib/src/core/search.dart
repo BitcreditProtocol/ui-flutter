@@ -29,6 +29,7 @@ class Search extends StatefulWidget {
     this.onSearch,
     this.enableDebounce = true,
     this.debounceDuration = const Duration(milliseconds: 300),
+    this.autofocus = false,
   });
 
   final String? value;
@@ -40,6 +41,7 @@ class Search extends StatefulWidget {
   final ValueChanged<String>? onSearch;
   final bool enableDebounce;
   final Duration debounceDuration;
+  final bool autofocus;
 
   @override
   State<Search> createState() => _SearchState();
@@ -194,6 +196,7 @@ class _SearchState extends State<Search> {
               child: TextField(
                 controller: _controller,
                 focusNode: _focusNode,
+                autofocus: widget.autofocus,
                 style: style,
                 decoration: InputDecoration(
                   hintText: widget.placeholder,

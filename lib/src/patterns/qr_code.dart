@@ -5,6 +5,26 @@ import 'package:bitcr_ui/src/patterns/qr_matrix.dart';
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:flutter/foundation.dart' show compute;
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+
+/// Drawn in place of a code that cannot be encoded, when the caller supplies
+/// no `errorBuilder` of its own.
+///
+/// A glyph rather than a sentence: the library ships no strings, and silence
+/// on a surface whose only job is to show a code is the worst of the options.
+class QrCodeUnavailable extends StatelessWidget {
+  const QrCodeUnavailable({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Icon(
+        LucideIcons.triangleAlert,
+        color: BitcrColors.of(context).signalError,
+      ),
+    );
+  }
+}
 
 /// Above this many characters a single QR's modules get too dense to scan
 /// reliably, and the data has to be shown as an [AnimatedQrCode] instead.
@@ -13,7 +33,10 @@ const int kMaxStaticQrDataLength = 2000;
 /// Wraps the fullscreen QR before it's shown, for an app that needs something
 /// around it — the wallet rotates it 180° when the phone is upside down, so a
 /// code held out across a table faces the other person.
-typedef QrFullscreenWrapper = Widget Function(BuildContext context, Widget child);
+typedef QrFullscreenWrapper = Widget Function(
+  BuildContext context,
+  Widget child,
+);
 
 /// Opens [data] as a fullscreen QR over a near-opaque scrim, dismissed by
 /// tapping anywhere.
@@ -92,21 +115,15 @@ class QrCode extends StatefulWidget {
     this.enlargeOnTap = true,
     this.fullscreenWrapper,
     this.backgroundColor,
+    this.errorBuilder,
   });
 
   final String data;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry contentPadding;
-
-  /// Replaces the default tap behaviour. Leave it null to keep
-  /// [enlargeOnTap].
+  final WidgetBuilder? errorBuilder;
   final VoidCallback? onTap;
-
-  /// Tapping opens the code fullscreen — a QR is there to be scanned, and one
-  /// inline is often too small for another device to read.
   final bool enlargeOnTap;
-
-  /// Passed through to [showQrCodeFullscreen].
   final QrFullscreenWrapper? fullscreenWrapper;
 
   final Color? backgroundColor;
@@ -117,6 +134,7 @@ class QrCode extends StatefulWidget {
 
 class _QrCodeState extends State<QrCode> {
   QrMatrix? _matrix;
+  bool _encoding = true;
 
   @override
   void initState() {
@@ -133,10 +151,14 @@ class _QrCodeState extends State<QrCode> {
   }
 
   void _encode() {
+    setState(() => _encoding = true);
     unawaited(
       compute(encodeQrMatrix, widget.data).then((matrix) {
         if (!mounted) return;
-        setState(() => _matrix = matrix);
+        setState(() {
+          _matrix = matrix;
+          _encoding = false;
+        });
       }),
     );
   }
@@ -171,11 +193,15 @@ class _QrCodeState extends State<QrCode> {
             decoration: BoxDecoration(color: bg),
             padding: widget.contentPadding,
             child: RepaintBoundary(
-              child: matrix == null
-                  ? const Center(child: CircularProgressIndicator())
-                  : CustomPaint(
-                      painter: QrMatrixPainter(matrix: matrix, color: fg),
-                    ),
+              child: switch ((_encoding, matrix)) {
+                (true, _) => const Center(child: CircularProgressIndicator()),
+                (false, final matrix?) => CustomPaint(
+                  painter: QrMatrixPainter(matrix: matrix, color: fg),
+                ),
+                (false, null) =>
+                  widget.errorBuilder?.call(context) ??
+                      const QrCodeUnavailable(),
+              },
             ),
           ),
         ),
@@ -192,11 +218,13 @@ class ExactQrCode extends StatefulWidget {
     required this.data,
     required this.color,
     this.onTap,
+    this.errorBuilder,
   });
 
   final String data;
   final Color color;
   final VoidCallback? onTap;
+  final WidgetBuilder? errorBuilder;
 
   @override
   State<ExactQrCode> createState() => _ExactQrCodeState();
@@ -204,6 +232,7 @@ class ExactQrCode extends StatefulWidget {
 
 class _ExactQrCodeState extends State<ExactQrCode> {
   QrMatrix? _matrix;
+  bool _encoding = true;
 
   @override
   void initState() {
@@ -220,10 +249,14 @@ class _ExactQrCodeState extends State<ExactQrCode> {
   }
 
   void _encode() {
+    setState(() => _encoding = true);
     unawaited(
       compute(encodeQrMatrix, widget.data).then((matrix) {
         if (!mounted) return;
-        setState(() => _matrix = matrix);
+        setState(() {
+          _matrix = matrix;
+          _encoding = false;
+        });
       }),
     );
   }
@@ -240,16 +273,16 @@ class _ExactQrCodeState extends State<ExactQrCode> {
           onTap: widget.onTap,
           child: SizedBox.square(
             dimension: dimension,
-            child: matrix == null
-                ? const Center(child: CircularProgressIndicator())
-                : RepaintBoundary(
-                    child: CustomPaint(
-                      painter: QrMatrixPainter(
-                        matrix: matrix,
-                        color: widget.color,
-                      ),
-                    ),
-                  ),
+            child: switch ((_encoding, matrix)) {
+              (true, _) => const Center(child: CircularProgressIndicator()),
+              (false, final matrix?) => RepaintBoundary(
+                child: CustomPaint(
+                  painter: QrMatrixPainter(matrix: matrix, color: widget.color),
+                ),
+              ),
+              (false, null) =>
+                widget.errorBuilder?.call(context) ?? const QrCodeUnavailable(),
+            },
           ),
         );
       },

@@ -6,6 +6,20 @@ import 'package:bitcr_ui/src/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+/// Above this many options on screen, [SelectionDrawer] builds its rows
+/// lazily instead of all at once.
+///
+/// A `Column` builds every child whether or not it is in view, which is fine
+/// for the language or date-format pickers and not for a currency list: 151
+/// options measured 265ms to open and 80ms per keystroke, against 108ms and
+/// 54ms for the same rows built lazily.
+///
+/// The threshold is applied to what is actually being shown rather than to the
+/// whole option list, so a search that narrows a long list back down gets the
+/// short-list behaviour again -- including a sheet that shrinks to its rows,
+/// which is what a `Column` does and a `ListView` cannot.
+const int kSelectionDrawerLazyThreshold = 30;
+
 /// One option in a [SelectionDrawer].
 ///
 /// Everything here is the app's: [label] and [secondaryLabel] are its copy or
@@ -96,23 +110,35 @@ class _SelectionDrawerState<T> extends State<SelectionDrawer<T>> {
     final search = widget.search;
     final options = _filtered;
 
-    final list = SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (final (index, option) in options.indexed)
-            SelectionRow(
-              label: option.label,
-              secondaryLabel: option.secondaryLabel,
-              leading: option.leading,
-              selected: option.value == widget.selected,
-              showDivider: index != options.length - 1,
-              onTap: () => widget.onSelect(option.value),
+    SelectionRow rowAt(int index) {
+      final option = options[index];
+
+      return SelectionRow(
+        label: option.label,
+        secondaryLabel: option.secondaryLabel,
+        leading: option.leading,
+        selected: option.value == widget.selected,
+        showDivider: index != options.length - 1,
+        onTap: () => widget.onSelect(option.value),
+      );
+    }
+
+    final list = options.length > kSelectionDrawerLazyThreshold
+        ? ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: options.length,
+            itemBuilder: (context, index) => rowAt(index),
+          )
+        : SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                for (var index = 0; index < options.length; index++)
+                  rowAt(index),
+              ],
             ),
-        ],
-      ),
-    );
+          );
 
     return BottomDrawer(
       title: widget.title,
@@ -127,8 +153,6 @@ class _SelectionDrawerState<T> extends State<SelectionDrawer<T>> {
                   value: _query,
                   placeholder: search.placeholder,
                   size: SearchSize.sm,
-                  // Filtering a list already in memory, so there's nothing to
-                  // debounce.
                   enableDebounce: false,
                   onChange: (v) => setState(() => _query = v),
                 ),
