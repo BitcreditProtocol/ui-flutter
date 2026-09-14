@@ -78,12 +78,6 @@ class AppTextField extends StatefulWidget {
   final ValueChanged<String>? onSubmitted;
   final VoidCallback? onEditingComplete;
   final String? semanticsLabel;
-
-  /// A stable identifier for end-to-end tests to find this field by, exposed
-  /// on the same semantics node as the text field itself.
-  ///
-  /// It has to sit here rather than on a wrapper at the call site: an
-  /// identifier on an ancestor names a node the driver cannot type into.
   final String? identifier;
 
   static const double minHeight = 52;
