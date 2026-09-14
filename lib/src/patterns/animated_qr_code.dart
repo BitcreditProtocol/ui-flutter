@@ -51,9 +51,6 @@ class AnimatedQrCode extends StatefulWidget {
   final bool enlargeOnTap;
   final QrFullscreenWrapper? fullscreenWrapper;
   final Color? backgroundColor;
-
-  /// See [QrCode.errorBuilder]. Reached only if a single chunk fails, which
-  /// [kBcqrChunkSize] is set well clear of.
   final WidgetBuilder? errorBuilder;
 
   @override
@@ -176,11 +173,6 @@ class _AnimatedQrCodeState extends State<AnimatedQrCode> {
             const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            // Sized from whichever side is shorter, not from the width. An
-            // `AspectRatio` takes the width when the height is loose, so in a
-            // box wider than it is tall -- a landscape window, which is what
-            // `showQrCodeFullscreen` hands this on a desktop -- the square came
-            // out taller than the space and the column overflowed.
             final reserved = isAnimated
                 ? _kProgressGap + _kProgressHeight
                 : 0.0;

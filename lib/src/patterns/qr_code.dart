@@ -121,21 +121,9 @@ class QrCode extends StatefulWidget {
   final String data;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry contentPadding;
-
-  /// Drawn when [data] cannot be encoded at all — past the largest QR version,
-  /// which is somewhere between 2,000 and 3,000 characters. Defaults to
-  /// [QrCodeUnavailable]. See [AnimatedQrCode] for payloads that big.
   final WidgetBuilder? errorBuilder;
-
-  /// Replaces the default tap behaviour. Leave it null to keep
-  /// [enlargeOnTap].
   final VoidCallback? onTap;
-
-  /// Tapping opens the code fullscreen — a QR is there to be scanned, and one
-  /// inline is often too small for another device to read.
   final bool enlargeOnTap;
-
-  /// Passed through to [showQrCodeFullscreen].
   final QrFullscreenWrapper? fullscreenWrapper;
 
   final Color? backgroundColor;
@@ -236,8 +224,6 @@ class ExactQrCode extends StatefulWidget {
   final String data;
   final Color color;
   final VoidCallback? onTap;
-
-  /// See [QrCode.errorBuilder].
   final WidgetBuilder? errorBuilder;
 
   @override

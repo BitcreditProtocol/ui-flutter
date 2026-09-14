@@ -80,10 +80,6 @@ class SettingsSectionItem extends StatelessWidget {
             child: Icon(icon, size: 20, color: contentColor),
           );
 
-    // Bounded and right-aligned. Unbounded it won a `Row` against the label,
-    // which is `Flexible`: a value long enough -- a currency's name rather
-    // than its code -- ellipsed the label away and then overflowed the row.
-    // The label is the one that has to survive.
     final valueSlot = value != null
         ? Flexible(
             child: Text(
@@ -125,15 +121,6 @@ class SettingsSectionItem extends StatelessWidget {
       ),
     );
 
-    // An ink response rather than a bare `GestureDetector`: without one the
-    // row does not light up under a pointer or answer a press, so on a
-    // desktop it reads as text rather than as a control. `InkWell` gives the
-    // hover only where there is a pointer to hover with, so a phone sees no
-    // more than the press it already had.
-    //
-    // Transparent `Material`, so the splash paints over the row's own fill
-    // instead of behind it -- an ink response draws on its nearest `Material`
-    // ancestor, which without this one is whatever sits under the card.
     final tappable = Material(
       type: MaterialType.transparency,
       borderRadius: bordered

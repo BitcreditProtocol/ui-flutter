@@ -41,9 +41,6 @@ class Search extends StatefulWidget {
   final ValueChanged<String>? onSearch;
   final bool enableDebounce;
   final Duration debounceDuration;
-
-  /// Takes focus on first build. For a surface that exists to be searched --
-  /// a picker over a long list -- reaching for the pointer first defeats it.
   final bool autofocus;
 
   @override

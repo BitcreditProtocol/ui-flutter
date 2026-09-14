@@ -123,11 +123,6 @@ class _SelectionDrawerState<T> extends State<SelectionDrawer<T>> {
       );
     }
 
-    // A `Column` sizes the sheet to its rows; a `ListView` fills the height it
-    // is offered. Short lists keep the `Column` so the sheet still hugs them,
-    // and only a list long enough to fill the sheet anyway is built lazily --
-    // which is why the swap is invisible. See
-    // [kSelectionDrawerLazyThreshold].
     final list = options.length > kSelectionDrawerLazyThreshold
         ? ListView.builder(
             padding: EdgeInsets.zero,
@@ -158,8 +153,6 @@ class _SelectionDrawerState<T> extends State<SelectionDrawer<T>> {
                   value: _query,
                   placeholder: search.placeholder,
                   size: SearchSize.sm,
-                  // Filtering a list already in memory, so there's nothing to
-                  // debounce.
                   enableDebounce: false,
                   onChange: (v) => setState(() => _query = v),
                 ),
