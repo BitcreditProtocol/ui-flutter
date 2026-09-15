@@ -2,10 +2,12 @@ library;
 
 export 'package:lucide_icons_flutter/lucide_icons.dart';
 
+export 'src/core/animated_trailing_icon.dart';
 export 'src/core/app_text_field.dart';
 export 'src/core/avatar.dart';
 export 'src/core/backup_dot.dart';
 export 'src/core/button.dart';
+export 'src/core/filter_chip_button.dart';
 export 'src/core/search.dart';
 export 'src/core/settings_section.dart';
 export 'src/core/settings_switch.dart';

@@ -43,6 +43,18 @@ class Search extends StatefulWidget {
   final Duration debounceDuration;
   final bool autofocus;
 
+  static const double xsHeight = 36; // 2 + 8·2 + 18
+  static const double smHeight = 46; // 2 + 12·2 + 20
+  static const double mdHeight = 54; // 2 + 16·2 + 20
+  static const double lgHeight = 62; // 2 + 20·2 + 20
+
+  static double heightOf(SearchSize size) => switch (size) {
+    SearchSize.xs => xsHeight,
+    SearchSize.sm => smHeight,
+    SearchSize.md => mdHeight,
+    SearchSize.lg => lgHeight,
+  };
+
   @override
   State<Search> createState() => _SearchState();
 }
