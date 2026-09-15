@@ -13,6 +13,8 @@
 
 import 'package:bitcr_ui_widgetbook/use_cases/animated_qr_code_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_animated_qr_code_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/animated_trailing_icon_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_animated_trailing_icon_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/app_text_field_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_app_text_field_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/avatar_use_cases.dart'
@@ -29,6 +31,8 @@ import 'package:bitcr_ui_widgetbook/use_cases/colors_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_colors_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/empty_state_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_empty_state_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/filter_chip_button_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_filter_chip_button_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/identity_switcher_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_identity_switcher_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/navigate_back_button_use_cases.dart'
@@ -75,6 +79,23 @@ final directories = <_widgetbook.WidgetbookNode>[
   _widgetbook.WidgetbookFolder(
     name: 'core',
     children: [
+      _widgetbook.WidgetbookComponent(
+        name: 'AnimatedTrailingIcon',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder:
+                _bitcr_ui_widgetbook_use_cases_animated_trailing_icon_use_cases
+                    .animatedTrailingIconPlayground,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Tab chevron',
+            builder:
+                _bitcr_ui_widgetbook_use_cases_animated_trailing_icon_use_cases
+                    .animatedTrailingIconTab,
+          ),
+        ],
+      ),
       _widgetbook.WidgetbookComponent(
         name: 'AppTextField',
         useCases: [
@@ -221,6 +242,26 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Sizes',
             builder:
                 _bitcr_ui_widgetbook_use_cases_button_use_cases.buttonSizes,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'FilterChipButton',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Filter section',
+            builder: _bitcr_ui_widgetbook_use_cases_filter_chip_button_use_cases
+                .filterChipButtonSection,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Overflowing label',
+            builder: _bitcr_ui_widgetbook_use_cases_filter_chip_button_use_cases
+                .filterChipButtonOverflowing,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder: _bitcr_ui_widgetbook_use_cases_filter_chip_button_use_cases
+                .filterChipButtonPlayground,
           ),
         ],
       ),
@@ -777,6 +818,11 @@ final directories = <_widgetbook.WidgetbookNode>[
       _widgetbook.WidgetbookComponent(
         name: 'EmptyState',
         useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Anchored under a header',
+            builder: _bitcr_ui_widgetbook_use_cases_empty_state_use_cases
+                .emptyStateAnchored,
+          ),
           _widgetbook.WidgetbookUseCase(
             name: 'No notifications',
             builder: _bitcr_ui_widgetbook_use_cases_empty_state_use_cases
