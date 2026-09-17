@@ -158,7 +158,11 @@ class EmptyState extends StatelessWidget {
                 ? Center(child: content)
                 : Padding(
                     padding: EdgeInsets.only(top: topInset),
-                    child: content,
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      heightFactor: 1,
+                      child: content,
+                    ),
                   ),
           ),
         );

@@ -50,9 +50,6 @@ Future<void> pumpBody(
     ),
   );
 
-  // The illustration is app-owned and the test bundle has no copy of it. That
-  // is not what any of this is measuring, and the failed load leaves the
-  // layout alone.
   tester.takeException();
 }
 
@@ -92,6 +89,40 @@ void main() {
       );
     },
   );
+
+  testWidgets('anchored, it centres even on a loose width constraint', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: BitcrTheme.light,
+        home: Scaffold(
+          body: EmptyStateAnchor(
+            bodyHeight: 800,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                height: 700,
+                child: EmptyState(
+                  asset: 'assets/images/no_payments.png',
+                  title: 'No payments yet',
+                  subtitle: 'Your payments will be listed here.',
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    tester.takeException();
+
+    final screenCentre = tester.getSize(find.byType(MaterialApp)).width / 2;
+
+    expect(
+      tester.getRect(find.text('No payments yet')).center.dx,
+      moreOrLessEquals(screenCentre),
+    );
+  });
 
   testWidgets('without an anchor it centres, and so it drifts', (tester) async {
     await pumpBody(tester, headerHeight: 0, anchored: false);
