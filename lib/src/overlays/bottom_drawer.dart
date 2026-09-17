@@ -100,8 +100,6 @@ class BottomDrawer extends StatelessWidget {
   }
 }
 
-/// Opens a [BottomDrawer] as a modal bottom sheet, styled to the design.
-///
 /// Set [opensKeyboard] for drawers that auto-focus a field on open (see
 /// [imeSheetAnimationStyle]). Drawers without a keyboard keep the snappier
 /// material defaults.
@@ -124,6 +122,21 @@ Future<T?> showBottomDrawer<T>(
       ),
     ),
     constraints: const BoxConstraints(maxWidth: double.infinity),
-    builder: builder,
+    builder: (context) {
+      final media = MediaQuery.of(context);
+      final inset = math.max(media.viewInsets.bottom, media.viewPadding.bottom);
+
+      return Padding(
+        padding: EdgeInsets.only(bottom: inset),
+        child: MediaQuery(
+          data: media.copyWith(
+            viewInsets: media.viewInsets.copyWith(bottom: 0),
+            viewPadding: media.viewPadding.copyWith(bottom: 0),
+            padding: media.padding.copyWith(bottom: 0),
+          ),
+          child: Builder(builder: builder),
+        ),
+      );
+    },
   );
 }
