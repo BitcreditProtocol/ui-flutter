@@ -37,7 +37,7 @@ class IdentityChip extends StatelessWidget {
 
     final pill = Container(
       constraints: const BoxConstraints(minWidth: 64, minHeight: minHeight),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.only(left: 4, right: 12, top: 4, bottom: 4),
       decoration: BoxDecoration(
         color: colors.elevation200,
         borderRadius: BorderRadius.circular(80),
