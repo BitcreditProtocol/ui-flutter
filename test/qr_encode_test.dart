@@ -33,8 +33,8 @@ void main() {
     });
 
     test('returns null past the largest QR version, rather than throwing', () {
-      // `QrValidator` reports its own failures through `isValid`, but the
-      // `QrImage` construction after it throws `InputTooLongException`. Run
+      // Picking the version is what fails here: `QrCode` throws
+      // `InputTooLongException` once the payload outgrows version 40. Run
       // through `compute` that becomes a rejected future, which every caller
       // here left unhandled -- and the widget waiting on it waited for ever.
       expect(encodeQrMatrix('x' * 3000), isNull);

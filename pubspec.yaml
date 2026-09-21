@@ -17,7 +17,9 @@ dependencies:
 
   # Encodes the module grid behind QrCode/AnimatedQrCode. Pure Dart — no
   # platform channels, so it costs consuming apps nothing at build time.
-  qr_flutter: ^4.1.0
+  # The encoder alone: the module painting is ours, so the widget layer
+  # qr_flutter wraps this in would be dead weight.
+  qr: ^4.0.0
 
 dev_dependencies:
   flutter_test:

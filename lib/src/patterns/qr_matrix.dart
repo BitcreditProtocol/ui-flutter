@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:flutter/rendering.dart';
-import 'package:qr_flutter/qr_flutter.dart' as qrf;
+import 'package:qr/qr.dart' as qr;
 
 /// A plain, isolate-transferable snapshot of an encoded QR code's module
-/// grid, decoupled from qr_flutter's QrCode/QrImage so it can safely cross
+/// grid, decoupled from qr's QrCode/QrImage so it can safely cross
 /// isolate boundaries when encoded via `compute`.
 class QrMatrix {
   const QrMatrix._(this.moduleCount, this._modules);
@@ -24,30 +24,25 @@ class QrMatrix {
 ///
 /// Null rather than a throw for the one failure that is a property of the
 /// input: past the largest QR version — somewhere between 2,000 and 3,000
-/// characters at [qrf.QrErrorCorrectLevel.L] — there is no code to draw. That
-/// arrives as an `InputTooLongException` from the [qrf.QrImage] construction
-/// rather than from [qrf.QrValidator], which reports its own failures through
-/// [qrf.QrValidationResult.isValid] instead. Callers run this through
-/// `compute`, where a throw becomes a rejected future that is easy to leave
-/// unhandled — and then the widget waiting on it waits for ever.
+/// characters at [qr.QrErrorCorrectLevel.low] — there is no code to draw. That
+/// arrives as an [qr.InputTooLongException] out of the [qr.QrCode] construction,
+/// which picks the version. Callers run this through `compute`, where a throw
+/// becomes a rejected future that is easy to leave unhandled — and then the
+/// widget waiting on it waits for ever.
 QrMatrix? encodeQrMatrix(String data) {
-  final validation = qrf.QrValidator.validate(
-    data: data,
-    version: qrf.QrVersions.auto,
-    errorCorrectionLevel: qrf.QrErrorCorrectLevel.L,
-  );
-
-  final qrCode = validation.qrCode;
-  if (!validation.isValid || qrCode == null) return null;
-
-  final qrf.QrImage qrImage;
+  final qr.QrImage qrImage;
   try {
-    qrImage = qrf.QrImage(qrCode);
+    qrImage = qr.QrImage(
+      qr.QrCode(
+        payload: qr.QrPayload.fromString(data),
+        errorCorrectLevel: qr.QrErrorCorrectLevel.low,
+      ),
+    );
   } on Object {
     return null;
   }
 
-  final n = qrCode.moduleCount;
+  final n = qrImage.moduleCount;
   final modules = Uint8List(n * n);
 
   for (var row = 0; row < n; row++) {
