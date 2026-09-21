@@ -19,7 +19,7 @@ dependencies:
   # platform channels, so it costs consuming apps nothing at build time.
   # The encoder alone: the module painting is ours, so the widget layer
   # qr_flutter wraps this in would be dead weight.
-  qr: ^4.0.0
+  qr: ^3.0.1
 
 dev_dependencies:
   flutter_test:
