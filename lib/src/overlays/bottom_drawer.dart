@@ -122,21 +122,42 @@ Future<T?> showBottomDrawer<T>(
       ),
     ),
     constraints: const BoxConstraints(maxWidth: double.infinity),
-    builder: (context) {
-      final media = MediaQuery.of(context);
-      final inset = math.max(media.viewInsets.bottom, media.viewPadding.bottom);
-
-      return Padding(
-        padding: EdgeInsets.only(bottom: inset),
-        child: MediaQuery(
-          data: media.copyWith(
-            viewInsets: media.viewInsets.copyWith(bottom: 0),
-            viewPadding: media.viewPadding.copyWith(bottom: 0),
-            padding: media.padding.copyWith(bottom: 0),
-          ),
-          child: Builder(builder: builder),
-        ),
-      );
-    },
+    builder: (context) => _SheetInset(builder: builder),
   );
+}
+
+/// Lifts the sheet clear of the keyboard, and of the home indicator when the
+/// keyboard is down.
+class _SheetInset extends StatefulWidget {
+  const _SheetInset({required this.builder});
+
+  final WidgetBuilder builder;
+
+  @override
+  State<_SheetInset> createState() => _SheetInsetState();
+}
+
+class _SheetInsetState extends State<_SheetInset> {
+  double? _inset;
+
+  @override
+  Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final live = math.max(media.viewInsets.bottom, media.viewPadding.bottom);
+    final covered = !(ModalRoute.of(context)?.isCurrent ?? true);
+    final inset = covered ? math.min(_inset ?? live, live) : live;
+    _inset = inset;
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: inset),
+      child: MediaQuery(
+        data: media.copyWith(
+          viewInsets: media.viewInsets.copyWith(bottom: 0),
+          viewPadding: media.viewPadding.copyWith(bottom: 0),
+          padding: media.padding.copyWith(bottom: 0),
+        ),
+        child: Builder(builder: widget.builder),
+      ),
+    );
+  }
 }
