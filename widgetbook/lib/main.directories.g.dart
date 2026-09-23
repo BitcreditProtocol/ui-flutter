@@ -45,6 +45,8 @@ import 'package:bitcr_ui_widgetbook/use_cases/qr_code_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_qr_code_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/radii_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_radii_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/refresh_button_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_refresh_button_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/screen_header_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_screen_header_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/search_use_cases.dart'
@@ -264,6 +266,56 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Playground',
             builder: _bitcr_ui_widgetbook_use_cases_filter_chip_button_use_cases
                 .filterChipButtonPlayground,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'RefreshButton',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Colors',
+            builder: _bitcr_ui_widgetbook_use_cases_refresh_button_use_cases
+                .refreshButtonColors,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Disabled',
+            builder: _bitcr_ui_widgetbook_use_cases_refresh_button_use_cases
+                .refreshButtonDisabled,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Icon only',
+            builder: _bitcr_ui_widgetbook_use_cases_refresh_button_use_cases
+                .refreshButtonIconOnly,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Loading (held)',
+            builder: _bitcr_ui_widgetbook_use_cases_refresh_button_use_cases
+                .refreshButtonLoading,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Next to TopbarActionButton',
+            builder: _bitcr_ui_widgetbook_use_cases_refresh_button_use_cases
+                .refreshButtonVersusTopbar,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder: _bitcr_ui_widgetbook_use_cases_refresh_button_use_cases
+                .refreshButtonPlayground,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Sizes',
+            builder: _bitcr_ui_widgetbook_use_cases_refresh_button_use_cases
+                .refreshButtonSizes,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'With label',
+            builder: _bitcr_ui_widgetbook_use_cases_refresh_button_use_cases
+                .refreshButtonWithLabel,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'With tooltip',
+            builder: _bitcr_ui_widgetbook_use_cases_refresh_button_use_cases
+                .refreshButtonWithTooltip,
           ),
         ],
       ),
