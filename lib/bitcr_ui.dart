@@ -24,6 +24,7 @@ export 'src/overlays/identity_switcher.dart';
 export 'src/overlays/selection_cards.dart';
 export 'src/overlays/selection_drawer.dart';
 export 'src/overlays/switching_overlay.dart';
+export 'src/overlays/toast.dart';
 export 'src/patterns/animated_qr_code.dart';
 export 'src/patterns/bcqr_protocol.dart';
 export 'src/patterns/empty_state.dart';

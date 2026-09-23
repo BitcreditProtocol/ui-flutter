@@ -67,6 +67,8 @@ import 'package:bitcr_ui_widgetbook/use_cases/switching_overlay_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_switching_overlay_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/text_styles_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_text_styles_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/toast_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_toast_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/topbar_action_button_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_topbar_action_button_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/topbar_use_cases.dart'
@@ -787,6 +789,49 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Inside a card',
             builder: _bitcr_ui_widgetbook_use_cases_switching_overlay_use_cases
                 .switchingStatusContentInCard,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'Toast',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Close button (no auto-dismiss)',
+            builder:
+                _bitcr_ui_widgetbook_use_cases_toast_use_cases.toastCloseButton,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Error',
+            builder: _bitcr_ui_widgetbook_use_cases_toast_use_cases.toastError,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Info',
+            builder: _bitcr_ui_widgetbook_use_cases_toast_use_cases.toastInfo,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder:
+                _bitcr_ui_widgetbook_use_cases_toast_use_cases.toastPlayground,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Success',
+            builder:
+                _bitcr_ui_widgetbook_use_cases_toast_use_cases.toastSuccess,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Warning',
+            builder:
+                _bitcr_ui_widgetbook_use_cases_toast_use_cases.toastWarning,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'With action',
+            builder:
+                _bitcr_ui_widgetbook_use_cases_toast_use_cases.toastWithAction,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'With description',
+            builder: _bitcr_ui_widgetbook_use_cases_toast_use_cases
+                .toastWithDescription,
           ),
         ],
       ),
