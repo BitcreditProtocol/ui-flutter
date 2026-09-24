@@ -188,7 +188,16 @@ class _PasscodeFormState extends State<PasscodeForm>
                 ],
                 decoration: const InputDecoration(
                   counterText: '',
+                  // this field is invisible, lying over the dots. Leaving
+                  // these null lets a host app's InputDecorationTheme paint a
+                  // fill and a border right across them.
+                  filled: false,
                   border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  focusedErrorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
                   contentPadding: EdgeInsets.zero,
                 ),
                 onChanged: _handleTextChanged,
