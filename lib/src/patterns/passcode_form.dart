@@ -188,7 +188,13 @@ class _PasscodeFormState extends State<PasscodeForm>
                 ],
                 decoration: const InputDecoration(
                   counterText: '',
+                  filled: false,
                   border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  focusedErrorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
                   contentPadding: EdgeInsets.zero,
                 ),
                 onChanged: _handleTextChanged,

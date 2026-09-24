@@ -51,10 +51,16 @@ class EmptyStateAnchor extends InheritedWidget {
 /// [asset] is resolved against the host app's asset bundle, so the
 /// illustration stays app-owned; pass [assetPackage] to load one that ships
 /// inside a package instead.
+///
+/// [asset] goes through [Image.asset], which decodes raster formats only. An
+/// app whose illustrations are SVG — or any other format this package should
+/// not need a decoder for — passes [illustration] and renders it itself. It is
+/// given the same [imageHeight] a bundled asset would get, so the two line up.
 class EmptyState extends StatelessWidget {
   const EmptyState({
     super.key,
-    required this.asset,
+    this.asset,
+    this.illustration,
     required this.title,
     required this.subtitle,
     this.assetPackage,
@@ -62,9 +68,13 @@ class EmptyState extends StatelessWidget {
     this.buttonIcon,
     this.onTap,
     this.illustrationTop = defaultIllustrationTop,
-  });
+  }) : assert(
+         (asset == null) != (illustration == null),
+         'Provide either asset or illustration, not both',
+       );
 
-  final String asset;
+  final String? asset;
+  final Widget? illustration;
   final String? assetPackage;
   final String title;
   final String subtitle;
@@ -74,7 +84,7 @@ class EmptyState extends StatelessWidget {
   final double illustrationTop;
 
   static const double defaultIllustrationTop = 209;
-  static const double _imageHeight = 72;
+  static const double imageHeight = 72;
   static const double _subtitleWidth = 216;
 
   @override
@@ -90,7 +100,12 @@ class EmptyState extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(asset, package: assetPackage, height: _imageHeight),
+          SizedBox(
+            height: imageHeight,
+            child:
+                illustration ??
+                Image.asset(asset!, package: assetPackage, height: imageHeight),
+          ),
           const SizedBox(height: 20),
           Text(
             title,
