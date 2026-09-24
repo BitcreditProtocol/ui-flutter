@@ -80,7 +80,7 @@ Widget emptyStatePlayground(BuildContext context) {
   );
 
   return EmptyState(
-    asset: context.knobs.object.dropdown(
+    asset: context.knobs.object.dropdown<String>(
       label: 'Illustration',
       options: const [
         'assets/images/no_requests.png',
