@@ -1,7 +1,7 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-enum AvatarSize { xs, sm, md, lg }
+enum AvatarSize { xs, sm, md, lg, xl }
 
 /// What the avatar stands for, which decides its shape and fallback: people
 /// and anonymous entities are round, companies get a squared-off rounded rect,
@@ -25,11 +25,17 @@ String avatarInitials(String name) {
 /// [backgroundColor] and [borderColor] exist because the avatar has to sit on
 /// surfaces of different elevations — pass the one it's resting on so the
 /// circle doesn't look cut out of the wrong shade.
+///
+/// [imageUrl] is the common case and is loaded over the network. Pass [image]
+/// instead for a picture that is not at a URL — one just chosen on the device
+/// and not yet uploaded, or a bundled asset. It takes precedence, and either
+/// way the avatar clips it, covers with it and decodes it at display size.
 class Avatar extends StatelessWidget {
   const Avatar({
     super.key,
     required this.name,
     this.imageUrl,
+    this.image,
     this.size = AvatarSize.sm,
     this.kind = AvatarKind.personal,
     this.dark = false,
@@ -39,6 +45,7 @@ class Avatar extends StatelessWidget {
 
   final String name;
   final String? imageUrl;
+  final ImageProvider? image;
   final AvatarSize size;
   final AvatarKind kind;
   final bool dark;
@@ -50,6 +57,7 @@ class Avatar extends StatelessWidget {
     AvatarSize.sm => 32,
     AvatarSize.md => 40,
     AvatarSize.lg => 48,
+    AvatarSize.xl => 64,
   };
 
   double get _fontSize => switch (size) {
@@ -57,11 +65,11 @@ class Avatar extends StatelessWidget {
     AvatarSize.sm => 14,
     AvatarSize.md => 16,
     AvatarSize.lg => 20,
+    AvatarSize.xl => 24,
   };
 
   BorderRadius get _borderRadius => switch (kind) {
-    AvatarKind.personal ||
-    AvatarKind.anon => BorderRadius.circular(_dimension),
+    AvatarKind.personal || AvatarKind.anon => BorderRadius.circular(_dimension),
     AvatarKind.company => BorderRadius.circular(_dimension * 0.2),
   };
 
@@ -70,7 +78,8 @@ class Avatar extends StatelessWidget {
     final colors = BitcrColors.of(context);
     final dim = _dimension;
     final url = imageUrl;
-    final hasImage = url != null && url.isNotEmpty;
+    final provider =
+        image ?? (url != null && url.isNotEmpty ? NetworkImage(url) : null);
 
     final resolvedBackground =
         backgroundColor ?? (dark ? colors.black : colors.elevation50);
@@ -99,30 +108,33 @@ class Avatar extends StatelessWidget {
         border: Border.all(color: resolvedBorder),
         borderRadius: _borderRadius,
       ),
-      child: hasImage
-          ? Stack(
+      child: provider == null
+          ? fallback
+          : Stack(
               alignment: Alignment.center,
-              children: [fallback, _AvatarImage(url: url, dimension: dim)],
-            )
-          : fallback,
+              children: [
+                fallback,
+                _AvatarImage(image: provider, dimension: dim),
+              ],
+            ),
     );
   }
 }
 
 class _AvatarImage extends StatelessWidget {
-  const _AvatarImage({required this.url, required this.dimension});
+  const _AvatarImage({required this.image, required this.dimension});
 
-  final String url;
+  final ImageProvider image;
   final double dimension;
 
   @override
   Widget build(BuildContext context) {
-    final decodeSize =
-        (dimension * MediaQuery.devicePixelRatioOf(context)).round();
+    final decodeSize = (dimension * MediaQuery.devicePixelRatioOf(context))
+        .round();
 
     return Image(
       image: ResizeImage(
-        NetworkImage(url),
+        image,
         width: decodeSize,
         height: decodeSize,
         policy: ResizeImagePolicy.fit,
