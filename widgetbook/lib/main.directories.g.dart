@@ -163,6 +163,11 @@ final directories = <_widgetbook.WidgetbookNode>[
             builder: _bitcr_ui_widgetbook_use_cases_avatar_use_cases.avatarDark,
           ),
           _widgetbook.WidgetbookUseCase(
+            name: 'Gradient',
+            builder:
+                _bitcr_ui_widgetbook_use_cases_avatar_use_cases.avatarGradient,
+          ),
+          _widgetbook.WidgetbookUseCase(
             name: 'In a wallet list',
             builder:
                 _bitcr_ui_widgetbook_use_cases_avatar_use_cases.avatarInList,

@@ -4,9 +4,94 @@ import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/radii.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 enum ToastVariant { info, success, warning, error }
+
+const double _toastInset = 20;
+
+/// The filled status badge a [Toast] shows ahead of its message.
+class ToastIcon extends StatelessWidget {
+  const ToastIcon({super.key, required this.variant});
+
+  final ToastVariant variant;
+
+  static const double size = 20;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = BitcrColors.of(context);
+
+    final (name, exported, badge) = switch (variant) {
+      ToastVariant.info => ('info', const Color(0xFF1B0F00), colors.text300),
+      ToastVariant.success => (
+        'success',
+        const Color(0xFF006F29),
+        colors.signalSuccess,
+      ),
+      ToastVariant.warning => (
+        'warning',
+        const Color(0xFFAE5F00),
+        colors.signalAlert,
+      ),
+      ToastVariant.error => (
+        'error',
+        const Color(0xFFA32B16),
+        colors.signalError,
+      ),
+    };
+
+    return SvgPicture.asset(
+      'assets/icons/toast_$name.svg',
+      package: 'bitcr_ui',
+      width: size,
+      height: size,
+      colorMapper: _ToastBadgeColors(
+        exportedBadge: exported,
+        badge: badge,
+        mark: colors.elevation200,
+      ),
+    );
+  }
+}
+
+@immutable
+class _ToastBadgeColors extends ColorMapper {
+  const _ToastBadgeColors({
+    required this.exportedBadge,
+    required this.badge,
+    required this.mark,
+  });
+
+  static const Color _exportedMark = Color(0xFFF6F2E7);
+
+  final Color exportedBadge;
+  final Color badge;
+  final Color mark;
+
+  @override
+  Color substitute(
+    String? id,
+    String elementName,
+    String attributeName,
+    Color color,
+  ) {
+    if (color == _exportedMark) return mark;
+    if (color == exportedBadge) return badge;
+    return color;
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      other is _ToastBadgeColors &&
+      other.exportedBadge == exportedBadge &&
+      other.badge == badge &&
+      other.mark == mark;
+
+  @override
+  int get hashCode => Object.hash(exportedBadge, badge, mark);
+}
 
 class ToastAction {
   const ToastAction({required this.label, required this.onPressed});
@@ -57,31 +142,25 @@ class Toast extends StatelessWidget {
     final colors = BitcrColors.of(context);
     final textStyles = context.bitcrText;
 
-    final (icon, iconColor) = switch (variant) {
-      ToastVariant.info => (LucideIcons.info300, colors.text300),
-      ToastVariant.success => (
-        LucideIcons.circleCheck300,
-        colors.signalSuccess,
-      ),
-      ToastVariant.warning => (
-        LucideIcons.triangleAlert300,
-        colors.signalAlert,
-      ),
-      ToastVariant.error => (LucideIcons.circleX300, colors.signalError),
-    };
-
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: colors.elevation200,
         borderRadius: BorderRadius.circular(BitcrRadius.md),
         border: Border.all(color: colors.divider75),
+        boxShadow: [
+          BoxShadow(
+            color: colors.divider75.withValues(alpha: 0.3),
+            offset: const Offset(0, 8),
+            blurRadius: 4,
+          ),
+        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 12,
         children: [
-          Icon(icon, size: 20, color: iconColor),
+          ToastIcon(variant: variant),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,9 +244,9 @@ ToastController? showToast(
 
   entry = OverlayEntry(
     builder: (_) => Positioned(
-      top: topPadding + 8,
-      left: 16,
-      right: 16,
+      top: topPadding,
+      left: _toastInset,
+      right: _toastInset,
       child: Material(
         color: Colors.transparent,
         child: Dismissible(

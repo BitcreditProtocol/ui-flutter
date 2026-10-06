@@ -11,14 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Re-exported from lib/bitcr_ui.dart: components whose icon is part of their
-  # design bake it in, and apps get the same pinned set for their own icons.
   lucide_icons_flutter: ^3.1.7
-
-  # Encodes the module grid behind QrCode/AnimatedQrCode. Pure Dart — no
-  # platform channels, so it costs consuming apps nothing at build time.
-  # The encoder alone: the module painting is ours, so the widget layer
-  # qr_flutter wraps this in would be dead weight.
+  flutter_svg: ^2.0.17
   qr: ^3.0.2
 
 dev_dependencies:
@@ -27,6 +21,9 @@ dev_dependencies:
   flutter_lints: ^6.0.0
 
 flutter:
+  assets:
+    - assets/icons/
+
   fonts:
     - family: Geist
       fonts:

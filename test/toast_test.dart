@@ -145,6 +145,30 @@ void main() {
     });
   });
 
+  group('placement', () {
+    testWidgets('sits 20 from each edge, flush under the status bar', (
+      tester,
+    ) async {
+      // `showToast` reads the view's padding directly rather than an
+      // inherited MediaQuery, so the fake has to go on the view. Physical
+      // pixels, hence the 1:1 ratio.
+      tester.view.devicePixelRatio = 1;
+      tester.view.viewPadding = const FakeViewPadding(top: 44);
+      addTearDown(tester.view.reset);
+
+      final context = await pumpHost(tester);
+      showToast(context, message: 'Payment sent', showCloseButton: true);
+      await tester.pump();
+
+      final toast = find.byType(Toast);
+      expect(tester.getTopLeft(toast), const Offset(20, 44));
+      expect(
+        tester.getSize(toast).width,
+        tester.view.physicalSize.width - 40,
+      );
+    });
+  });
+
   group('the card', () {
     testWidgets('renders the description as a second line', (tester) async {
       final context = await pumpHost(tester);
@@ -165,27 +189,27 @@ void main() {
       await tester.pump(const Duration(seconds: 2));
     });
 
-    testWidgets('each variant draws its own icon', (tester) async {
-      const expected = {
-        ToastVariant.info: LucideIcons.info300,
-        ToastVariant.success: LucideIcons.circleCheck300,
-        ToastVariant.warning: LucideIcons.triangleAlert300,
-        ToastVariant.error: LucideIcons.circleX300,
-      };
-
-      for (final entry in expected.entries) {
+    testWidgets('each variant draws its own badge, at the design size', (
+      tester,
+    ) async {
+      for (final variant in ToastVariant.values) {
         await tester.pumpWidget(
           MaterialApp(
             theme: BitcrTheme.light,
             home: Scaffold(
-              body: Toast(message: 'x', variant: entry.key),
+              body: Toast(message: 'x', variant: variant),
             ),
           ),
         );
+
+        final badge = find.byWidgetPredicate(
+          (widget) => widget is ToastIcon && widget.variant == variant,
+        );
+        expect(badge, findsOneWidget, reason: 'variant ${variant.name}');
         expect(
-          find.byIcon(entry.value),
-          findsOneWidget,
-          reason: 'variant ${entry.key.name}',
+          tester.getSize(badge),
+          const Size.square(ToastIcon.size),
+          reason: 'variant ${variant.name}',
         );
       }
     });

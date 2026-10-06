@@ -37,6 +37,26 @@ Widget avatarDark(BuildContext context) => Row(
   ],
 );
 
+/// A gradient fill, which the wallet uses to tell its wallets apart. The
+/// palette is the app's; this sample is the wallet's blue.
+@widgetbook.UseCase(name: 'Gradient', type: Avatar)
+Widget avatarGradient(BuildContext context) => Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  spacing: 16,
+  children: [
+    for (final size in AvatarSize.values)
+      Avatar(
+        name: 'Wallet 1',
+        size: size,
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF1E9EFF), Color(0xFF0080F8)],
+        ),
+      ),
+  ],
+);
+
 /// In a list, which is where the border earns its keep: the avatar sits on a
 /// raised row, so it takes that row's fill rather than the page's.
 @widgetbook.UseCase(name: 'In a wallet list', type: Avatar)

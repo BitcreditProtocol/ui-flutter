@@ -26,6 +26,11 @@ String avatarInitials(String name) {
 /// surfaces of different elevations — pass the one it's resting on so the
 /// circle doesn't look cut out of the wrong shade.
 ///
+/// [gradient] fills the avatar with colour instead, for an app that tells its
+/// identities apart by hue; the initials turn white and the border goes, since
+/// the fill already separates it from the surface. It wins over [dark] and
+/// [backgroundColor]. The palette is the app's, not this package's.
+///
 /// [imageUrl] is the common case and is loaded over the network. Pass [image]
 /// instead for a picture that is not at a URL — one just chosen on the device
 /// and not yet uploaded, or a bundled asset. It takes precedence, and either
@@ -41,6 +46,7 @@ class Avatar extends StatelessWidget {
     this.dark = false,
     this.backgroundColor,
     this.borderColor,
+    this.gradient,
   });
 
   final String name;
@@ -51,6 +57,7 @@ class Avatar extends StatelessWidget {
   final bool dark;
   final Color? backgroundColor;
   final Color? borderColor;
+  final Gradient? gradient;
 
   double get _dimension => switch (size) {
     AvatarSize.xs => 20,
@@ -83,8 +90,10 @@ class Avatar extends StatelessWidget {
 
     final resolvedBackground =
         backgroundColor ?? (dark ? colors.black : colors.elevation50);
-    final resolvedBorder = borderColor ?? colors.divider75;
-    final foreground = dark ? colors.white : colors.text300;
+    final resolvedBorder = gradient != null
+        ? null
+        : Border.all(color: borderColor ?? colors.divider75);
+    final foreground = gradient != null || dark ? colors.white : colors.text300;
 
     final Widget fallback = kind == AvatarKind.anon
         ? Icon(Icons.person, color: foreground, size: _fontSize * 1.2)
@@ -104,8 +113,9 @@ class Avatar extends StatelessWidget {
       alignment: Alignment.center,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: resolvedBackground,
-        border: Border.all(color: resolvedBorder),
+        color: gradient == null ? resolvedBackground : null,
+        gradient: gradient,
+        border: resolvedBorder,
         borderRadius: _borderRadius,
       ),
       child: provider == null

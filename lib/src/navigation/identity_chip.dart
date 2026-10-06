@@ -17,6 +17,7 @@ class IdentityChip extends StatelessWidget {
     super.key,
     required this.name,
     this.imageUrl,
+    this.avatarGradient,
     this.showChevron = false,
     this.open = false,
     this.onTap,
@@ -24,6 +25,7 @@ class IdentityChip extends StatelessWidget {
 
   final String name;
   final String? imageUrl;
+  final Gradient? avatarGradient;
   final bool showChevron;
   final bool open;
   final VoidCallback? onTap;
@@ -51,6 +53,7 @@ class IdentityChip extends StatelessWidget {
             name: name,
             imageUrl: imageUrl,
             borderColor: colors.divider50,
+            gradient: avatarGradient,
           ),
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: _maxNameWidth),

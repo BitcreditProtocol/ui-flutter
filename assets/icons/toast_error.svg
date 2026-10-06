@@ -1,0 +1,15 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon-toast" clip-path="url(#clip0_0_34)">
+<g id="Vector">
+<path d="M13 6.99999L6.99999 13Z" fill="#A32B16"/>
+<path d="M0.585989 14.726C0.210891 14.351 0.000102784 13.8424 -1.04904e-05 13.312V6.68799C0.000102784 6.1576 0.210891 5.64898 0.585989 5.27399L5.27399 0.585989C5.64898 0.210891 6.1576 0.000102784 6.68799 -1.04904e-05H13.312C13.8424 0.000102784 14.351 0.210891 14.726 0.585989L19.414 5.27399C19.7891 5.64898 19.9999 6.1576 20 6.68799V13.312C19.9999 13.8424 19.7891 14.351 19.414 14.726L14.726 19.414C14.351 19.7891 13.8424 19.9999 13.312 20H6.68799C6.1576 19.9999 5.64898 19.7891 5.27399 19.414L0.585989 14.726Z" fill="#A32B16"/>
+<path d="M6.99999 6.99999L13 13Z" fill="#A32B16"/>
+</g>
+<path id="Vector_2" d="M13 7L7 13M7 7L13 13" stroke="#F6F2E7" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_0_34">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+</defs>
+</svg>
