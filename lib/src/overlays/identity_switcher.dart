@@ -27,11 +27,13 @@ class IdentityOption<T> {
     required this.value,
     required this.name,
     this.imageUrl,
+    this.avatarGradient,
   });
 
   final T value;
   final String name;
   final String? imageUrl;
+  final Gradient? avatarGradient;
 }
 
 /// An [IdentityChip] that drops a menu of the other identities to switch to,
@@ -49,6 +51,7 @@ class IdentitySwitcher<T> extends StatefulWidget {
     required this.selected,
     required this.onSelect,
     this.imageUrl,
+    this.avatarGradient,
     this.loading = false,
     this.footerLabel,
     this.footerIcon,
@@ -57,6 +60,7 @@ class IdentitySwitcher<T> extends StatefulWidget {
 
   final String name;
   final String? imageUrl;
+  final Gradient? avatarGradient;
   final List<IdentityOption<T>> options;
   final T? selected;
   final ValueChanged<T> onSelect;
@@ -106,6 +110,7 @@ class _IdentitySwitcherState<T> extends State<IdentitySwitcher<T>> {
       child: IdentityChip(
         name: widget.name,
         imageUrl: widget.imageUrl,
+        avatarGradient: widget.avatarGradient,
         showChevron: true,
         open: _open,
         onTap: _toggle,
@@ -208,6 +213,7 @@ class _IdentityMenu<T> extends StatelessWidget {
                             _IdentityMenuRow(
                               name: option.name,
                               imageUrl: option.imageUrl,
+                              avatarGradient: option.avatarGradient,
                               selected: option.value == selected,
                               onTap: () => onSelect(option.value),
                             ),
@@ -250,12 +256,14 @@ class _IdentityMenuRow extends StatelessWidget {
   const _IdentityMenuRow({
     required this.name,
     required this.imageUrl,
+    required this.avatarGradient,
     required this.selected,
     required this.onTap,
   });
 
   final String name;
   final String? imageUrl;
+  final Gradient? avatarGradient;
   final bool selected;
   final VoidCallback onTap;
 
@@ -275,6 +283,7 @@ class _IdentityMenuRow extends StatelessWidget {
               imageUrl: imageUrl,
               backgroundColor: colors.elevation200,
               borderColor: colors.divider50,
+              gradient: avatarGradient,
             ),
             Expanded(
               child: Text(
