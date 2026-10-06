@@ -24,8 +24,8 @@ class QrMatrix {
 ///
 /// Null rather than a throw for the one failure that is a property of the
 /// input: past the largest QR version — somewhere between 2,000 and 3,000
-/// characters at [qr.QrErrorCorrectLevel.low] — there is no code to draw. That
-/// arrives as an [qr.InputTooLongException] out of [qr.QrCode.new], which
+/// characters at [qr.QrErrorCorrectLevel.L] — there is no code to draw. That
+/// arrives as an [qr.InputTooLongException] out of [qr.QrCode.fromData], which
 /// picks the version. Callers run this through `compute`, where a throw
 /// becomes a rejected future that is easy to leave unhandled — and then the
 /// widget waiting on it waits for ever.
@@ -33,9 +33,9 @@ QrMatrix? encodeQrMatrix(String data) {
   final qr.QrCode qrCode;
   final qr.QrImage qrImage;
   try {
-    qrCode = qr.QrCode(
-      payload: qr.QrPayload.fromString(data),
-      errorCorrectLevel: qr.QrErrorCorrectLevel.low,
+    qrCode = qr.QrCode.fromData(
+      data: data,
+      errorCorrectLevel: qr.QrErrorCorrectLevel.L,
     );
     qrImage = qr.QrImage(qrCode);
   } on Object {
