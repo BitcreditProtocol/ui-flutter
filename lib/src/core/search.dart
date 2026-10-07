@@ -6,7 +6,7 @@ import 'package:bitcr_ui/src/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-enum SearchSize { xs, sm, md, lg }
+enum SearchSize { xs, sm, md, lg, topbar }
 
 /// The search input: a leading magnifier, a clear button that fades in once
 /// there's text, and hover/focus states on the border.
@@ -47,12 +47,14 @@ class Search extends StatefulWidget {
   static const double smHeight = 46; // 2 + 12·2 + 20
   static const double mdHeight = 54; // 2 + 16·2 + 20
   static const double lgHeight = 62; // 2 + 20·2 + 20
+  static const double topbarHeight = 44; // 2 + 11·2 + 20
 
   static double heightOf(SearchSize size) => switch (size) {
     SearchSize.xs => xsHeight,
     SearchSize.sm => smHeight,
     SearchSize.md => mdHeight,
     SearchSize.lg => lgHeight,
+    SearchSize.topbar => topbarHeight,
   };
 
   @override
@@ -142,6 +144,10 @@ class _SearchState extends State<Search> {
     SearchSize.sm => const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     SearchSize.md => const EdgeInsets.all(16),
     SearchSize.lg => const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+    SearchSize.topbar => const EdgeInsets.symmetric(
+      horizontal: 12,
+      vertical: 11,
+    ),
   };
 
   double get _searchIconSize => widget.size == SearchSize.xs ? 16 : 20;
@@ -173,9 +179,6 @@ class _SearchState extends State<Search> {
     final colors = BitcrColors.of(context);
     final hasValue = _currentValue.isNotEmpty;
     final style = _textStyle(context, colors.text300);
-
-    // Skip the color transition on a theme flip: animating between the two
-    // palettes reads as a lag rather than as a state change.
     final brightness = Theme.of(context).brightness;
     final themeBrightnessChanged =
         _lastBrightness != null && _lastBrightness != brightness;

@@ -30,7 +30,7 @@ class IdentityChip extends StatelessWidget {
   final bool open;
   final VoidCallback? onTap;
 
-  static const double minHeight = 40;
+  static const double height = 32;
   static const double _maxNameWidth = 160;
 
   @override
@@ -38,8 +38,9 @@ class IdentityChip extends StatelessWidget {
     final colors = BitcrColors.of(context);
 
     final pill = Container(
-      constraints: const BoxConstraints(minWidth: 64, minHeight: minHeight),
-      padding: const EdgeInsets.only(left: 4, right: 12, top: 4, bottom: 4),
+      height: height,
+      constraints: const BoxConstraints(minWidth: 64),
+      padding: const EdgeInsets.only(left: 4, right: 12),
       decoration: BoxDecoration(
         color: colors.elevation200,
         borderRadius: BorderRadius.circular(80),
@@ -47,11 +48,12 @@ class IdentityChip extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        spacing: 8,
+        spacing: 6,
         children: [
           Avatar(
             name: name,
             imageUrl: imageUrl,
+            size: AvatarSize.chip,
             borderColor: colors.divider50,
             gradient: avatarGradient,
           ),
@@ -60,15 +62,13 @@ class IdentityChip extends StatelessWidget {
             child: Text(
               name,
               overflow: TextOverflow.ellipsis,
-              style: context.bitcrText
-                  .textSmMedium(color: colors.text300)
-                  .copyWith(height: 1.5),
+              style: context.bitcrText.textXsMedium(color: colors.text300),
             ),
           ),
           if (showChevron)
             Icon(
               open ? LucideIcons.chevronUp : LucideIcons.chevronDown,
-              size: 16,
+              size: 12,
               color: colors.text300,
             ),
         ],

@@ -16,8 +16,6 @@ Widget topbarBackAndTitle(BuildContext context) => _page(
   ),
 );
 
-/// One trailing action. The trail slot is the same width as the lead, so the
-/// title stays on the bar's true center.
 @widgetbook.UseCase(name: 'With trailing action', type: Topbar)
 Widget topbarWithTrailingAction(BuildContext context) => _page(
   Topbar(
@@ -31,14 +29,34 @@ Widget topbarWithTrailingAction(BuildContext context) => _page(
   ),
 );
 
-/// Two actions, which needs `trailSlotWidth` widened to fit the group — and
-/// that shifts the title off center, which is the trade-off to look at here.
-@widgetbook.UseCase(name: 'Two trailing actions', type: Topbar)
-Widget topbarTwoTrailingActions(BuildContext context) => _page(
+/// Several actions side by side. The trail grows to fit them and the title
+/// stays on the bar's true center regardless.
+@widgetbook.UseCase(name: 'Multiple actions', type: Topbar)
+Widget topbarMultipleActions(BuildContext context) => _page(
   Topbar(
     lead: NavigateBackButton(onPressed: () {}),
     middle: Text('Payment', style: context.bitcrText.textMdMedium()),
-    trailSlotWidth: TopbarActionGroup.widthFor(2),
+    actions: [
+      TopbarActionButton(
+        icon: LucideIcons.share300,
+        semanticLabel: 'Share',
+        onPressed: () {},
+      ),
+      TopbarActionButton(
+        icon: LucideIcons.ellipsis,
+        semanticLabel: 'More',
+        onPressed: () {},
+      ),
+    ],
+  ),
+);
+
+/// Two actions sharing one pill.
+@widgetbook.UseCase(name: 'Grouped actions', type: Topbar)
+Widget topbarGroupedActions(BuildContext context) => _page(
+  Topbar(
+    lead: NavigateBackButton(onPressed: () {}),
+    middle: Text('Payment', style: context.bitcrText.textMdMedium()),
     trail: TopbarActionGroup(
       children: [
         TopbarActionButton(
@@ -57,6 +75,57 @@ Widget topbarTwoTrailingActions(BuildContext context) => _page(
     ),
   ),
 );
+
+@widgetbook.UseCase(name: 'Skip', type: Topbar)
+Widget topbarSkip(BuildContext context) => _page(
+  Topbar(
+    lead: NavigateBackButton(onPressed: () {}),
+    trail: TopbarTextButton(label: 'Skip', onPressed: () {}),
+  ),
+);
+
+@widgetbook.UseCase(name: 'Logo', type: Topbar)
+Widget topbarLogo(BuildContext context) =>
+    _page(const Topbar(middle: BitcreditLogo()));
+
+@widgetbook.UseCase(name: 'Wallet indicator', type: Topbar)
+Widget topbarWalletIndicator(BuildContext context) => _page(
+  Topbar(
+    lead: NavigateBackButton(onPressed: () {}),
+    middle: IdentityChip(
+      name: 'Personal',
+      avatarGradient: const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [Color(0xFFFFA72E), Color(0xFFED8910)],
+      ),
+      showChevron: true,
+      onTap: () {},
+    ),
+    trail: TopbarActionButton(
+      icon: LucideIcons.share300,
+      semanticLabel: 'Share',
+      onPressed: () {},
+    ),
+  ),
+);
+
+@widgetbook.UseCase(name: 'Search', type: Topbar)
+Widget topbarSearch(BuildContext context) {
+  final colors = BitcrColors.of(context);
+
+  return _page(
+    Topbar.search(
+      lead: Avatar(
+        name: 'Alice',
+        size: AvatarSize.md,
+        backgroundColor: colors.elevation200,
+        borderColor: colors.divider50,
+      ),
+      search: const Search(placeholder: 'Search...', size: SearchSize.topbar),
+    ),
+  );
+}
 
 /// Anything can go in the middle slot — the bar has no idea what an identity
 /// chip is, which is what keeps it reusable across apps.
@@ -80,11 +149,7 @@ Widget topbarCustomMiddle(BuildContext context) {
           children: [
             const Avatar(name: 'Wallet 3', size: AvatarSize.sm),
             Text('Wallet 3', style: context.bitcrText.textSmMedium()),
-            Icon(
-              LucideIcons.chevronDown300,
-              size: 16,
-              color: colors.text300,
-            ),
+            Icon(LucideIcons.chevronDown300, size: 16, color: colors.text300),
           ],
         ),
       ),

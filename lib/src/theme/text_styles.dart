@@ -17,6 +17,13 @@ class BitcrTextStyles {
     height: 1.25,
   );
 
+  TextStyle displaySmSemibold({Color? color}) => TextStyle(
+    fontSize: 32,
+    fontWeight: FontWeight.w600,
+    color: color ?? colors.text300,
+    height: 38 / 32,
+  );
+
   TextStyle displayXsMedium({Color? color}) => TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w500,

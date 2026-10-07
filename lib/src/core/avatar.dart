@@ -1,7 +1,10 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-enum AvatarSize { xs, sm, md, lg, xl }
+/// The avatar scale, 20 to 64. [chip] is the 24 an [IdentityChip] holds and
+/// [nav] the 44 that stands in for a navigation button, both off the scale
+/// because the design's are.
+enum AvatarSize { xs, sm, md, lg, xl, chip, nav }
 
 /// What the avatar stands for, which decides its shape and fallback: people
 /// and anonymous entities are round, companies get a squared-off rounded rect,
@@ -65,6 +68,8 @@ class Avatar extends StatelessWidget {
     AvatarSize.md => 40,
     AvatarSize.lg => 48,
     AvatarSize.xl => 64,
+    AvatarSize.chip => 24,
+    AvatarSize.nav => 44,
   };
 
   double get _fontSize => switch (size) {
@@ -73,6 +78,8 @@ class Avatar extends StatelessWidget {
     AvatarSize.md => 16,
     AvatarSize.lg => 20,
     AvatarSize.xl => 24,
+    AvatarSize.chip => 10,
+    AvatarSize.nav => 14,
   };
 
   BorderRadius get _borderRadius => switch (kind) {

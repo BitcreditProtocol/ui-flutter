@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show OverflowBoxFit;
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-/// A circular 40×40 back button, sized the same on every screen so it always
+/// A circular 44×44 back button, sized the same on every screen so it always
 /// sits in the same spot.
 ///
-/// It keeps its 40×40 even inside a slot that allots it less, by overflowing
+/// It keeps its 44×44 even inside a slot that allots it less, by overflowing
 /// that slot rather than shrinking into it.
 ///
 /// Navigation is the caller's: this only reports [onPressed], so the same
@@ -27,7 +27,7 @@ class NavigateBackButton extends StatelessWidget {
   final Color? borderColor;
   final Color? iconColor;
 
-  static const double _size = 40;
+  static const double _size = 44;
 
   @override
   Widget build(BuildContext context) {
