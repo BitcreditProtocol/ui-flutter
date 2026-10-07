@@ -1,6 +1,6 @@
 # bitcr_ui
 
-Shared Flutter UI for the Bitcredit apps — wallet, dashboard and (later) ebills.
+Shared Flutter UI for the Bitcredit apps — wallet, dashboard and (later) eBills.
 
 ```
 lib/, pubspec.yaml   the library: design tokens + components. This is what apps depend on.
@@ -22,7 +22,7 @@ lib/src/overlays/     drawers, sheets and overlay menus
 lib/src/patterns/     composed, Bitcredit-specific pieces (QR, recovery phrase, …)
 ```
 
-Two rules keep components reusable across the wallet, dashboard and ebills:
+Two rules keep components reusable across the wallet, dashboard and eBills:
 
 - **No app state.** Nothing in here reads a provider or a router — values come
   in as parameters, changes go out as callbacks. A component that needs to know
