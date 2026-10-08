@@ -1,5 +1,5 @@
 name: bitcr_ui
-description: "Shared Bitcredit UI components and design tokens, used by wallet, dashboard and ebills."
+description: "Shared Bitcredit UI components and design tokens, used by wallet, dashboard and eBills."
 version: 0.0.1
 publish_to: none
 
