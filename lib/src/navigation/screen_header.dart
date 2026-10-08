@@ -124,6 +124,7 @@ class LargeTitleLayout extends StatefulWidget {
   final Widget body;
 
   static const double horizontalPadding = 20;
+  static const double topSpacing = 8;
   static const double sectionSpacing = 10;
   static const double bodySpacing = 14;
   static const Duration duration = Duration(milliseconds: 250);
@@ -209,6 +210,7 @@ class _LargeTitleLayoutState extends State<LargeTitleLayout>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const SizedBox(height: LargeTitleLayout.topSpacing),
                   _section(
                     ScreenHeader(
                       title: widget.title,
