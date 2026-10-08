@@ -39,6 +39,9 @@ class IdentityOption<T> {
 /// An [IdentityChip] that drops a menu of the other identities to switch to,
 /// with an optional action row at the bottom.
 ///
+/// Set [compact] to trigger it from the bare avatar, at navigation-button
+/// size, instead of the chip — for a header with no room for a name.
+///
 /// The menu hangs from below the topbar, spans the page's width and closes on
 /// an outside tap. Selecting closes it and reports the choice — everything
 /// that happens next (showing a [SwitchingOverlay], reloading, navigating) is
@@ -56,6 +59,7 @@ class IdentitySwitcher<T> extends StatefulWidget {
     this.footerLabel,
     this.footerIcon,
     this.onFooterTap,
+    this.compact = false,
   });
 
   final String name;
@@ -68,6 +72,7 @@ class IdentitySwitcher<T> extends StatefulWidget {
   final String? footerLabel;
   final IconData? footerIcon;
   final VoidCallback? onFooterTap;
+  final bool compact;
 
   @override
   State<IdentitySwitcher<T>> createState() => _IdentitySwitcherState<T>();
@@ -107,20 +112,39 @@ class _IdentitySwitcherState<T> extends State<IdentitySwitcher<T>> {
     return OverlayPortal(
       controller: _controller,
       overlayChildBuilder: _buildOverlay,
-      child: IdentityChip(
-        name: widget.name,
-        imageUrl: widget.imageUrl,
-        avatarGradient: widget.avatarGradient,
-        showChevron: true,
-        open: _open,
-        onTap: _toggle,
-      ),
+      child: widget.compact
+          ? Semantics(
+              button: true,
+              expanded: _open,
+              label: widget.name,
+              child: GestureDetector(
+                onTap: _toggle,
+                behavior: HitTestBehavior.opaque,
+                child: Avatar(
+                  name: widget.name,
+                  imageUrl: widget.imageUrl,
+                  size: AvatarSize.nav,
+                  gradient: widget.avatarGradient,
+                ),
+              ),
+            )
+          : IdentityChip(
+              name: widget.name,
+              imageUrl: widget.imageUrl,
+              avatarGradient: widget.avatarGradient,
+              showChevron: true,
+              open: _open,
+              onTap: _toggle,
+            ),
     );
   }
 
   Widget _buildOverlay(BuildContext context) {
-    final topInset =
-        MediaQuery.paddingOf(context).top + _menuGap + IdentityChip.minHeight;
+    final chip = this.context.findRenderObject() as RenderBox?;
+    final chipBottom = chip != null && chip.hasSize
+        ? chip.localToGlobal(Offset(0, chip.size.height)).dy
+        : MediaQuery.paddingOf(context).top + IdentityChip.height;
+    final topInset = chipBottom + _menuGap;
 
     return Stack(
       children: [

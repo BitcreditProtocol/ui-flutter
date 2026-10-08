@@ -67,6 +67,8 @@ import 'package:bitcr_ui_widgetbook/use_cases/swipeable_views_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_swipeable_views_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/switching_overlay_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_switching_overlay_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/tab_switch_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_tab_switch_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/text_styles_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_text_styles_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/toast_use_cases.dart'
@@ -251,6 +253,16 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Sizes',
             builder:
                 _bitcr_ui_widgetbook_use_cases_button_use_cases.buttonSizes,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'FilterBadge',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Default',
+            builder: _bitcr_ui_widgetbook_use_cases_tab_switch_use_cases
+                .filterBadgeDefault,
           ),
         ],
       ),
@@ -536,6 +548,16 @@ final directories = <_widgetbook.WidgetbookNode>[
         ],
       ),
       _widgetbook.WidgetbookComponent(
+        name: 'LargeTitleLayout',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Large title layout',
+            builder: _bitcr_ui_widgetbook_use_cases_screen_header_use_cases
+                .largeTitleLayout,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
         name: 'NavigateBackButton',
         useCases: [
           _widgetbook.WidgetbookUseCase(
@@ -583,9 +605,9 @@ final directories = <_widgetbook.WidgetbookNode>[
                 .screenHeaderTitleOnly,
           ),
           _widgetbook.WidgetbookUseCase(
-            name: 'With trailing action',
+            name: 'With actions',
             builder: _bitcr_ui_widgetbook_use_cases_screen_header_use_cases
-                .screenHeaderWithTrailing,
+                .screenHeaderWithActions,
           ),
         ],
       ),
@@ -596,6 +618,16 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Three pages',
             builder: _bitcr_ui_widgetbook_use_cases_swipeable_views_use_cases
                 .swipeableViewsThreePages,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'TabSwitch',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Default',
+            builder: _bitcr_ui_widgetbook_use_cases_tab_switch_use_cases
+                .tabSwitchDefault,
           ),
         ],
       ),
@@ -613,14 +645,37 @@ final directories = <_widgetbook.WidgetbookNode>[
                 .topbarCustomMiddle,
           ),
           _widgetbook.WidgetbookUseCase(
+            name: 'Grouped actions',
+            builder: _bitcr_ui_widgetbook_use_cases_topbar_use_cases
+                .topbarGroupedActions,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Logo',
+            builder: _bitcr_ui_widgetbook_use_cases_topbar_use_cases.topbarLogo,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Multiple actions',
+            builder: _bitcr_ui_widgetbook_use_cases_topbar_use_cases
+                .topbarMultipleActions,
+          ),
+          _widgetbook.WidgetbookUseCase(
             name: 'Playground',
             builder: _bitcr_ui_widgetbook_use_cases_topbar_use_cases
                 .topbarPlayground,
           ),
           _widgetbook.WidgetbookUseCase(
-            name: 'Two trailing actions',
+            name: 'Search',
+            builder:
+                _bitcr_ui_widgetbook_use_cases_topbar_use_cases.topbarSearch,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Skip',
+            builder: _bitcr_ui_widgetbook_use_cases_topbar_use_cases.topbarSkip,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Wallet indicator',
             builder: _bitcr_ui_widgetbook_use_cases_topbar_use_cases
-                .topbarTwoTrailingActions,
+                .topbarWalletIndicator,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'With background',

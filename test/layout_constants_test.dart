@@ -38,7 +38,7 @@ void main() {
   });
 
   group('ScreenHeader.height', () {
-    testWidgets('holds with no trailing action', (tester) async {
+    testWidgets('holds with no action', (tester) async {
       await pump(
         tester,
         const SizedBox(width: 320, child: ScreenHeader(title: 'Settings')),
@@ -59,11 +59,13 @@ void main() {
           width: 320,
           child: ScreenHeader(
             title: 'Contacts',
-            trailing: TopbarActionButton(
-              icon: LucideIcons.userPlus300,
-              semanticLabel: 'New contact',
-              onPressed: () {},
-            ),
+            actions: [
+              TopbarActionButton(
+                icon: LucideIcons.userPlus300,
+                semanticLabel: 'New contact',
+                onPressed: () {},
+              ),
+            ],
           ),
         ),
       );

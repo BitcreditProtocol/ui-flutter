@@ -1,8 +1,8 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
+import 'package:bitcr_ui/src/theme/radii.dart';
+import 'package:bitcr_ui/src/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
-/// The design system's "Navigation button": a 40px circle holding a 24px icon.
-///
 /// Set [showChip] to false when the button sits inside a [TopbarActionGroup],
 /// which draws the surrounding chip once for the whole row.
 class TopbarActionButton extends StatelessWidget {
@@ -23,7 +23,7 @@ class TopbarActionButton extends StatelessWidget {
   final bool isLoading;
   final bool showChip;
 
-  static const double buttonSize = 40;
+  static const double buttonSize = 44;
   static const double iconSize = 24;
   static const double groupedWidth = 48;
 
@@ -75,6 +75,43 @@ class TopbarActionButton extends StatelessWidget {
     }
 
     return button;
+  }
+}
+
+class TopbarTextButton extends StatelessWidget {
+  const TopbarTextButton({super.key, required this.label, this.onPressed});
+
+  final String label;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = BitcrColors.of(context);
+
+    return MergeSemantics(
+      child: Semantics(
+        button: true,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onPressed,
+          child: Container(
+            height: TopbarActionButton.buttonSize,
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: colors.elevation200,
+              border: Border.all(color: colors.divider50),
+              borderRadius: BorderRadius.circular(BitcrRadius.xxl),
+            ),
+            child: Text(
+              label,
+              maxLines: 1,
+              style: context.bitcrText.textSmMedium(color: colors.text300),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

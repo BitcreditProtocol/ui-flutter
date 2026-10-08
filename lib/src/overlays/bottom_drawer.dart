@@ -69,7 +69,7 @@ class BottomDrawer extends StatelessWidget {
       padding: EdgeInsets.only(
         left: 20,
         right: 20,
-        top: 16,
+        top: 20,
         bottom: bottomPadding,
       ),
       child: Column(
