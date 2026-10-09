@@ -43,6 +43,56 @@ void main() {
     expect(refreshed, 1);
   });
 
+  // Android clamps and iOS bounces, and the pull has to work on both.
+  final platforms = TargetPlatformVariant({
+    TargetPlatform.android,
+    TargetPlatform.iOS,
+  });
+
+  testWidgets('a scroll view with short content still takes the pull', (
+    tester,
+  ) async {
+    var refreshed = 0;
+
+    await pump(
+      tester,
+      PullToRefresh(
+        onRefresh: () async => refreshed++,
+        child: const SingleChildScrollView(child: Text('short')),
+      ),
+    );
+
+    // Below the text: the scroll view must fill the screen, not shrink to
+    // its content, or a pull on the blank space misses it.
+    await tester.flingFrom(const Offset(400, 300), const Offset(0, 300), 1000);
+    await tester.pumpAndSettle();
+
+    expect(refreshed, 1);
+  }, variant: platforms);
+
+  testWidgets('an empty state that sizes itself to the viewport refreshes', (
+    tester,
+  ) async {
+    var refreshed = 0;
+
+    await pump(
+      tester,
+      PullToRefresh(
+        onRefresh: () async => refreshed++,
+        child: const EmptyState(
+          title: 'Nothing here',
+          subtitle: 'Yet',
+          illustration: SizedBox.shrink(),
+        ),
+      ),
+    );
+
+    await pullDown(tester);
+
+    expect(tester.takeException(), isNull);
+    expect(refreshed, 1);
+  }, variant: platforms);
+
   testWidgets('a short screen refreshes when childScrolls is false', (
     tester,
   ) async {
