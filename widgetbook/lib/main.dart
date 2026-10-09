@@ -1,4 +1,5 @@
 import 'package:bitcr_ui/bitcr_ui.dart';
+import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -36,6 +37,25 @@ List<WidgetbookNode> _collapseComponents(List<WidgetbookNode> nodes) => [
       node,
 ];
 
+/// Lets a mouse drag a scrollable, which Flutter does not allow by default:
+/// [ScrollBehavior.dragDevices] is touch-like devices only, and a wheel scroll
+/// is a pointer signal rather than a drag. On a desktop run that leaves no
+/// input that can overscroll, so gestures built on one — `PullToRefresh`
+/// above all — are untestable in the catalog.
+///
+/// Catalog-only on purpose. Shipping it in `BitcrTheme` would let a stray
+/// mouse drag scroll lists in the apps' own desktop builds, which is not the
+/// platform behaviour.
+class _MouseDragScrollBehavior extends MaterialScrollBehavior {
+  const _MouseDragScrollBehavior();
+
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    ...super.dragDevices,
+    PointerDeviceKind.mouse,
+  };
+}
+
 @widgetbook.App()
 class WidgetbookApp extends StatelessWidget {
   const WidgetbookApp({super.key});
@@ -43,6 +63,14 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
+      // Below the app's own ScrollConfiguration, so it wins for the use case.
+      appBuilder: (context, child) => materialAppBuilder(
+        context,
+        ScrollConfiguration(
+          behavior: const _MouseDragScrollBehavior(),
+          child: child,
+        ),
+      ),
       directories: _collapseComponents(directories),
       addons: [
         // Viewport has to come first: it wraps everything below it.
