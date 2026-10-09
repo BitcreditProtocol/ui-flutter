@@ -41,6 +41,8 @@ import 'package:bitcr_ui_widgetbook/use_cases/page_transitions_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_page_transitions_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/passcode_form_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_passcode_form_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/pull_to_refresh_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_pull_to_refresh_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/qr_code_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_qr_code_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/radii_use_cases.dart'
@@ -283,6 +285,26 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Playground',
             builder: _bitcr_ui_widgetbook_use_cases_filter_chip_button_use_cases
                 .filterChipButtonPlayground,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'PullToRefresh',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder: _bitcr_ui_widgetbook_use_cases_pull_to_refresh_use_cases
+                .pullToRefreshPlayground,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Scrolling screen',
+            builder: _bitcr_ui_widgetbook_use_cases_pull_to_refresh_use_cases
+                .pullToRefreshScrolling,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Short screen',
+            builder: _bitcr_ui_widgetbook_use_cases_pull_to_refresh_use_cases
+                .pullToRefreshShort,
           ),
         ],
       ),
