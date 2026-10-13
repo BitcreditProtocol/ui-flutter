@@ -513,6 +513,11 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'BottomNavigation',
         useCases: [
           _widgetbook.WidgetbookUseCase(
+            name: 'Colored tab',
+            builder: _bitcr_ui_widgetbook_use_cases_bottom_navigation_use_cases
+                .bottomNavigationColoredTab,
+          ),
+          _widgetbook.WidgetbookUseCase(
             name: 'Five tabs',
             builder: _bitcr_ui_widgetbook_use_cases_bottom_navigation_use_cases
                 .bottomNavigationFiveTabs,

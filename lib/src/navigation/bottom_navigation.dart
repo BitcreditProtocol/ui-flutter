@@ -4,16 +4,22 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/material.dart';
 
 /// One destination in a [BottomNavigation].
+///
+/// [color] paints the icon and label in that color whether or not the tab is
+/// active, for a destination that should stand out from the rest, such as a
+/// create action. Without it the tab follows the active/inactive text colors.
 class NavItem {
   const NavItem({
     required this.label,
     required this.icon,
     this.showBadge = false,
+    this.color,
   });
 
   final String label;
   final IconData icon;
   final bool showBadge;
+  final Color? color;
 }
 
 /// The app's bottom tab bar: evenly spaced icon-and-label destinations over a
@@ -64,6 +70,7 @@ class BottomNavigation extends StatelessWidget {
                   icon: item.icon,
                   isActive: index == currentIndex,
                   showBadge: item.showBadge,
+                  color: item.color,
                   onPressed: () => onTap(index),
                 ),
               ),
@@ -81,6 +88,7 @@ class _NavigationButton extends StatelessWidget {
     this.onPressed,
     this.isActive = false,
     this.showBadge = false,
+    this.color,
   });
 
   final String label;
@@ -88,11 +96,13 @@ class _NavigationButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isActive;
   final bool showBadge;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     final colors = BitcrColors.of(context);
-    final decorationColor = isActive ? colors.text300 : colors.text200;
+    final decorationColor =
+        color ?? (isActive ? colors.text300 : colors.text200);
 
     return GestureDetector(
       onTap: onPressed,

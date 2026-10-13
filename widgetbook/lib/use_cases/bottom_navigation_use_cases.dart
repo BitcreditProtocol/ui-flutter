@@ -75,6 +75,22 @@ Widget bottomNavigationNoActive(BuildContext context) => _atBottom(
   ),
 );
 
+/// A tab in its own color, whatever is active — eBill's create action.
+@widgetbook.UseCase(name: 'Colored tab', type: BottomNavigation)
+Widget bottomNavigationColoredTab(BuildContext context) => _NavHarness(
+  items: [
+    const NavItem(label: 'Home', icon: LucideIcons.house300),
+    const NavItem(label: 'Contacts', icon: LucideIcons.contactRound300),
+    NavItem(
+      label: 'New bill',
+      icon: LucideIcons.circlePlus300,
+      color: BitcrColors.of(context).brand200,
+    ),
+    const NavItem(label: 'Notifications', icon: LucideIcons.bell300),
+    const NavItem(label: 'Settings', icon: LucideIcons.settings300),
+  ],
+);
+
 /// Three tabs, to check the labels don't look stranded when the row is less
 /// crowded.
 @widgetbook.UseCase(name: 'Three tabs', type: BottomNavigation)
