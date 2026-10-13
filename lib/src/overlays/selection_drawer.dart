@@ -212,9 +212,9 @@ class SelectionRow extends StatelessWidget {
                     children: [
                       Text(
                         label,
-                        style: context.bitcrText
-                            .textMdMedium(color: colors.text300)
-                            .copyWith(letterSpacing: 0),
+                        style: context.bitcrText.textMdMedium(
+                          color: colors.text300,
+                        ),
                       ),
                       if (secondary != null)
                         Text(

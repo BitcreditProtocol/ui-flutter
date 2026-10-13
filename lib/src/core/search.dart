@@ -156,11 +156,9 @@ class _SearchState extends State<Search> {
 
   TextStyle _textStyle(BuildContext context, Color color) {
     final text = context.bitcrText;
-    final style = widget.size == SearchSize.xs
+    return widget.size == SearchSize.xs
         ? text.textXsMedium(color: color)
         : text.textSmMedium(color: color);
-
-    return style.copyWith(letterSpacing: 0);
   }
 
   Color _backgroundColor(BitcrColors colors) {
