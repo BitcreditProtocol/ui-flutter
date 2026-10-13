@@ -93,7 +93,7 @@ class Button extends StatelessWidget {
       ),
       overlayColor: WidgetStateProperty.all(Colors.transparent),
       textStyle: WidgetStateProperty.all(
-        context.bitcrText.textSmMedium(color: fg).copyWith(letterSpacing: 0),
+        context.bitcrText.textSmMedium(color: fg),
       ),
     );
 

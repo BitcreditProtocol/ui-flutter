@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 /// The type scale. Every style defaults its color to [BitcrColors.text300],
 /// so call sites only pass `color:` when they want a different token.
-///
-/// Read it off the context: `context.bitcrText.textLgMedium()`.
 class BitcrTextStyles {
   const BitcrTextStyles(this.colors);
 
@@ -14,6 +12,7 @@ class BitcrTextStyles {
     fontSize: 40,
     fontWeight: FontWeight.w400,
     color: color ?? colors.text300,
+    letterSpacing: 0,
     height: 1.25,
   );
 
@@ -21,6 +20,7 @@ class BitcrTextStyles {
     fontSize: 32,
     fontWeight: FontWeight.w600,
     color: color ?? colors.text300,
+    letterSpacing: 0,
     height: 38 / 32,
   );
 
@@ -28,6 +28,7 @@ class BitcrTextStyles {
     fontSize: 24,
     fontWeight: FontWeight.w500,
     color: color ?? colors.text300,
+    letterSpacing: 0,
     height: 32 / 24,
   );
 
@@ -35,6 +36,7 @@ class BitcrTextStyles {
     fontSize: 20,
     fontWeight: FontWeight.w500,
     color: color ?? colors.text300,
+    letterSpacing: 0,
     height: 30 / 20,
   );
 
@@ -42,6 +44,7 @@ class BitcrTextStyles {
     fontSize: 16,
     fontWeight: FontWeight.w500,
     color: color ?? colors.text300,
+    letterSpacing: 0,
     height: 24 / 16,
   );
 
@@ -49,6 +52,7 @@ class BitcrTextStyles {
     fontSize: 16,
     fontWeight: FontWeight.w400,
     color: color ?? colors.text300,
+    letterSpacing: 0,
     height: 24 / 16,
   );
 
@@ -56,6 +60,7 @@ class BitcrTextStyles {
     fontSize: 14,
     fontWeight: FontWeight.w500,
     color: color ?? colors.text300,
+    letterSpacing: 0,
     height: 20 / 14,
   );
 
@@ -63,6 +68,7 @@ class BitcrTextStyles {
     fontSize: 14,
     fontWeight: FontWeight.w400,
     color: color ?? colors.text300,
+    letterSpacing: 0,
     height: 20 / 14,
   );
 
@@ -70,6 +76,7 @@ class BitcrTextStyles {
     fontSize: 12,
     fontWeight: FontWeight.w500,
     color: color ?? colors.text300,
+    letterSpacing: 0,
     height: 18 / 12,
   );
 
@@ -77,6 +84,7 @@ class BitcrTextStyles {
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: color ?? colors.text300,
+    letterSpacing: 0,
     height: 18 / 12,
   );
 }

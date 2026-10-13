@@ -24,7 +24,36 @@ abstract final class BitcrTheme {
 
   static ThemeData get dark => of(BitcrColors.dark, Brightness.dark);
 
+  static const _noLetterSpacing = TextStyle(letterSpacing: 0);
+
+  static const _noLetterSpacingTextTheme = TextTheme(
+    displayLarge: _noLetterSpacing,
+    displayMedium: _noLetterSpacing,
+    displaySmall: _noLetterSpacing,
+    headlineLarge: _noLetterSpacing,
+    headlineMedium: _noLetterSpacing,
+    headlineSmall: _noLetterSpacing,
+    titleLarge: _noLetterSpacing,
+    titleMedium: _noLetterSpacing,
+    titleSmall: _noLetterSpacing,
+    bodyLarge: _noLetterSpacing,
+    bodyMedium: _noLetterSpacing,
+    bodySmall: _noLetterSpacing,
+    labelLarge: _noLetterSpacing,
+    labelMedium: _noLetterSpacing,
+    labelSmall: _noLetterSpacing,
+  );
+
+  static ThemeData withoutLetterSpacing(ThemeData theme) => theme.copyWith(
+    textTheme: theme.textTheme.merge(_noLetterSpacingTextTheme),
+    primaryTextTheme: theme.primaryTextTheme.merge(_noLetterSpacingTextTheme),
+  );
+
   static ThemeData of(BitcrColors colors, Brightness brightness) {
+    return withoutLetterSpacing(_base(colors, brightness));
+  }
+
+  static ThemeData _base(BitcrColors colors, Brightness brightness) {
     return ThemeData(
       brightness: brightness,
       fontFamily: fontFamily,

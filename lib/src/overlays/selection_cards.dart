@@ -96,9 +96,7 @@ class _SelectionCard extends StatelessWidget {
             Text(
               label,
               textAlign: TextAlign.left,
-              style: context.bitcrText
-                  .textSmRegular(color: colors.text300)
-                  .copyWith(letterSpacing: 0),
+              style: context.bitcrText.textSmRegular(color: colors.text300),
             ),
           ],
         ),
