@@ -2,6 +2,13 @@ library;
 
 export 'package:lucide_icons_flutter/lucide_icons.dart';
 
+export 'src/bill_pdf/amount_to_words.dart';
+export 'src/bill_pdf/bill_pdf_assets.dart';
+export 'src/bill_pdf/bill_pdf_data.dart';
+export 'src/bill_pdf/bill_pdf_endorsement.dart';
+export 'src/bill_pdf/bill_pdf_labels.dart';
+export 'src/bill_pdf/bill_pdf_layout.dart';
+export 'src/bill_pdf/create_bill_pdf.dart';
 export 'src/core/animated_trailing_icon.dart';
 export 'src/core/app_text_field.dart';
 export 'src/core/avatar.dart';
