@@ -14,6 +14,8 @@ dependencies:
   lucide_icons_flutter: ^3.1.7
   flutter_svg: ^2.0.17
   qr: ^3.0.2
+  pdf: ^3.13.1
+  vector_math: ^2.1.4
 
 dev_dependencies:
   flutter_test:
@@ -23,6 +25,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/icons/
+    - assets/bill_pdf/
     - assets/logo/
 
   fonts:
