@@ -6,11 +6,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 /// Owns the [TextEditingController] the field needs, so use cases don't create
 /// one per rebuild and leak it. Shared with the drawer use cases.
 class FieldHarness extends StatefulWidget {
-  const FieldHarness({
-    super.key,
-    this.initialText = '',
-    required this.builder,
-  });
+  const FieldHarness({super.key, this.initialText = '', required this.builder});
 
   final String initialText;
   final Widget Function(BuildContext context, TextEditingController controller)
@@ -136,7 +132,7 @@ Widget appTextFieldPaste(BuildContext context) => _field(
   build: (controller) => AppTextField(
     controller: controller,
     label: 'Recovery phrase',
-    icon: LucideIcons.keyRound300,
+    icon: LucideIcons300.keyRound,
     onPaste: () => controller.text = 'abandon ability able about above absent',
     pasteSemanticLabel: 'Paste',
     clearSemanticLabel: 'Clear',
@@ -204,7 +200,7 @@ Widget appTextFieldPlayground(BuildContext context) {
         initialValue: true,
       ),
       icon: context.knobs.boolean(label: 'Leading icon')
-          ? LucideIcons.user300
+          ? LucideIcons300.user
           : null,
       clearSemanticLabel: 'Clear',
     ),

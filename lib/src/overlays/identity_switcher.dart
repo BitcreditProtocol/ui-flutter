@@ -4,7 +4,7 @@ import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/radii.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons_300.dart';
 
 const List<BoxShadow> _menuShadows = [
   BoxShadow(
@@ -317,7 +317,7 @@ class _IdentityMenuRow extends StatelessWidget {
               ),
             ),
             if (selected)
-              Icon(LucideIcons.check300, size: 20, color: colors.text300),
+              Icon(LucideIcons300.check, size: 20, color: colors.text300),
           ],
         ),
       ),

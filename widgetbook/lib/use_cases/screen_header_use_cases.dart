@@ -14,7 +14,7 @@ Widget _page(Widget child) =>
 
 List<Widget> _actions() => [
   TopbarActionButton(
-    icon: LucideIcons.download300,
+    icon: LucideIcons300.download,
     semanticLabel: 'Export',
     onPressed: () {},
   ),

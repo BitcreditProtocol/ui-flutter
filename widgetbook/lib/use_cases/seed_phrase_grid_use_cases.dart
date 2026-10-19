@@ -18,10 +18,8 @@ const _phrase = [
   'accident',
 ];
 
-Widget _page(Widget child) => SingleChildScrollView(
-  padding: const EdgeInsets.all(24),
-  child: child,
-);
+Widget _page(Widget child) =>
+    SingleChildScrollView(padding: const EdgeInsets.all(24), child: child);
 
 @widgetbook.UseCase(name: 'Revealed', type: SeedPhraseGrid)
 Widget seedPhraseGridRevealed(BuildContext context) =>

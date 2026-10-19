@@ -6,17 +6,15 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 // All labels here stand in for the app's translations, and all values for the
 // preferences it has resolved.
 
-Widget _page(Widget child) => SingleChildScrollView(
-  padding: const EdgeInsets.all(20),
-  child: child,
-);
+Widget _page(Widget child) =>
+    SingleChildScrollView(padding: const EdgeInsets.all(20), child: child);
 
 /// A row with its current setting on the right — the shape the localisation
 /// screen uses for every entry.
 @widgetbook.UseCase(name: 'With a value', type: SettingsSectionItem)
 Widget settingsSectionItemWithValue(BuildContext context) => _page(
   SettingsSectionItem(
-    icon: LucideIcons.languages300,
+    icon: LucideIcons300.languages,
     label: 'Language',
     value: 'EN',
     onTap: () {},
@@ -25,11 +23,7 @@ Widget settingsSectionItemWithValue(BuildContext context) => _page(
 
 @widgetbook.UseCase(name: 'Label only', type: SettingsSectionItem)
 Widget settingsSectionItemLabelOnly(BuildContext context) => _page(
-  SettingsSectionItem(
-    icon: LucideIcons.info300,
-    label: 'About',
-    onTap: () {},
-  ),
+  SettingsSectionItem(icon: LucideIcons300.info, label: 'About', onTap: () {}),
 );
 
 /// The dot marks a setting that needs attention — an unbacked wallet, a PIN
@@ -37,7 +31,7 @@ Widget settingsSectionItemLabelOnly(BuildContext context) => _page(
 @widgetbook.UseCase(name: 'Needs attention', type: SettingsSectionItem)
 Widget settingsSectionItemWithDot(BuildContext context) => _page(
   SettingsSectionItem(
-    icon: LucideIcons.walletMinimal300,
+    icon: LucideIcons300.walletMinimal,
     label: 'Wallets',
     showDot: true,
     onTap: () {},
@@ -52,13 +46,13 @@ Widget settingsSectionItemStates(BuildContext context) => _page(
     spacing: 12,
     children: [
       const SettingsSectionItem(
-        icon: LucideIcons.shieldCheck300,
+        icon: LucideIcons300.shieldCheck,
         label: 'Security',
         value: 'Unavailable',
         enabled: false,
       ),
       SettingsSectionItem(
-        icon: LucideIcons.trash2300,
+        icon: LucideIcons300.trash2,
         label: 'Reset app',
         color: BitcrColors.of(context).signalError,
         showChevron: false,
@@ -71,7 +65,10 @@ Widget settingsSectionItemStates(BuildContext context) => _page(
 /// `leading` replaces the bordered icon tile, and `trailing` takes a real
 /// widget where [SettingsSectionItem.value] would only take text — here a
 /// switch and a spinner for a setting that's still loading.
-@widgetbook.UseCase(name: 'Custom leading and trailing', type: SettingsSectionItem)
+@widgetbook.UseCase(
+  name: 'Custom leading and trailing',
+  type: SettingsSectionItem,
+)
 Widget settingsSectionItemCustomSlots(BuildContext context) => _page(
   Column(
     spacing: 12,
@@ -83,13 +80,13 @@ Widget settingsSectionItemCustomSlots(BuildContext context) => _page(
         onTap: () {},
       ),
       SettingsSectionItem(
-        icon: LucideIcons.bell300,
+        icon: LucideIcons300.bell,
         label: 'Notifications',
         showChevron: false,
         trailing: SettingsSwitch(value: true, onChanged: (_) {}),
       ),
       SettingsSectionItem(
-        icon: LucideIcons.coins300,
+        icon: LucideIcons300.coins,
         label: 'Currency',
         trailing: const SizedBox(
           width: 16,
@@ -110,14 +107,14 @@ Widget settingsSectionCardGrouped(BuildContext context) => _page(
     children: [
       SettingsSectionItem(
         bordered: false,
-        icon: LucideIcons.earth300,
+        icon: LucideIcons300.earth,
         label: 'Localisation',
         onTap: () {},
       ),
       const SettingsSectionDivider(),
       SettingsSectionItem(
         bordered: false,
-        icon: LucideIcons.walletMinimal300,
+        icon: LucideIcons300.walletMinimal,
         label: 'Wallets',
         showDot: true,
         onTap: () {},
@@ -125,7 +122,7 @@ Widget settingsSectionCardGrouped(BuildContext context) => _page(
       const SettingsSectionDivider(),
       SettingsSectionItem(
         bordered: false,
-        icon: LucideIcons.shieldCheck300,
+        icon: LucideIcons300.shieldCheck,
         label: 'Security',
         onTap: () {},
       ),
@@ -141,7 +138,7 @@ Widget settingsSectionCardLocalisation(BuildContext context) => _page(
     children: [
       SettingsSectionItem(
         bordered: false,
-        icon: LucideIcons.languages300,
+        icon: LucideIcons300.languages,
         label: 'Language',
         value: 'EN',
         onTap: () {},
@@ -149,7 +146,7 @@ Widget settingsSectionCardLocalisation(BuildContext context) => _page(
       const SettingsSectionDivider(),
       SettingsSectionItem(
         bordered: false,
-        icon: LucideIcons.coins300,
+        icon: LucideIcons300.coins,
         label: 'Currency',
         value: 'EUR',
         onTap: () {},
@@ -157,7 +154,7 @@ Widget settingsSectionCardLocalisation(BuildContext context) => _page(
       const SettingsSectionDivider(),
       SettingsSectionItem(
         bordered: false,
-        icon: LucideIcons.calendarDays300,
+        icon: LucideIcons300.calendarDays,
         label: 'Date format',
         value: '10/09/2026',
         onTap: () {},
@@ -165,7 +162,7 @@ Widget settingsSectionCardLocalisation(BuildContext context) => _page(
       const SettingsSectionDivider(),
       SettingsSectionItem(
         bordered: false,
-        icon: LucideIcons.hash300,
+        icon: LucideIcons300.hash,
         label: 'Decimal separator',
         value: '1,000.00',
         onTap: () {},
@@ -184,14 +181,14 @@ Widget settingsSectionListFull(BuildContext context) => _page(
         children: [
           SettingsSectionItem(
             bordered: false,
-            icon: LucideIcons.earth300,
+            icon: LucideIcons300.earth,
             label: 'Localisation',
             onTap: () {},
           ),
           const SettingsSectionDivider(),
           SettingsSectionItem(
             bordered: false,
-            icon: LucideIcons.walletMinimal300,
+            icon: LucideIcons300.walletMinimal,
             label: 'Wallets',
             showDot: true,
             onTap: () {},
@@ -199,7 +196,7 @@ Widget settingsSectionListFull(BuildContext context) => _page(
           const SettingsSectionDivider(),
           SettingsSectionItem(
             bordered: false,
-            icon: LucideIcons.shieldCheck300,
+            icon: LucideIcons300.shieldCheck,
             label: 'Security',
             showDot: true,
             onTap: () {},
@@ -207,7 +204,7 @@ Widget settingsSectionListFull(BuildContext context) => _page(
         ],
       ),
       SettingsSectionItem(
-        icon: LucideIcons.info300,
+        icon: LucideIcons300.info,
         label: 'About',
         onTap: () {},
       ),
@@ -220,7 +217,7 @@ Widget settingsSectionItemPlayground(BuildContext context) {
   final grouped = context.knobs.boolean(label: 'Inside a card');
   final item = SettingsSectionItem(
     bordered: !grouped,
-    icon: LucideIcons.languages300,
+    icon: LucideIcons300.languages,
     label: context.knobs.string(label: 'Label', initialValue: 'Language'),
     value: context.knobs.stringOrNull(label: 'Value'),
     enabled: context.knobs.boolean(label: 'Enabled', initialValue: true),

@@ -284,11 +284,7 @@ class BitcrColors extends ThemeExtension<BitcrColors> {
       brandFill: Color.lerp(brandFill, other.brandFill, t)!,
       onBrandFill: Color.lerp(onBrandFill, other.onBrandFill, t)!,
       selectionFill: Color.lerp(selectionFill, other.selectionFill, t)!,
-      onSelectionFill: Color.lerp(
-        onSelectionFill,
-        other.onSelectionFill,
-        t,
-      )!,
+      onSelectionFill: Color.lerp(onSelectionFill, other.onSelectionFill, t)!,
       networkBadge: Color.lerp(networkBadge, other.networkBadge, t)!,
       signalError: Color.lerp(signalError, other.signalError, t)!,
       signalErrorAccent: Color.lerp(

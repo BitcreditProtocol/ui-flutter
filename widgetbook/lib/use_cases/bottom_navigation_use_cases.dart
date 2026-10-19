@@ -7,11 +7,11 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 // state it decided needs attention.
 
 const _walletTabs = [
-  NavItem(label: 'Home', icon: LucideIcons.house300),
-  NavItem(label: 'Contacts', icon: LucideIcons.contactRound300),
-  NavItem(label: 'Payments', icon: LucideIcons.arrowRightLeft300),
-  NavItem(label: 'Notifications', icon: LucideIcons.bell300),
-  NavItem(label: 'Settings', icon: LucideIcons.settings300),
+  NavItem(label: 'Home', icon: LucideIcons300.house),
+  NavItem(label: 'Contacts', icon: LucideIcons300.contactRound),
+  NavItem(label: 'Payments', icon: LucideIcons300.arrowRightLeft),
+  NavItem(label: 'Notifications', icon: LucideIcons300.bell),
+  NavItem(label: 'Settings', icon: LucideIcons300.settings),
 ];
 
 /// Pinned to the bottom, because that's the only place its safe-area handling
@@ -52,15 +52,11 @@ Widget bottomNavigationFiveTabs(BuildContext context) =>
 @widgetbook.UseCase(name: 'With badges', type: BottomNavigation)
 Widget bottomNavigationWithBadges(BuildContext context) => const _NavHarness(
   items: [
-    NavItem(label: 'Home', icon: LucideIcons.house300),
-    NavItem(label: 'Contacts', icon: LucideIcons.contactRound300),
-    NavItem(label: 'Payments', icon: LucideIcons.arrowRightLeft300),
-    NavItem(
-      label: 'Notifications',
-      icon: LucideIcons.bell300,
-      showBadge: true,
-    ),
-    NavItem(label: 'Settings', icon: LucideIcons.settings300, showBadge: true),
+    NavItem(label: 'Home', icon: LucideIcons300.house),
+    NavItem(label: 'Contacts', icon: LucideIcons300.contactRound),
+    NavItem(label: 'Payments', icon: LucideIcons300.arrowRightLeft),
+    NavItem(label: 'Notifications', icon: LucideIcons300.bell, showBadge: true),
+    NavItem(label: 'Settings', icon: LucideIcons300.settings, showBadge: true),
   ],
 );
 
@@ -68,26 +64,22 @@ Widget bottomNavigationWithBadges(BuildContext context) => const _NavHarness(
 /// show the bar this way.
 @widgetbook.UseCase(name: 'No active tab', type: BottomNavigation)
 Widget bottomNavigationNoActive(BuildContext context) => _atBottom(
-  BottomNavigation(
-    items: _walletTabs,
-    currentIndex: -1,
-    onTap: (_) {},
-  ),
+  BottomNavigation(items: _walletTabs, currentIndex: -1, onTap: (_) {}),
 );
 
 /// A tab in its own color, whatever is active — eBill's create action.
 @widgetbook.UseCase(name: 'Colored tab', type: BottomNavigation)
 Widget bottomNavigationColoredTab(BuildContext context) => _NavHarness(
   items: [
-    const NavItem(label: 'Home', icon: LucideIcons.house300),
-    const NavItem(label: 'Contacts', icon: LucideIcons.contactRound300),
+    const NavItem(label: 'Home', icon: LucideIcons300.house),
+    const NavItem(label: 'Contacts', icon: LucideIcons300.contactRound),
     NavItem(
       label: 'New bill',
-      icon: LucideIcons.circlePlus300,
+      icon: LucideIcons300.circlePlus,
       color: BitcrColors.of(context).brand200,
     ),
-    const NavItem(label: 'Notifications', icon: LucideIcons.bell300),
-    const NavItem(label: 'Settings', icon: LucideIcons.settings300),
+    const NavItem(label: 'Notifications', icon: LucideIcons300.bell),
+    const NavItem(label: 'Settings', icon: LucideIcons300.settings),
   ],
 );
 
@@ -96,9 +88,9 @@ Widget bottomNavigationColoredTab(BuildContext context) => _NavHarness(
 @widgetbook.UseCase(name: 'Three tabs', type: BottomNavigation)
 Widget bottomNavigationThreeTabs(BuildContext context) => const _NavHarness(
   items: [
-    NavItem(label: 'Balances', icon: LucideIcons.coins300),
-    NavItem(label: 'Quotes', icon: LucideIcons.arrowRightLeft300),
-    NavItem(label: 'Settings', icon: LucideIcons.settings300),
+    NavItem(label: 'Balances', icon: LucideIcons300.coins),
+    NavItem(label: 'Quotes', icon: LucideIcons300.arrowRightLeft),
+    NavItem(label: 'Settings', icon: LucideIcons300.settings),
   ],
 );
 
@@ -107,11 +99,11 @@ Widget bottomNavigationThreeTabs(BuildContext context) => const _NavHarness(
 @widgetbook.UseCase(name: 'Long labels', type: BottomNavigation)
 Widget bottomNavigationLongLabels(BuildContext context) => const _NavHarness(
   items: [
-    NavItem(label: 'Home', icon: LucideIcons.house300),
-    NavItem(label: 'Contacts', icon: LucideIcons.contactRound300),
-    NavItem(label: 'Zahlungsverkehr', icon: LucideIcons.arrowRightLeft300),
-    NavItem(label: 'Benachrichtigungen', icon: LucideIcons.bell300),
-    NavItem(label: 'Einstellungen', icon: LucideIcons.settings300),
+    NavItem(label: 'Home', icon: LucideIcons300.house),
+    NavItem(label: 'Contacts', icon: LucideIcons300.contactRound),
+    NavItem(label: 'Zahlungsverkehr', icon: LucideIcons300.arrowRightLeft),
+    NavItem(label: 'Benachrichtigungen', icon: LucideIcons300.bell),
+    NavItem(label: 'Einstellungen', icon: LucideIcons300.settings),
   ],
 );
 

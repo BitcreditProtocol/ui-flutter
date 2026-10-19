@@ -15,7 +15,10 @@ Widget _inTopbar(BuildContext context, Widget middle) => Padding(
   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
   child: Align(
     alignment: Alignment.topCenter,
-    child: Topbar(lead: NavigateBackButton(onPressed: () {}), middle: middle),
+    child: Topbar(
+      lead: NavigateBackButton(onPressed: () {}),
+      middle: middle,
+    ),
   ),
 );
 
@@ -56,7 +59,7 @@ class _SwitcherHarnessState extends State<_SwitcherHarness> {
       selected: _selected,
       loading: widget.loading,
       footerLabel: widget.withFooter ? 'Manage wallets' : null,
-      footerIcon: widget.withFooter ? LucideIcons.settings300 : null,
+      footerIcon: widget.withFooter ? LucideIcons300.settings : null,
       onFooterTap: widget.withFooter ? () {} : null,
       onSelect: (next) => setState(() => _selected = next),
     ),

@@ -18,10 +18,7 @@ Widget _row(BuildContext context, Widget child) => Padding(
 @widgetbook.UseCase(name: 'Node ID', type: TruncatedTextPopover)
 Widget truncatedNodeId(BuildContext context) => _row(
   context,
-  TruncatedTextPopover(
-    text: _nodeId,
-    style: context.bitcrText.textSmMedium(),
-  ),
+  TruncatedTextPopover(text: _nodeId, style: context.bitcrText.textSmMedium()),
 );
 
 /// Prose with an explicit `maxLength`: truncated at the end instead.
@@ -57,9 +54,9 @@ Widget truncatedWithCopy(BuildContext context) => _row(
     text: _nodeId,
     showCopyButton: true,
     copyLabel: 'Copy',
-    onCopied: () => ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Copied to clipboard')),
-    ),
+    onCopied: () =>
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Copied to clipboard'))),
     style: context.bitcrText.textSmMedium(),
   ),
 );

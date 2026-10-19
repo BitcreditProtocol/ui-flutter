@@ -28,7 +28,7 @@ Widget _layout({
   title: 'Payments',
   actions: [
     TopbarActionButton(
-      icon: LucideIcons.download300,
+      icon: LucideIcons300.download,
       semanticLabel: 'Export',
       onPressed: () {},
     ),

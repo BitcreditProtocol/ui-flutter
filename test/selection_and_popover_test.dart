@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Future<void> pump(WidgetTester tester, Widget child) => tester.pumpWidget(
-  MaterialApp(theme: BitcrTheme.light, home: Scaffold(body: child)),
+  MaterialApp(
+    theme: BitcrTheme.light,
+    home: Scaffold(body: child),
+  ),
 );
 
 List<SelectionOption<int>> optionsOf(int count) => <SelectionOption<int>>[
@@ -118,10 +121,8 @@ void main() {
               truncationMode: TruncationMode.middle,
             ),
           ],
-          builder: (context, controller, _) => TextButton(
-            onPressed: controller.open,
-            child: const Text('open'),
-          ),
+          builder: (context, controller, _) =>
+              TextButton(onPressed: controller.open, child: const Text('open')),
         ),
       );
 

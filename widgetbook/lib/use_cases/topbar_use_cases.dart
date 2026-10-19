@@ -22,7 +22,7 @@ Widget topbarWithTrailingAction(BuildContext context) => _page(
     lead: NavigateBackButton(onPressed: () {}),
     middle: Text('Payment details', style: context.bitcrText.textMdMedium()),
     trail: TopbarActionButton(
-      icon: LucideIcons.share300,
+      icon: LucideIcons300.share,
       semanticLabel: 'Share',
       onPressed: () {},
     ),
@@ -38,7 +38,7 @@ Widget topbarMultipleActions(BuildContext context) => _page(
     middle: Text('Payment', style: context.bitcrText.textMdMedium()),
     actions: [
       TopbarActionButton(
-        icon: LucideIcons.share300,
+        icon: LucideIcons300.share,
         semanticLabel: 'Share',
         onPressed: () {},
       ),
@@ -60,7 +60,7 @@ Widget topbarGroupedActions(BuildContext context) => _page(
     trail: TopbarActionGroup(
       children: [
         TopbarActionButton(
-          icon: LucideIcons.share300,
+          icon: LucideIcons300.share,
           showChip: false,
           semanticLabel: 'Share',
           onPressed: () {},
@@ -103,7 +103,7 @@ Widget topbarWalletIndicator(BuildContext context) => _page(
       onTap: () {},
     ),
     trail: TopbarActionButton(
-      icon: LucideIcons.share300,
+      icon: LucideIcons300.share,
       semanticLabel: 'Share',
       onPressed: () {},
     ),
@@ -149,7 +149,7 @@ Widget topbarCustomMiddle(BuildContext context) {
           children: [
             const Avatar(name: 'Wallet 3', size: AvatarSize.sm),
             Text('Wallet 3', style: context.bitcrText.textSmMedium()),
-            Icon(LucideIcons.chevronDown300, size: 16, color: colors.text300),
+            Icon(LucideIcons300.chevronDown, size: 16, color: colors.text300),
           ],
         ),
       ),

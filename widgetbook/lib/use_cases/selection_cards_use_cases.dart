@@ -8,11 +8,11 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 const _themes = [
   SelectionCardOption(
     value: 'system',
-    icon: LucideIcons.settings300,
+    icon: LucideIcons300.settings,
     label: 'System',
   ),
-  SelectionCardOption(value: 'light', icon: LucideIcons.sun300, label: 'Light'),
-  SelectionCardOption(value: 'dark', icon: LucideIcons.moon300, label: 'Dark'),
+  SelectionCardOption(value: 'light', icon: LucideIcons300.sun, label: 'Light'),
+  SelectionCardOption(value: 'dark', icon: LucideIcons300.moon, label: 'Dark'),
 ];
 
 /// The theme drawer, which is the reason this component exists: three cards

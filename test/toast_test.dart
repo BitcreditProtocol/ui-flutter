@@ -162,10 +162,7 @@ void main() {
 
       final toast = find.byType(Toast);
       expect(tester.getTopLeft(toast), const Offset(20, 44));
-      expect(
-        tester.getSize(toast).width,
-        tester.view.physicalSize.width - 40,
-      );
+      expect(tester.getSize(toast).width, tester.view.physicalSize.width - 40);
     });
   });
 

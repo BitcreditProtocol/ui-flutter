@@ -25,16 +25,13 @@ Widget qrCodeEnlargesToAnimated(BuildContext context) =>
 /// A long payload, which encodes to a denser grid — worth looking at because
 /// module rendering is where a QR stops being scannable.
 @widgetbook.UseCase(name: 'Dense payload', type: QrCode)
-Widget qrCodeDense(BuildContext context) =>
-    QrCode(data: _address * 8);
+Widget qrCodeDense(BuildContext context) => QrCode(data: _address * 8);
 
 /// On a caller-owned white surface: the modules switch to true black so the
 /// code stays scannable in dark mode too.
 @widgetbook.UseCase(name: 'On a light surface', type: QrCode)
-Widget qrCodeOnLightSurface(BuildContext context) => QrCode(
-  data: _address,
-  backgroundColor: BitcrColors.of(context).white,
-);
+Widget qrCodeOnLightSurface(BuildContext context) =>
+    QrCode(data: _address, backgroundColor: BitcrColors.of(context).white);
 
 @widgetbook.UseCase(name: 'Playground', type: QrCode)
 Widget qrCodePlayground(BuildContext context) {

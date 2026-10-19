@@ -38,9 +38,7 @@ class _DemoPage extends StatelessWidget {
                     ? 'Push a page to watch it slide in while this one zooms '
                           'out to $kPageScaleFactor×.'
                     : 'Swipe from the left edge to go back, or use the button.',
-                style: context.bitcrText.textSmRegular(
-                  color: colors.text200,
-                ),
+                style: context.bitcrText.textSmRegular(color: colors.text200),
               ),
               Button(
                 onPressed: () => Navigator.of(context).push(
@@ -68,9 +66,8 @@ class _DemoPage extends StatelessWidget {
 @widgetbook.UseCase(name: 'Push and pop', type: BitcrPageTransitionsBuilder)
 Widget pageTransitionsPushPop(BuildContext context) => ClipRect(
   child: Navigator(
-    onGenerateRoute: (_) => MaterialPageRoute<void>(
-      builder: (_) => const _DemoPage(depth: 0),
-    ),
+    onGenerateRoute: (_) =>
+        MaterialPageRoute<void>(builder: (_) => const _DemoPage(depth: 0)),
   ),
 );
 

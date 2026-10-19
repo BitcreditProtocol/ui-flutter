@@ -1,7 +1,7 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons_300.dart';
 
 enum RefreshButtonSize { xs, sm, md, lg }
 
@@ -16,7 +16,7 @@ class RefreshButton extends StatefulWidget {
     this.isLoading = false,
     this.disabled = false,
     this.size = RefreshButtonSize.md,
-    this.icon = LucideIcons.refreshCw300,
+    this.icon = LucideIcons300.refreshCw,
     this.iconSize,
     this.color,
     this.labelStyle,
@@ -53,7 +53,6 @@ class RefreshButton extends StatefulWidget {
 
 class _RefreshButtonState extends State<RefreshButton>
     with SingleTickerProviderStateMixin {
-
   late final AnimationController _spin = AnimationController(
     vsync: this,
     duration: widget.spinDuration,

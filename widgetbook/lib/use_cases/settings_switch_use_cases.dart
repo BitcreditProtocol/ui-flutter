@@ -21,9 +21,7 @@ class _SwitchHarnessState extends State<_SwitchHarness> {
   @override
   Widget build(BuildContext context) => SettingsSwitch(
     value: _value,
-    onChanged: widget.enabled
-        ? (next) => setState(() => _value = next)
-        : null,
+    onChanged: widget.enabled ? (next) => setState(() => _value = next) : null,
   );
 }
 
@@ -35,10 +33,7 @@ Widget settingsSwitchInteractive(BuildContext context) =>
 Widget settingsSwitchDisabled(BuildContext context) => Row(
   mainAxisSize: MainAxisSize.min,
   spacing: 16,
-  children: const [
-    SettingsSwitch(value: false),
-    SettingsSwitch(value: true),
-  ],
+  children: const [SettingsSwitch(value: false), SettingsSwitch(value: true)],
 );
 
 @widgetbook.UseCase(name: 'Playground', type: SettingsSwitch)

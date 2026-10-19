@@ -3,7 +3,7 @@ import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/radii.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons_300.dart';
 
 const double _kContentPadding = 12;
 const double _kIconBoxSize = 32;
@@ -116,21 +116,16 @@ class SettingsSectionItem extends StatelessWidget {
             if (showChevron) const SizedBox(width: 8),
           ],
           if (showChevron)
-            Icon(LucideIcons.chevronRight300, size: 24, color: baseColor),
+            Icon(LucideIcons300.chevronRight, size: 24, color: baseColor),
         ],
       ),
     );
 
     final tappable = Material(
       type: MaterialType.transparency,
-      borderRadius: bordered
-          ? BorderRadius.circular(BitcrRadius.md)
-          : null,
+      borderRadius: bordered ? BorderRadius.circular(BitcrRadius.md) : null,
       clipBehavior: bordered ? Clip.antiAlias : Clip.none,
-      child: InkWell(
-        onTap: enabled ? onTap : null,
-        child: content,
-      ),
+      child: InkWell(onTap: enabled ? onTap : null, child: content),
     );
 
     return bordered

@@ -44,7 +44,10 @@ class _PagerHarnessState extends State<_PagerHarness> {
             children: [
               for (final label in _PagerHarness._labels)
                 Center(
-                  child: Text(label, style: context.bitcrText.displayXsMedium()),
+                  child: Text(
+                    label,
+                    style: context.bitcrText.displayXsMedium(),
+                  ),
                 ),
             ],
           ),
