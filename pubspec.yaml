@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  lucide_icons_flutter: ^3.1.7
+  lucide_icons_flutter: ^4.0.0
   flutter_svg: ^2.0.17
   qr: ^3.0.2
   pdf: ^3.13.1
