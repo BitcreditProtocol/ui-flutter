@@ -60,10 +60,7 @@ class _FillPair extends StatelessWidget {
         border: Border.all(color: colors.divider300),
         borderRadius: BorderRadius.circular(BitcrRadius.sm),
       ),
-      child: Text(
-        name,
-        style: context.bitcrText.textSmMedium(color: onFill),
-      ),
+      child: Text(name, style: context.bitcrText.textSmMedium(color: onFill)),
     );
   }
 }

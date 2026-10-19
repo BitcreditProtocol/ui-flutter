@@ -14,10 +14,10 @@ void main() {
               currentIndex: currentIndex,
               onTap: (_) {},
               items: const [
-                NavItem(label: 'Home', icon: LucideIcons.house300),
+                NavItem(label: 'Home', icon: LucideIcons300.house),
                 NavItem(
                   label: 'New',
-                  icon: LucideIcons.circlePlus300,
+                  icon: LucideIcons300.circlePlus,
                   color: orange,
                 ),
               ],
@@ -35,14 +35,14 @@ void main() {
   testWidgets('a colored tab keeps its color while inactive', (tester) async {
     await pump(tester, currentIndex: 0);
 
-    expect(iconColor(tester, LucideIcons.circlePlus300), orange);
+    expect(iconColor(tester, LucideIcons300.circlePlus), orange);
     expect(labelColor(tester, 'New'), orange);
   });
 
   testWidgets('a colored tab keeps its color while active', (tester) async {
     await pump(tester, currentIndex: 1);
 
-    expect(iconColor(tester, LucideIcons.circlePlus300), orange);
+    expect(iconColor(tester, LucideIcons300.circlePlus), orange);
     expect(labelColor(tester, 'New'), orange);
   });
 
@@ -50,10 +50,10 @@ void main() {
     await pump(tester, currentIndex: 0);
     final colors = BitcrColors.light;
 
-    expect(iconColor(tester, LucideIcons.house300), colors.text300);
+    expect(iconColor(tester, LucideIcons300.house), colors.text300);
 
     await pump(tester, currentIndex: 1);
 
-    expect(iconColor(tester, LucideIcons.house300), colors.text200);
+    expect(iconColor(tester, LucideIcons300.house), colors.text200);
   });
 }

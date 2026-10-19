@@ -1,6 +1,12 @@
 library;
 
+// v4 splits the icon set by stroke weight, one library per weight, so that a
+// web debug build does not have to compile all 14 MB of them. Only the two
+// weights this library draws with are re-exported, for the same reason — an
+// app wanting another weight imports `lucide_icons_<weight>.dart` itself.
 export 'package:lucide_icons_flutter/lucide_icons.dart';
+export 'package:lucide_icons_flutter/lucide_icons_200.dart';
+export 'package:lucide_icons_flutter/lucide_icons_300.dart';
 
 export 'src/bill_pdf/amount_to_words.dart';
 export 'src/bill_pdf/bill_pdf_assets.dart';

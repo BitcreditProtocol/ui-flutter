@@ -54,7 +54,7 @@ Widget bottomDrawerWithTrail(BuildContext context) => _inSheet(
     title: 'Payment note',
     closeSemanticLabel: 'Close',
     trail: TopbarActionButton(
-      icon: LucideIcons.check300,
+      icon: LucideIcons300.check,
       semanticLabel: 'Save',
       onPressed: () {},
     ),

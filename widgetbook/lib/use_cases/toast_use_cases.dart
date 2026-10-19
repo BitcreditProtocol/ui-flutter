@@ -84,10 +84,8 @@ Widget toastInfo(BuildContext context) =>
 
 /// Success — green check.
 @widgetbook.UseCase(name: 'Success', type: Toast)
-Widget toastSuccess(BuildContext context) => const _ToastHarness(
-  message: 'Payment sent',
-  variant: ToastVariant.success,
-);
+Widget toastSuccess(BuildContext context) =>
+    const _ToastHarness(message: 'Payment sent', variant: ToastVariant.success);
 
 /// Warning — the amber triangle, for something the user should notice but
 /// which did not fail.
@@ -99,10 +97,8 @@ Widget toastWarning(BuildContext context) => const _ToastHarness(
 
 /// Error — red, and in the wallet the only variant the app also logs.
 @widgetbook.UseCase(name: 'Error', type: Toast)
-Widget toastError(BuildContext context) => const _ToastHarness(
-  message: 'Payment failed',
-  variant: ToastVariant.error,
-);
+Widget toastError(BuildContext context) =>
+    const _ToastHarness(message: 'Payment failed', variant: ToastVariant.error);
 
 /// The two-line form: a lighter description under the message.
 @widgetbook.UseCase(name: 'With description', type: Toast)
@@ -124,10 +120,8 @@ Widget toastCloseButton(BuildContext context) => const _ToastHarness(
 
 /// A trailing action. Tapping it dismisses the toast, then runs the callback.
 @widgetbook.UseCase(name: 'With action', type: Toast)
-Widget toastWithAction(BuildContext context) => const _ToastHarness(
-  message: 'Contact deleted',
-  withAction: true,
-);
+Widget toastWithAction(BuildContext context) =>
+    const _ToastHarness(message: 'Contact deleted', withAction: true);
 
 @widgetbook.UseCase(name: 'Playground', type: Toast)
 Widget toastPlayground(BuildContext context) => _ToastHarness(
@@ -142,12 +136,7 @@ Widget toastPlayground(BuildContext context) => _ToastHarness(
   showCloseButton: context.knobs.boolean(label: 'Close button'),
   duration: Duration(
     milliseconds: context.knobs.int
-        .slider(
-          label: 'Duration (ms)',
-          initialValue: 2000,
-          min: 500,
-          max: 8000,
-        )
+        .slider(label: 'Duration (ms)', initialValue: 2000, min: 500, max: 8000)
         .toInt(),
   ),
 );

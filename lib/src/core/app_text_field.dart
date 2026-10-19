@@ -3,7 +3,7 @@ import 'package:bitcr_ui/src/theme/radii.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons_200.dart';
 
 /// The standard text input: elevation surface, 8pt corners, focus and error
 /// borders, a floating label and an optional clear button.
@@ -166,7 +166,7 @@ class _AppTextFieldState extends State<AppTextField> {
     final trailingActions = <Widget>[
       if (editable && widget.showClearButton && hasValue)
         _IconButton(
-          icon: LucideIcons.x200,
+          icon: LucideIcons200.x,
           color: colors.text300,
           semanticsLabel: widget.clearSemanticLabel,
           onTap: () {
@@ -177,7 +177,7 @@ class _AppTextFieldState extends State<AppTextField> {
         ),
       if (editable && widget.onPaste != null && !hasValue)
         _IconButton(
-          icon: LucideIcons.clipboard200,
+          icon: LucideIcons200.clipboard,
           color: colors.text300,
           semanticsLabel: widget.pasteSemanticLabel,
           onTap: widget.onPaste!,

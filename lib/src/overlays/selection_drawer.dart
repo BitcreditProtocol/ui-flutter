@@ -4,7 +4,7 @@ import 'package:bitcr_ui/src/overlays/bottom_drawer.dart';
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons_200.dart';
 
 /// Above this many options on screen, [SelectionDrawer] builds its rows
 /// lazily instead of all at once.
@@ -228,11 +228,7 @@ class SelectionRow extends StatelessWidget {
                 ),
                 if (selected) ...[
                   const SizedBox(width: 16),
-                  Icon(
-                    LucideIcons.check200,
-                    size: 24,
-                    color: colors.text300,
-                  ),
+                  Icon(LucideIcons200.check, size: 24, color: colors.text300),
                 ],
               ],
             ),

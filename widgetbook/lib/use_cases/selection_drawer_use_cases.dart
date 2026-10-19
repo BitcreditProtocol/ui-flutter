@@ -23,10 +23,8 @@ class _SelectionHarnessState<T> extends State<SelectionHarness<T>> {
   late T _selected = widget.initial;
 
   @override
-  Widget build(BuildContext context) => widget.builder(
-    _selected,
-    (next) => setState(() => _selected = next),
-  );
+  Widget build(BuildContext context) =>
+      widget.builder(_selected, (next) => setState(() => _selected = next));
 }
 
 /// Renders the drawer body in place — the real thing is inside a modal sheet.
@@ -87,23 +85,24 @@ const _decimalFormats = [
   SelectionOption(value: 'space', label: 'Space', secondaryLabel: '1 000,00'),
 ];
 
-List<SelectionOption<String>> get _languages => const [
-  ('en', 'English', '🇬🇧'),
-  ('de', 'Deutsch', '🇩🇪'),
-  ('es', 'Español', '🇪🇸'),
-  ('it', 'Italiano', '🇮🇹'),
-  ('tr', 'Türkçe', '🇹🇷'),
-  ('pt', 'Português', '🇵🇹'),
-].map((entry) {
-  final (code, name, flag) = entry;
-  return SelectionOption(
-    value: code,
-    label: name,
-    secondaryLabel: code,
-    leading: Text(flag, style: const TextStyle(fontSize: 24)),
-    searchTerms: [code, name],
-  );
-}).toList();
+List<SelectionOption<String>> get _languages =>
+    const [
+      ('en', 'English', '🇬🇧'),
+      ('de', 'Deutsch', '🇩🇪'),
+      ('es', 'Español', '🇪🇸'),
+      ('it', 'Italiano', '🇮🇹'),
+      ('tr', 'Türkçe', '🇹🇷'),
+      ('pt', 'Português', '🇵🇹'),
+    ].map((entry) {
+      final (code, name, flag) = entry;
+      return SelectionOption(
+        value: code,
+        label: name,
+        secondaryLabel: code,
+        leading: Text(flag, style: const TextStyle(fontSize: 24)),
+        searchTerms: [code, name],
+      );
+    }).toList();
 
 /// The currency drawer's shape: one line per option plus its code.
 @widgetbook.UseCase(name: 'Currency', type: SelectionDrawer)
@@ -268,7 +267,7 @@ Widget selectionDrawerPlayground(BuildContext context) {
               label: 'Option ${i + 1}',
               secondaryLabel: withSecondary ? 'Secondary line ${i + 1}' : null,
               leading: withLeading
-                  ? const Icon(LucideIcons.coins300, size: 24)
+                  ? const Icon(LucideIcons300.coins, size: 24)
                   : null,
             ),
         ],

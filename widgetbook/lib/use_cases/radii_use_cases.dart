@@ -81,8 +81,16 @@ Widget radiiScale(BuildContext context) => SingleChildScrollView(
         radius: BitcrRadius.xl,
         usage: 'Bottom sheets and drawers',
       ),
-      _RadiusTile(name: 'xxl', radius: BitcrRadius.xxl, usage: 'Sheet top edge'),
-      _RadiusTile(name: 'xxxl', radius: BitcrRadius.xxxl, usage: 'Largest step'),
+      _RadiusTile(
+        name: 'xxl',
+        radius: BitcrRadius.xxl,
+        usage: 'Sheet top edge',
+      ),
+      _RadiusTile(
+        name: 'xxxl',
+        radius: BitcrRadius.xxxl,
+        usage: 'Largest step',
+      ),
     ],
   ),
 );
@@ -165,7 +173,11 @@ Widget radiiOffScale(BuildContext context) {
       runSpacing: 20,
       children: [
         box('circular(80) — IdentityChip pill', BorderRadius.circular(80), 40),
-        box('circular(10) — SettingsSwitch track', BorderRadius.circular(10), 20),
+        box(
+          'circular(10) — SettingsSwitch track',
+          BorderRadius.circular(10),
+          20,
+        ),
         box(
           'vertical(top: xxl) — sheet top only',
           const BorderRadius.vertical(top: Radius.circular(BitcrRadius.xxl)),

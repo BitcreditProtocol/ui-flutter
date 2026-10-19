@@ -26,7 +26,11 @@ void main() {
     for (final MapEntry(key: name, value: assetKey) in keys.entries) {
       test(name, () async {
         final data = await rootBundle.load(assetKey);
-        expect(data.lengthInBytes, greaterThan(0), reason: '$assetKey is empty');
+        expect(
+          data.lengthInBytes,
+          greaterThan(0),
+          reason: '$assetKey is empty',
+        );
       });
     }
   });

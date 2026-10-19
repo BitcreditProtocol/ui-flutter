@@ -9,8 +9,7 @@ Widget avatarSizes(BuildContext context) => Row(
   crossAxisAlignment: CrossAxisAlignment.center,
   spacing: 16,
   children: [
-    for (final size in AvatarSize.values)
-      Avatar(name: 'Wallet 1', size: size),
+    for (final size in AvatarSize.values) Avatar(name: 'Wallet 1', size: size),
   ],
 );
 

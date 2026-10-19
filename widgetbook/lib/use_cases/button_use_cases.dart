@@ -65,7 +65,7 @@ Widget buttonFullWidthPair(BuildContext context) {
               spacing: 8,
               children: [
                 const Text('Show QR'),
-                Icon(LucideIcons.nfc300, color: colors.textInactive, size: 20),
+                Icon(LucideIcons300.nfc, color: colors.textInactive, size: 20),
               ],
             ),
           ),
@@ -89,7 +89,5 @@ Widget buttonPlayground(BuildContext context) => Button(
   ),
   disabled: context.knobs.boolean(label: 'Disabled'),
   onPressed: () {},
-  child: Text(
-    context.knobs.string(label: 'Label', initialValue: 'Continue'),
-  ),
+  child: Text(context.knobs.string(label: 'Label', initialValue: 'Continue')),
 );

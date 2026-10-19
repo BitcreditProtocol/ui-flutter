@@ -5,15 +5,15 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(name: 'Default', type: TopbarActionButton)
 Widget topbarActionButtonDefault(BuildContext context) => TopbarActionButton(
-  icon: LucideIcons.share300,
+  icon: LucideIcons300.share,
   semanticLabel: 'Share details',
   onPressed: () {},
 );
 
 @widgetbook.UseCase(name: 'Loading', type: TopbarActionButton)
-Widget topbarActionButtonLoading(BuildContext context) => const
-    TopbarActionButton(
-      icon: LucideIcons.share300,
+Widget topbarActionButtonLoading(BuildContext context) =>
+    const TopbarActionButton(
+      icon: LucideIcons300.share,
       semanticLabel: 'Share details',
       isLoading: true,
     );
@@ -34,29 +34,28 @@ Widget topbarActionButtonBesideBack(BuildContext context) => Row(
 );
 
 @widgetbook.UseCase(name: 'Playground', type: TopbarActionButton)
-Widget topbarActionButtonPlayground(BuildContext context) =>
-    TopbarActionButton(
-      icon: context.knobs.object
-          .dropdown(
-            label: 'Icon',
-            options: const [
-              ('share', LucideIcons.share300),
-              ('ellipsis', LucideIcons.ellipsis),
-              ('x', LucideIcons.x),
-              ('search', LucideIcons.search),
-            ],
-            labelBuilder: (option) => option.$1,
-          )
-          .$2,
-      semanticLabel: context.knobs.string(
-        label: 'Semantic label',
-        initialValue: 'Share details',
-      ),
-      tooltip: context.knobs.stringOrNull(label: 'Tooltip'),
-      isLoading: context.knobs.boolean(label: 'Loading'),
-      showChip: context.knobs.boolean(label: 'Show chip', initialValue: true),
-      onPressed: () {},
-    );
+Widget topbarActionButtonPlayground(BuildContext context) => TopbarActionButton(
+  icon: context.knobs.object
+      .dropdown(
+        label: 'Icon',
+        options: const [
+          ('share', LucideIcons300.share),
+          ('ellipsis', LucideIcons.ellipsis),
+          ('x', LucideIcons.x),
+          ('search', LucideIcons.search),
+        ],
+        labelBuilder: (option) => option.$1,
+      )
+      .$2,
+  semanticLabel: context.knobs.string(
+    label: 'Semantic label',
+    initialValue: 'Share details',
+  ),
+  tooltip: context.knobs.stringOrNull(label: 'Tooltip'),
+  isLoading: context.knobs.boolean(label: 'Loading'),
+  showChip: context.knobs.boolean(label: 'Show chip', initialValue: true),
+  onPressed: () {},
+);
 
 /// The grouped form: the chip is drawn once around the whole row, so the
 /// buttons inside it turn theirs off.
@@ -64,7 +63,7 @@ Widget topbarActionButtonPlayground(BuildContext context) =>
 Widget topbarActionGroupTwo(BuildContext context) => TopbarActionGroup(
   children: [
     TopbarActionButton(
-      icon: LucideIcons.share300,
+      icon: LucideIcons300.share,
       showChip: false,
       semanticLabel: 'Share',
       onPressed: () {},

@@ -99,7 +99,7 @@ Widget refreshButtonVersusTopbar(BuildContext context) => const Center(
     spacing: 24,
     children: [
       RefreshButton(label: 'Refresh', isLoading: true),
-      TopbarActionButton(icon: LucideIcons.refreshCw300, isLoading: true),
+      TopbarActionButton(icon: LucideIcons300.refreshCw, isLoading: true),
     ],
   ),
 );

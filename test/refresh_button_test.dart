@@ -6,12 +6,13 @@ import 'package:bitcr_ui/bitcr_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> pumpButton(WidgetTester tester, Widget button) => tester.pumpWidget(
-  MaterialApp(
-    theme: BitcrTheme.light,
-    home: Scaffold(body: Center(child: button)),
-  ),
-);
+Future<void> pumpButton(WidgetTester tester, Widget button) =>
+    tester.pumpWidget(
+      MaterialApp(
+        theme: BitcrTheme.light,
+        home: Scaffold(body: Center(child: button)),
+      ),
+    );
 
 /// The button's own spinning icon — `MaterialApp` puts other
 /// [RotationTransition]s in the tree, so this has to be scoped.

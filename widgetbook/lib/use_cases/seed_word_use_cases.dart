@@ -5,9 +5,8 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 /// Sized like a real grid cell — the component stretches to its slot, so an
 /// unconstrained one tells you nothing about the layout.
-Widget _cell(Widget child) => Center(
-  child: SizedBox(width: 160, height: 46, child: child),
-);
+Widget _cell(Widget child) =>
+    Center(child: SizedBox(width: 160, height: 46, child: child));
 
 @widgetbook.UseCase(name: 'Revealed', type: SeedWord)
 Widget seedWordRevealed(BuildContext context) =>

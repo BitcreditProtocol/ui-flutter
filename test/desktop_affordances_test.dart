@@ -26,7 +26,7 @@ void main() {
       await pump(
         tester,
         SettingsSectionItem(
-          icon: LucideIcons.banknote300,
+          icon: LucideIcons300.banknote,
           label: 'Display currency',
           // A real currency name, and the case that broke this.
           value: 'Netherlands Antillean Guilder',
@@ -51,7 +51,7 @@ void main() {
       await pump(
         tester,
         SettingsSectionItem(
-          icon: LucideIcons.banknote300,
+          icon: LucideIcons300.banknote,
           label: 'Display currency',
           value: 'CHF',
           onTap: () {},
@@ -61,7 +61,7 @@ void main() {
       // Bounding the value must not have pulled it off the right-hand edge:
       // it belongs beside the chevron, not adrift in the middle of the row.
       final value = tester.getRect(find.text('CHF'));
-      final chevron = tester.getRect(find.byIcon(LucideIcons.chevronRight300));
+      final chevron = tester.getRect(find.byIcon(LucideIcons300.chevronRight));
       expect(chevron.left - value.right, lessThan(16));
     });
   });
@@ -72,7 +72,7 @@ void main() {
       await pump(
         tester,
         SettingsSectionItem(
-          icon: LucideIcons.banknote300,
+          icon: LucideIcons300.banknote,
           label: 'Display currency',
           onTap: () => taps++,
         ),
@@ -92,7 +92,7 @@ void main() {
       await pump(
         tester,
         SettingsSectionItem(
-          icon: LucideIcons.banknote300,
+          icon: LucideIcons300.banknote,
           label: 'Display currency',
           enabled: false,
           onTap: () => taps++,
@@ -112,7 +112,7 @@ void main() {
         SettingsSectionCard(
           children: <Widget>[
             SettingsSectionItem(
-              icon: LucideIcons.banknote300,
+              icon: LucideIcons300.banknote,
               label: 'Display currency',
               bordered: false,
               onTap: () {},

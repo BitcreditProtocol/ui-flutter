@@ -61,7 +61,7 @@ void main() {
             title: 'Contacts',
             actions: [
               TopbarActionButton(
-                icon: LucideIcons.userPlus300,
+                icon: LucideIcons300.userPlus,
                 semanticLabel: 'New contact',
                 onPressed: () {},
               ),

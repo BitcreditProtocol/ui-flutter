@@ -1,7 +1,7 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show OverflowBoxFit;
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons_300.dart';
 
 /// A circular 44×44 back button, sized the same on every screen so it always
 /// sits in the same spot.
@@ -68,7 +68,7 @@ class NavigateBackButton extends StatelessWidget {
               ),
               onPressed: onPressed,
               child: Icon(
-                LucideIcons.chevronLeft300,
+                LucideIcons300.chevronLeft,
                 size: 24,
                 color: resolvedIconColor,
               ),

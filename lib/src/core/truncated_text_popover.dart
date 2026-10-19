@@ -2,7 +2,7 @@ import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/radii.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons_200.dart';
 
 /// Utility: visual width
 bool _isWideCodePoint(int cp) =>
@@ -255,7 +255,8 @@ class _TruncatedTextPopoverState extends State<TruncatedTextPopover> {
   @override
   Widget build(BuildContext context) {
     final textDirection = Directionality.of(context);
-    final measuredStyle = DefaultTextStyle.of(context).style.merge(widget.style);
+    final measuredStyle = DefaultTextStyle.of(context).style
+        .merge(widget.style);
     final textScaler = MediaQuery.textScalerOf(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -271,8 +272,7 @@ class _TruncatedTextPopoverState extends State<TruncatedTextPopover> {
         textDirection: textDirection,
         textScaler: textScaler,
       )..layout(maxWidth: maxWidth);
-      final overflows =
-          tp.didExceedMaxLines || tp.width > maxWidth + 0.5;
+      final overflows = tp.didExceedMaxLines || tp.width > maxWidth + 0.5;
 
       if (_usesMaxLengthTruncation &&
           overflows &&
@@ -425,12 +425,12 @@ class _CopyButton extends StatelessWidget {
           ? Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(LucideIcons.copy200, size: 16),
+                const Icon(LucideIcons200.copy, size: 16),
                 const SizedBox(width: 4),
                 Text(label, style: const TextStyle(fontSize: 13)),
               ],
             )
-          : const Icon(LucideIcons.copy200),
+          : const Icon(LucideIcons200.copy),
       onPressed: () async {
         await Clipboard.setData(ClipboardData(text: value));
         onCopied?.call();

@@ -51,6 +51,5 @@ Widget switchingStatusContentInCard(BuildContext context) {
 }
 
 @widgetbook.UseCase(name: 'Default', type: SpinningLoader)
-Widget spinningLoaderDefault(BuildContext context) => const Center(
-  child: SpinningLoader(),
-);
+Widget spinningLoaderDefault(BuildContext context) =>
+    const Center(child: SpinningLoader());

@@ -60,7 +60,10 @@ class TopbarActionButton extends StatelessWidget {
                 ),
                 child: content,
               )
-            : SizedBox(width: groupedWidth, child: Center(child: content)),
+            : SizedBox(
+                width: groupedWidth,
+                child: Center(child: content),
+              ),
       ),
     );
 
