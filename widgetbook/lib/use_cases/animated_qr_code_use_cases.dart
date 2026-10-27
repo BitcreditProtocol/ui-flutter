@@ -32,9 +32,6 @@ Widget animatedQrCodePlayground(BuildContext context) {
     // One char short of the next chunk boundary, so the slider value is the
     // frame count.
     data: _payload(kBcqrChunkSize * chunks),
-    backgroundColor: context.knobs.boolean(label: 'Light surface')
-        ? BitcrColors.of(context).white
-        : null,
     enlargeOnTap: context.knobs.boolean(
       label: 'Enlarge on tap',
       initialValue: true,

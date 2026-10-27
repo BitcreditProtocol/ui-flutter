@@ -15,6 +15,11 @@ class QrMatrix {
   bool isDark(int row, int col) => _modules[row * moduleCount + col] != 0;
 }
 
+const Color kQrModuleColor = Color(0xFF000000);
+const Color kQrBackgroundColor = Color(0xFFFFFFFF);
+const int kQrQuietZoneModules = 4;
+const int kQrMediumEccMaxLength = 1000;
+
 /// Runs the QR Reed-Solomon encode for [data] and returns a transferable
 /// [QrMatrix], or null when [data] cannot be encoded at all.
 ///
@@ -29,13 +34,20 @@ class QrMatrix {
 /// picks the version. Callers run this through `compute`, where a throw
 /// becomes a rejected future that is easy to leave unhandled — and then the
 /// widget waiting on it waits for ever.
-QrMatrix? encodeQrMatrix(String data) {
+QrMatrix? encodeQrMatrix(String data) => _encode(
+  data,
+  data.length <= kQrMediumEccMaxLength
+      ? qr.QrErrorCorrectLevel.M
+      : qr.QrErrorCorrectLevel.L,
+);
+
+QrMatrix? _encode(String data, int errorCorrectLevel) {
   final qr.QrCode qrCode;
   final qr.QrImage qrImage;
   try {
     qrCode = qr.QrCode.fromData(
       data: data,
-      errorCorrectLevel: qr.QrErrorCorrectLevel.L,
+      errorCorrectLevel: errorCorrectLevel,
     );
     qrImage = qr.QrImage(qrCode);
   } on Object {
@@ -57,15 +69,12 @@ QrMatrix? encodeQrMatrix(String data) {
 /// Same as [encodeQrMatrix] but for a whole set of chunked frames in one
 /// `compute` call, so an animated QR only pays the isolate-spawn cost once.
 List<QrMatrix?> encodeQrMatrices(List<String> frames) =>
-    frames.map(encodeQrMatrix).toList();
+    frames.map((frame) => _encode(frame, qr.QrErrorCorrectLevel.L)).toList();
 
-/// Paints a [QrMatrix] as square modules, filling the shortest side of the
-/// canvas. Anti-aliasing is off so module edges stay hard and scannable.
 class QrMatrixPainter extends CustomPainter {
-  const QrMatrixPainter({required this.matrix, required this.color});
+  const QrMatrixPainter({required this.matrix});
 
   final QrMatrix matrix;
-  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -73,9 +82,15 @@ class QrMatrixPainter extends CustomPainter {
     if (moduleCount == 0) return;
 
     final side = size.shortestSide;
-    final moduleSize = side / moduleCount;
+    canvas.drawRect(
+      Rect.fromLTWH(0, 0, side, side),
+      Paint()..color = kQrBackgroundColor,
+    );
+
+    final moduleSize = side / (moduleCount + 2 * kQrQuietZoneModules);
+    final offset = kQrQuietZoneModules * moduleSize;
     final paint = Paint()
-      ..color = color
+      ..color = kQrModuleColor
       ..isAntiAlias = false;
     final path = Path();
 
@@ -85,8 +100,8 @@ class QrMatrixPainter extends CustomPainter {
 
         path.addRect(
           Rect.fromLTWH(
-            col * moduleSize,
-            row * moduleSize,
+            offset + col * moduleSize,
+            offset + row * moduleSize,
             moduleSize,
             moduleSize,
           ),
@@ -99,6 +114,6 @@ class QrMatrixPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant QrMatrixPainter oldDelegate) {
-    return matrix != oldDelegate.matrix || color != oldDelegate.color;
+    return matrix != oldDelegate.matrix;
   }
 }

@@ -1105,11 +1105,6 @@ final directories = <_widgetbook.WidgetbookNode>[
                 .qrCodeEnlargesToAnimated,
           ),
           _widgetbook.WidgetbookUseCase(
-            name: 'On a light surface',
-            builder: _bitcr_ui_widgetbook_use_cases_qr_code_use_cases
-                .qrCodeOnLightSurface,
-          ),
-          _widgetbook.WidgetbookUseCase(
             name: 'Playground',
             builder: _bitcr_ui_widgetbook_use_cases_qr_code_use_cases
                 .qrCodePlayground,

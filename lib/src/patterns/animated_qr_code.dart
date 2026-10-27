@@ -8,17 +8,9 @@ import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:flutter/foundation.dart' show compute;
 import 'package:flutter/material.dart';
 
-/// Initial time each chunk QR is shown before advancing to the next one.
 const Duration _kInitialFrameDuration = Duration(milliseconds: 200);
-
-/// Amount to slow the animation on each step after the initial pace.
 const Duration _kFrameDurationStep = Duration(milliseconds: 100);
-
-/// Maximum delay between frame changes once the animation slows down.
 const Duration _kMaxFrameDuration = Duration(milliseconds: 700);
-
-/// Gap between the code and its progress bar, and the bar's own height —
-/// reserved out of the available height so the square never overflows it.
 const double _kProgressGap = 12;
 const double _kProgressHeight = 6;
 
@@ -40,7 +32,6 @@ class AnimatedQrCode extends StatefulWidget {
     this.onTap,
     this.enlargeOnTap = true,
     this.fullscreenWrapper,
-    this.backgroundColor,
     this.errorBuilder,
   });
 
@@ -50,7 +41,6 @@ class AnimatedQrCode extends StatefulWidget {
   final VoidCallback? onTap;
   final bool enlargeOnTap;
   final QrFullscreenWrapper? fullscreenWrapper;
-  final Color? backgroundColor;
   final WidgetBuilder? errorBuilder;
 
   @override
@@ -159,10 +149,7 @@ class _AnimatedQrCodeState extends State<AnimatedQrCode> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = BitcrColors.of(context);
     final isAnimated = _frames.length > 1;
-    final bg = widget.backgroundColor ?? colors.elevation250;
-    final fg = widget.backgroundColor != null ? colors.black : colors.text300;
     final matrix = _frameMatrices?[_currentFrame];
 
     return GestureDetector(
@@ -187,7 +174,7 @@ class _AnimatedQrCodeState extends State<AnimatedQrCode> {
                 SizedBox.square(
                   dimension: side,
                   child: Container(
-                    decoration: BoxDecoration(color: bg),
+                    decoration: const BoxDecoration(color: kQrBackgroundColor),
                     padding: widget.contentPadding,
                     child: RepaintBoundary(
                       child: switch ((_encoding, matrix)) {
@@ -195,7 +182,7 @@ class _AnimatedQrCodeState extends State<AnimatedQrCode> {
                           child: CircularProgressIndicator(),
                         ),
                         (false, final matrix?) => CustomPaint(
-                          painter: QrMatrixPainter(matrix: matrix, color: fg),
+                          painter: QrMatrixPainter(matrix: matrix),
                         ),
                         (false, null) =>
                           widget.errorBuilder?.call(context) ??

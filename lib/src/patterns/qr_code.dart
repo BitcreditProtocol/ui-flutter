@@ -55,9 +55,6 @@ Future<void> showQrCodeFullscreen(
   );
 }
 
-/// The fullscreen QR itself: as large as the screen allows, on a white card so
-/// it scans regardless of theme.
-///
 /// Long payloads render as an [AnimatedQrCode]; see [kMaxStaticQrDataLength].
 class QrCodeFullscreenOverlay extends StatelessWidget {
   const QrCodeFullscreenOverlay({super.key, required this.data, this.wrapper});
@@ -67,8 +64,6 @@ class QrCodeFullscreenOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = BitcrColors.of(context);
-
     final Widget content = GestureDetector(
       onTap: () => Navigator.of(context).pop(),
       child: Scaffold(
@@ -77,18 +72,15 @@ class QrCodeFullscreenOverlay extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Container(
-              color: colors.white,
+              color: kQrBackgroundColor,
               padding: const EdgeInsets.all(16),
               child: data.length <= kMaxStaticQrDataLength
-                  ? ExactQrCode(data: data, color: colors.black)
-                  // Already fullscreen, so tapping this one dismisses rather
-                  // than opening a second overlay.
+                  ? ExactQrCode(data: data)
                   : AnimatedQrCode(
                       data: data,
                       enlargeOnTap: false,
                       padding: EdgeInsets.zero,
                       contentPadding: const EdgeInsets.all(8),
-                      backgroundColor: colors.white,
                     ),
             ),
           ),
@@ -101,7 +93,8 @@ class QrCodeFullscreenOverlay extends StatelessWidget {
 }
 
 /// A static QR code for [data], padded and boxed the way the receive and
-/// request screens show it.
+/// request screens show it: black on white in either theme, see
+/// [kQrModuleColor].
 ///
 /// The encode runs on a background isolate, so the widget shows a spinner for
 /// the first frame or two and re-encodes whenever [data] changes.
@@ -114,7 +107,6 @@ class QrCode extends StatefulWidget {
     this.onTap,
     this.enlargeOnTap = true,
     this.fullscreenWrapper,
-    this.backgroundColor,
     this.errorBuilder,
   });
 
@@ -125,8 +117,6 @@ class QrCode extends StatefulWidget {
   final VoidCallback? onTap;
   final bool enlargeOnTap;
   final QrFullscreenWrapper? fullscreenWrapper;
-
-  final Color? backgroundColor;
 
   @override
   State<QrCode> createState() => _QrCodeState();
@@ -176,9 +166,6 @@ class _QrCodeState extends State<QrCode> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = BitcrColors.of(context);
-    final bg = widget.backgroundColor ?? colors.elevation250;
-    final fg = widget.backgroundColor != null ? colors.black : colors.text300;
     final matrix = _matrix;
 
     return GestureDetector(
@@ -190,13 +177,13 @@ class _QrCodeState extends State<QrCode> {
         child: AspectRatio(
           aspectRatio: 1,
           child: Container(
-            decoration: BoxDecoration(color: bg),
+            decoration: const BoxDecoration(color: kQrBackgroundColor),
             padding: widget.contentPadding,
             child: RepaintBoundary(
               child: switch ((_encoding, matrix)) {
                 (true, _) => const Center(child: CircularProgressIndicator()),
                 (false, final matrix?) => CustomPaint(
-                  painter: QrMatrixPainter(matrix: matrix, color: fg),
+                  painter: QrMatrixPainter(matrix: matrix),
                 ),
                 (false, null) =>
                   widget.errorBuilder?.call(context) ??
@@ -210,19 +197,15 @@ class _QrCodeState extends State<QrCode> {
   }
 }
 
-/// [QrCode] without the padding, box or color logic: it fills the shortest
-/// side of whatever slot it's given, in exactly the [color] asked for.
 class ExactQrCode extends StatefulWidget {
   const ExactQrCode({
     super.key,
     required this.data,
-    required this.color,
     this.onTap,
     this.errorBuilder,
   });
 
   final String data;
-  final Color color;
   final VoidCallback? onTap;
   final WidgetBuilder? errorBuilder;
 
@@ -276,9 +259,7 @@ class _ExactQrCodeState extends State<ExactQrCode> {
             child: switch ((_encoding, matrix)) {
               (true, _) => const Center(child: CircularProgressIndicator()),
               (false, final matrix?) => RepaintBoundary(
-                child: CustomPaint(
-                  painter: QrMatrixPainter(matrix: matrix, color: widget.color),
-                ),
+                child: CustomPaint(painter: QrMatrixPainter(matrix: matrix)),
               ),
               (false, null) =>
                 widget.errorBuilder?.call(context) ?? const QrCodeUnavailable(),

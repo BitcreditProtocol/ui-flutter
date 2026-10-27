@@ -53,10 +53,7 @@ void main() {
     });
 
     testWidgets('ExactQrCode does too', (tester) async {
-      await pumpEncoded(
-        tester,
-        ExactQrCode(data: 'x' * 5000, color: Colors.black),
-      );
+      await pumpEncoded(tester, ExactQrCode(data: 'x' * 5000));
 
       expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.byType(QrCodeUnavailable), findsOneWidget);
