@@ -55,6 +55,8 @@ import 'package:bitcr_ui_widgetbook/use_cases/search_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_search_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/seed_phrase_grid_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_seed_phrase_grid_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/seed_phrase_input_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_seed_phrase_input_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/seed_word_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_seed_word_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/selection_cards_use_cases.dart'
@@ -1053,6 +1055,11 @@ final directories = <_widgetbook.WidgetbookNode>[
                 .passcodeFormEmpty,
           ),
           _widgetbook.WidgetbookUseCase(
+            name: 'One-time code',
+            builder: _bitcr_ui_widgetbook_use_cases_passcode_form_use_cases
+                .passcodeFormOneTimeCode,
+          ),
+          _widgetbook.WidgetbookUseCase(
             name: 'Partly filled',
             builder: _bitcr_ui_widgetbook_use_cases_passcode_form_use_cases
                 .passcodeFormPartlyFilled,
@@ -1131,6 +1138,21 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Revealed',
             builder: _bitcr_ui_widgetbook_use_cases_seed_phrase_grid_use_cases
                 .seedPhraseGridRevealed,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'SeedPhraseInput',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Empty',
+            builder: _bitcr_ui_widgetbook_use_cases_seed_phrase_input_use_cases
+                .seedPhraseInputEmpty,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Partly filled',
+            builder: _bitcr_ui_widgetbook_use_cases_seed_phrase_input_use_cases
+                .seedPhraseInputPartlyFilled,
           ),
         ],
       ),

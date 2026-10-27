@@ -46,7 +46,8 @@ class EmptyStateAnchor extends InheritedWidget {
 /// above it gains a search field or a row of filter badges, and what lines
 /// several lists up with each other despite their different headers. Without
 /// an anchor it falls back to centring in the space it is given, which is what
-/// you want inside a drawer or a card.
+/// you want inside a drawer or a card. With unbounded height, e.g. as an item
+/// of a scrolling list, it takes only the height of its content.
 ///
 /// [asset] is resolved against the host app's asset bundle, so the
 /// illustration stays app-owned; pass [assetPackage] to load one that ships
@@ -158,6 +159,8 @@ class EmptyState extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
+        if (!constraints.hasBoundedHeight) return Center(child: content);
+
         final topInset = bodyHeight == null
             ? null
             : (illustrationTop - (bodyHeight - constraints.maxHeight)).clamp(

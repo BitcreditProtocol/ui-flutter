@@ -101,11 +101,15 @@ class BottomDrawer extends StatelessWidget {
 /// Set [opensKeyboard] for drawers that auto-focus a field on open (see
 /// [imeSheetAnimationStyle]). Drawers without a keyboard keep the snappier
 /// material defaults.
+///
+/// [constraints] caps the sheet, e.g. a max width on desktop; by default it
+/// spans the full width.
 Future<T?> showBottomDrawer<T>(
   BuildContext context, {
   required WidgetBuilder builder,
   bool isScrollControlled = true,
   bool opensKeyboard = false,
+  BoxConstraints? constraints,
 }) {
   return showModalBottomSheet<T>(
     context: context,
@@ -119,7 +123,7 @@ Future<T?> showBottomDrawer<T>(
         top: Radius.circular(BitcrRadius.xxl),
       ),
     ),
-    constraints: const BoxConstraints(maxWidth: double.infinity),
+    constraints: constraints ?? const BoxConstraints(maxWidth: double.infinity),
     builder: (context) => _SheetInset(builder: builder),
   );
 }

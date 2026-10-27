@@ -1,9 +1,5 @@
 library;
 
-// v4 splits the icon set by stroke weight, one library per weight, so that a
-// web debug build does not have to compile all 14 MB of them. Only the two
-// weights this library draws with are re-exported, for the same reason — an
-// app wanting another weight imports `lucide_icons_<weight>.dart` itself.
 export 'package:lucide_icons_flutter/lucide_icons.dart';
 export 'package:lucide_icons_flutter/lucide_icons_200.dart';
 export 'package:lucide_icons_flutter/lucide_icons_300.dart';
@@ -50,6 +46,7 @@ export 'src/patterns/passcode_form.dart';
 export 'src/patterns/qr_code.dart';
 export 'src/patterns/qr_matrix.dart';
 export 'src/patterns/seed_phrase_grid.dart';
+export 'src/patterns/seed_phrase_input.dart';
 export 'src/patterns/seed_word.dart';
 export 'src/theme/colors.dart';
 export 'src/theme/fonts.dart';

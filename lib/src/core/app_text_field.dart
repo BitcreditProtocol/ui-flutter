@@ -12,6 +12,11 @@ import 'package:lucide_icons_flutter/lucide_icons_200.dart';
 /// full size, standing in for the hint. On focus — or as soon as there's a
 /// value — it shrinks and rises to its own line above the text. The field
 /// itself never moves; only the label animates.
+///
+/// [validator] makes it a form field: [Form.validate] runs it and its message
+/// shows as the error text. [textInputAction] defaults to
+/// [TextInputAction.next] on a single line and [TextInputAction.newline] on
+/// several.
 class AppTextField extends StatefulWidget {
   const AppTextField({
     super.key,
@@ -46,6 +51,8 @@ class AppTextField extends StatefulWidget {
     this.onEditingComplete,
     this.semanticsLabel,
     this.identifier,
+    this.validator,
+    this.autovalidateMode = AutovalidateMode.onUserInteraction,
   });
 
   final TextEditingController controller;
@@ -79,6 +86,8 @@ class AppTextField extends StatefulWidget {
   final VoidCallback? onEditingComplete;
   final String? semanticsLabel;
   final String? identifier;
+  final FormFieldValidator<String>? validator;
+  final AutovalidateMode autovalidateMode;
 
   static const double minHeight = 52;
 
@@ -102,6 +111,7 @@ class AppTextField extends StatefulWidget {
 
 class _AppTextFieldState extends State<AppTextField> {
   FocusNode? _ownedFocusNode;
+  final _formFieldKey = GlobalKey<FormFieldState<String>>();
 
   bool _isFocused = false;
 
@@ -146,15 +156,33 @@ class _AppTextFieldState extends State<AppTextField> {
   }
 
   void _onTextChanged() {
-    if (mounted) setState(() {});
+    if (!mounted) return;
+    if (widget.validator != null) {
+      _formFieldKey.currentState?.didChange(widget.controller.text);
+    }
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    final validator = widget.validator;
+    if (validator == null) return _buildField(context, null);
+
+    return FormField<String>(
+      key: _formFieldKey,
+      initialValue: widget.controller.text,
+      validator: (_) => validator(widget.controller.text),
+      autovalidateMode: widget.autovalidateMode,
+      builder: (field) => _buildField(context, field.errorText),
+    );
+  }
+
+  Widget _buildField(BuildContext context, String? validationError) {
     final colors = BitcrColors.of(context);
     final textStyles = context.bitcrText;
     final hasValue = widget.controller.text.isNotEmpty;
-    final isInvalid = widget.hasError || widget.errorText != null;
+    final errorText = widget.errorText ?? validationError;
+    final isInvalid = widget.hasError || errorText != null;
 
     final borderColor = isInvalid
         ? colors.signalError
@@ -185,7 +213,7 @@ class _AppTextFieldState extends State<AppTextField> {
       ?widget.trailing,
     ];
 
-    final subtext = widget.errorText ?? widget.helperText;
+    final subtext = errorText ?? widget.helperText;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -241,9 +269,7 @@ class _AppTextFieldState extends State<AppTextField> {
             child: Text(
               subtext,
               style: textStyles.textXsMedium(
-                color: widget.errorText != null
-                    ? colors.signalError
-                    : colors.text200,
+                color: errorText != null ? colors.signalError : colors.text200,
               ),
             ),
           ),
@@ -251,12 +277,6 @@ class _AppTextFieldState extends State<AppTextField> {
     );
   }
 
-  /// The field with its floating label stacked over it.
-  ///
-  /// The label's line is reserved above the field whether or not it's floating,
-  /// and the label is drawn in a [Stack] on top: floated it sits in that
-  /// reserved line, resting it drops onto the field's own first line. Only the
-  /// label moves, so nothing reflows.
   Widget _labelledField(
     BuildContext context, {
     required BitcrColors colors,
@@ -311,7 +331,11 @@ class _AppTextFieldState extends State<AppTextField> {
       autofocus: widget.autofocus,
       obscureText: widget.obscureText,
       keyboardType: widget.keyboardType,
-      textInputAction: widget.textInputAction,
+      textInputAction:
+          widget.textInputAction ??
+          (widget.maxLines == 1
+              ? TextInputAction.next
+              : TextInputAction.newline),
       textCapitalization: widget.textCapitalization,
       inputFormatters: widget.inputFormatters,
       maxLength: widget.maxLength,

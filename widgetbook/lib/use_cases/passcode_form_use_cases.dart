@@ -11,6 +11,7 @@ class _PasscodeHarness extends StatefulWidget {
     this.length = 4,
     this.autoFocus = false,
     this.clearWhenComplete = false,
+    this.obscure = true,
   });
 
   final String initial;
@@ -20,6 +21,7 @@ class _PasscodeHarness extends StatefulWidget {
   /// Mimics a rejected PIN: once full, the app wipes the value and the form
   /// resets for another attempt.
   final bool clearWhenComplete;
+  final bool obscure;
 
   @override
   State<_PasscodeHarness> createState() => _PasscodeHarnessState();
@@ -61,6 +63,10 @@ class _PasscodeHarnessState extends State<_PasscodeHarness> {
             value: _value,
             length: widget.length,
             autoFocus: widget.autoFocus,
+            obscure: widget.obscure,
+            autofillHints: widget.obscure
+                ? null
+                : const [AutofillHints.oneTimeCode],
             onChanged: _onChanged,
           ),
           Text(
@@ -96,6 +102,12 @@ Widget passcodeFormComplete(BuildContext context) =>
 Widget passcodeFormSixDigits(BuildContext context) =>
     const _PasscodeHarness(length: 6);
 
+/// A six-digit one-time code, as eBills' email verification uses it: the
+/// digits are shown, and the platform may autofill the whole code at once.
+@widgetbook.UseCase(name: 'One-time code', type: PasscodeForm)
+Widget passcodeFormOneTimeCode(BuildContext context) =>
+    const _PasscodeHarness(length: 6, initial: '482', obscure: false);
+
 /// What a wrong PIN looks like: the app clears the value on completion and the
 /// form resets, ready for the next attempt.
 @widgetbook.UseCase(name: 'Rejected attempt', type: PasscodeForm)
@@ -111,4 +123,5 @@ Widget passcodeFormPlayground(BuildContext context) => _PasscodeHarness(
   // focus from the knobs panel.
   autoFocus: context.knobs.boolean(label: 'Auto focus'),
   clearWhenComplete: context.knobs.boolean(label: 'Reject when complete'),
+  obscure: context.knobs.boolean(label: 'Obscure', initialValue: true),
 );

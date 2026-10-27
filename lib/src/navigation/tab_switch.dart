@@ -10,23 +10,32 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 /// [showChevron] marks a tab that opens something — a filter sheet, a menu —
 /// when tapped again while selected; it only shows on the selected tab.
 /// [semanticsIdentifier] is for UI tests to find the tab by.
+/// [badge] is a short suffix such as a count, [icon] a glyph after the label,
+/// and a tab that is not [enabled] is dimmed and ignores taps.
 class TabSwitchItem {
   const TabSwitchItem({
     required this.label,
     this.showChevron = false,
     this.semanticsIdentifier,
+    this.badge,
+    this.icon,
+    this.enabled = true,
   });
 
   final String label;
   final bool showChevron;
   final String? semanticsIdentifier;
+  final String? badge;
+  final IconData? icon;
+  final bool enabled;
 }
 
 /// A segmented control: equal-width tabs on a sunken track, the selected one
 /// raised on a pill that slides between them.
 ///
 /// [onTap] fires for every tab, the selected one included, so the caller
-/// decides what tapping the current tab does.
+/// decides what tapping the current tab does. A null [selectedIndex] selects
+/// nothing, for a choice the user has to make explicitly.
 class TabSwitch extends StatelessWidget {
   const TabSwitch({
     super.key,
@@ -36,7 +45,7 @@ class TabSwitch extends StatelessWidget {
   }) : assert(items.length > 1, 'A TabSwitch needs at least two tabs');
 
   final List<TabSwitchItem> items;
-  final int selectedIndex;
+  final int? selectedIndex;
   final ValueChanged<int> onTap;
 
   static const double height = 44;
@@ -48,6 +57,7 @@ class TabSwitch extends StatelessWidget {
     final radius = BorderRadius.circular(BitcrRadius.md);
     final border = Border.all(color: colors.divider50);
     final last = items.length - 1;
+    final selected = selectedIndex;
 
     return Container(
       height: height,
@@ -58,29 +68,30 @@ class TabSwitch extends StatelessWidget {
       foregroundDecoration: BoxDecoration(border: border, borderRadius: radius),
       child: Stack(
         children: [
-          AnimatedAlign(
-            duration: duration,
-            curve: Curves.easeInOut,
-            alignment: Alignment(-1 + 2 * selectedIndex / last, 0),
-            child: FractionallySizedBox(
-              widthFactor: 1 / items.length,
-              heightFactor: 1,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: colors.elevation50,
-                  borderRadius: radius,
-                  border: border,
+          if (selected != null)
+            AnimatedAlign(
+              duration: duration,
+              curve: Curves.easeInOut,
+              alignment: Alignment(-1 + 2 * selected / last, 0),
+              child: FractionallySizedBox(
+                widthFactor: 1 / items.length,
+                heightFactor: 1,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: colors.elevation50,
+                    borderRadius: radius,
+                    border: border,
+                  ),
                 ),
               ),
             ),
-          ),
           Row(
             children: [
               for (final (index, item) in items.indexed)
                 Expanded(
                   child: _Tab(
                     item: item,
-                    selected: index == selectedIndex,
+                    selected: index == selected,
                     onTap: () => onTap(index),
                   ),
                 ),
@@ -104,37 +115,56 @@ class _Tab extends StatelessWidget {
     final colors = BitcrColors.of(context);
     final color = selected ? colors.text300 : colors.text200;
 
+    final badge = item.badge;
+    final icon = item.icon;
+
     return Semantics(
       identifier: item.semanticsIdentifier,
       button: true,
       selected: selected,
+      enabled: item.enabled,
       child: GestureDetector(
-        onTap: onTap,
+        onTap: item.enabled ? onTap : null,
         behavior: HitTestBehavior.opaque,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: AnimatedDefaultTextStyle(
-                  duration: TabSwitch.duration,
-                  style: context.bitcrText.textSmMedium(color: color),
-                  child: Text(
-                    item.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+        child: Opacity(
+          opacity: item.enabled ? 1 : 0.5,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: AnimatedDefaultTextStyle(
+                    duration: TabSwitch.duration,
+                    style: context.bitcrText.textSmMedium(color: color),
+                    child: Text(
+                      item.label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
-              ),
-              AnimatedTrailingIcon(
-                icon: LucideIcons.chevronDown,
-                visible: selected && item.showChevron,
-                size: 12,
-                gap: 4,
-                color: color,
-              ),
-            ],
+                if (badge != null) ...[
+                  const SizedBox(width: 4),
+                  AnimatedDefaultTextStyle(
+                    duration: TabSwitch.duration,
+                    style: context.bitcrText.textXsMedium(color: color),
+                    child: Text(badge, maxLines: 1),
+                  ),
+                ],
+                if (icon != null) ...[
+                  const SizedBox(width: 4),
+                  Icon(icon, size: 16, color: colors.text100),
+                ],
+                AnimatedTrailingIcon(
+                  icon: LucideIcons.chevronDown,
+                  visible: selected && item.showChevron,
+                  size: 12,
+                  gap: 4,
+                  color: color,
+                ),
+              ],
+            ),
           ),
         ),
       ),

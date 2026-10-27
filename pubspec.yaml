@@ -49,3 +49,9 @@ flutter:
           weight: 800
         - asset: fonts/Geist-Black.ttf
           weight: 900
+    - family: GeistMono
+      fonts:
+        - asset: assets/bill_pdf/GeistMono-Regular.ttf
+          weight: 400
+        - asset: assets/bill_pdf/GeistMono-Medium.ttf
+          weight: 500

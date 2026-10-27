@@ -1,5 +1,6 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/radii.dart';
+import 'package:bitcr_ui/src/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,6 +9,9 @@ import 'package:flutter/services.dart';
 /// The parent owns the value. [onChanged] reports one digit at a time as a
 /// (index, character) pair — an empty string for a deletion — and the caller
 /// folds those into its own state and passes the result back as [value].
+///
+/// Set [obscure] to false for a one-time code, which shows its digits; pass
+/// [AutofillHints.oneTimeCode] in [autofillHints] to let the platform fill it.
 class PasscodeForm extends StatefulWidget {
   const PasscodeForm({
     super.key,
@@ -16,6 +20,9 @@ class PasscodeForm extends StatefulWidget {
     this.length = 4,
     this.autoFocus = false,
     this.identifier,
+    this.obscure = true,
+    this.autofillHints,
+    this.onSubmitted,
   });
 
   final void Function(int index, String value) onChanged;
@@ -24,6 +31,9 @@ class PasscodeForm extends StatefulWidget {
   final int length;
   final bool autoFocus;
   final String? identifier;
+  final bool obscure;
+  final Iterable<String>? autofillHints;
+  final ValueChanged<String>? onSubmitted;
 
   @override
   State<PasscodeForm> createState() => _PasscodeFormState();
@@ -140,11 +150,10 @@ class _PasscodeFormState extends State<PasscodeForm>
     final oldText = _previousText;
     _previousText = newText;
 
-    if (newText.length > oldText.length) {
-      final index = newText.length - 1;
+    for (var index = oldText.length; index < newText.length; index++) {
       widget.onChanged(index, newText[index]);
-    } else if (newText.length < oldText.length) {
-      final index = oldText.length - 1;
+    }
+    for (var index = oldText.length - 1; index >= newText.length; index--) {
       widget.onChanged(index, '');
     }
   }
@@ -163,9 +172,15 @@ class _PasscodeFormState extends State<PasscodeForm>
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 8,
                 children: List.generate(widget.length, (index) {
-                  return _PinDot(
-                    filled: index < value.text.length,
-                    active: index == value.text.length,
+                  final filled = index < value.text.length;
+                  return Flexible(
+                    child: _PinDot(
+                      filled: filled,
+                      active: index == value.text.length,
+                      digit: !widget.obscure && filled
+                          ? value.text[index]
+                          : null,
+                    ),
                   );
                 }),
               );
@@ -182,6 +197,11 @@ class _PasscodeFormState extends State<PasscodeForm>
                 showCursor: false,
                 style: const TextStyle(color: Colors.transparent, fontSize: 1),
                 keyboardType: TextInputType.number,
+                autofillHints: widget.autofillHints,
+                textInputAction: widget.onSubmitted == null
+                    ? null
+                    : TextInputAction.done,
+                onSubmitted: widget.onSubmitted,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                   LengthLimitingTextInputFormatter(widget.length),
@@ -208,10 +228,11 @@ class _PasscodeFormState extends State<PasscodeForm>
 }
 
 class _PinDot extends StatelessWidget {
-  const _PinDot({required this.filled, this.active = false});
+  const _PinDot({required this.filled, this.active = false, this.digit});
 
   final bool filled;
   final bool active;
+  final String? digit;
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +248,10 @@ class _PinDot extends StatelessWidget {
           color: active ? colors.divider300 : colors.divider50,
         ),
       ),
-      child: filled
+      alignment: Alignment.center,
+      child: digit != null
+          ? Text(digit!, style: context.bitcrText.displayXsMedium())
+          : filled
           ? Center(
               child: Container(
                 width: 12,

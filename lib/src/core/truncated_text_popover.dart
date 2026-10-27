@@ -57,7 +57,9 @@ String _truncateEnd(String value, int maxLength) {
   return '${chars.take(keep).join()}…'; // …
 }
 
-String _truncateMiddle(String value, int maxLength) {
+/// Shortens [value] to [maxLength] characters by replacing its middle with an
+/// ellipsis, keeping the head one character longer than the tail.
+String truncateMiddle(String value, int maxLength) {
   final chars = _graphemes(value);
   if (chars.length <= maxLength) return value;
   if (maxLength <= 1) return '…';
@@ -77,21 +79,19 @@ String _truncateWithSafeguard(String line, int maxLength, _TruncMode mode) {
   var effective = maxLength;
   var candidate = useEnd
       ? _truncateEnd(line, effective)
-      : _truncateMiddle(line, effective);
+      : truncateMiddle(line, effective);
 
   while (visualWidth(candidate) > maxLength && effective > 1) {
     effective -= 1;
     candidate = useEnd
         ? _truncateEnd(line, effective)
-        : _truncateMiddle(line, effective);
+        : truncateMiddle(line, effective);
   }
 
   return candidate;
 }
 
 enum _TruncMode { end, middle }
-
-/// Public API
 enum TruncationMode { auto, end, middle }
 
 /// A text widget that truncates long strings and reveals the full content in a

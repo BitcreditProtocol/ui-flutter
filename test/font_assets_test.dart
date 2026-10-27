@@ -39,4 +39,18 @@ void main() {
     expect(BitcrFonts.family, 'packages/bitcr_ui/Geist');
     expect(BitcrTheme.fontFamily, BitcrFonts.family);
   });
+
+  // GeistMono is declared as a family off the bill PDF's TTFs rather than a
+  // second copy, so the dashboard and eBills stop bundling their own. The
+  // name has the same package-namespace rule as Geist.
+  test('mono is namespaced and its files resolve', () async {
+    expect(BitcrFonts.mono, 'packages/bitcr_ui/GeistMono');
+    for (final key in [
+      BillPdfAssets.geistMonoRegular,
+      BillPdfAssets.geistMonoMedium,
+    ]) {
+      final data = await rootBundle.load(key);
+      expect(data.lengthInBytes, greaterThan(0), reason: '$key is empty');
+    }
+  });
 }
