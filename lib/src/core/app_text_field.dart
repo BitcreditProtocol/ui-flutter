@@ -219,46 +219,58 @@ class _AppTextFieldState extends State<AppTextField> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: AppTextField.minHeight),
-          child: Container(
-            padding: AppTextField._contentPadding,
-            decoration: BoxDecoration(
-              color: colors.elevation200,
-              borderRadius: BorderRadius.circular(BitcrRadius.md),
-              border: Border.all(color: borderColor),
-            ),
-            child: Semantics(
-              identifier: widget.identifier,
-              label: widget.semanticsLabel ?? widget.label,
-              textField: true,
-              child: Row(
-                children: [
-                  if (widget.icon != null) ...[
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: _focusNode.requestFocus,
-                      child: Icon(widget.icon, size: 20, color: colors.text300),
-                    ),
-                    const SizedBox(width: 8),
-                  ],
-                  Expanded(
-                    child: _labelledField(
-                      context,
-                      colors: colors,
-                      textStyles: textStyles,
-                      isFloating: _isFocused || hasValue,
-                    ),
+        TextFieldTapRegion(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: widget.enabled ? _focusNode.requestFocus : null,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                minHeight: AppTextField.minHeight,
+              ),
+              child: Container(
+                padding: AppTextField._contentPadding,
+                decoration: BoxDecoration(
+                  color: colors.elevation200,
+                  borderRadius: BorderRadius.circular(BitcrRadius.md),
+                  border: Border.all(color: borderColor),
+                ),
+                child: Semantics(
+                  identifier: widget.identifier,
+                  label: widget.semanticsLabel ?? widget.label,
+                  textField: true,
+                  child: Row(
+                    children: [
+                      if (widget.icon != null) ...[
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: _focusNode.requestFocus,
+                          child: Icon(
+                            widget.icon,
+                            size: 20,
+                            color: colors.text300,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                      ],
+                      Expanded(
+                        child: _labelledField(
+                          context,
+                          colors: colors,
+                          textStyles: textStyles,
+                          isFloating: _isFocused || hasValue,
+                        ),
+                      ),
+                      if (trailingActions.isNotEmpty) ...[
+                        const SizedBox(width: 8),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 8,
+                          children: trailingActions,
+                        ),
+                      ],
+                    ],
                   ),
-                  if (trailingActions.isNotEmpty) ...[
-                    const SizedBox(width: 8),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      spacing: 8,
-                      children: trailingActions,
-                    ),
-                  ],
-                ],
+                ),
               ),
             ),
           ),
