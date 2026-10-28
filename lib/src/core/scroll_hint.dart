@@ -34,8 +34,10 @@ class ScrollHint extends StatefulWidget {
 
 class _ScrollHintState extends State<ScrollHint> {
   ScrollPosition? _position;
+  BuildContext? _scrollable;
   var _hasMoreBelow = false;
   var _isScrolled = false;
+  var _viewport = EdgeInsets.zero;
 
   bool _onNotification(ScrollNotification notification) {
     _update(notification.depth, notification.metrics, notification.context);
@@ -52,21 +54,62 @@ class _ScrollHintState extends State<ScrollHint> {
   void _update(int depth, ScrollMetrics metrics, BuildContext? context) {
     if (depth != 0 || metrics.axis != Axis.vertical) return;
 
-    if (context != null) _position = Scrollable.maybeOf(context)?.position;
+    final scrollable = context == null ? null : Scrollable.maybeOf(context);
+
+    if (scrollable != null) {
+      _position = scrollable.position;
+      _scrollable = scrollable.context;
+    }
 
     final hasMoreBelow = metrics.extentAfter > 1;
     final isScrolled = metrics.extentBefore > 0;
 
-    if (hasMoreBelow == _hasMoreBelow && isScrolled == _isScrolled) return;
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+
+      final viewport = _measureViewport() ?? _viewport;
+
+      if (hasMoreBelow == _hasMoreBelow &&
+          isScrolled == _isScrolled &&
+          viewport == _viewport) {
+        return;
+      }
 
       setState(() {
         _hasMoreBelow = hasMoreBelow;
         _isScrolled = isScrolled;
+        _viewport = viewport;
       });
     });
+  }
+
+  EdgeInsets? _measureViewport() {
+    final scrollableContext = _scrollable;
+
+    if (scrollableContext == null || !scrollableContext.mounted) return null;
+
+    final hint = context.findRenderObject();
+    final scrollable = scrollableContext.findRenderObject();
+
+    if (hint is! RenderBox ||
+        scrollable is! RenderBox ||
+        !hint.hasSize ||
+        !scrollable.hasSize ||
+        !scrollable.attached) {
+      return null;
+    }
+
+    final rect =
+        scrollable.localToGlobal(Offset.zero, ancestor: hint) & scrollable.size;
+
+    double edge(double value) => value < 0.5 ? 0 : value.roundToDouble();
+
+    return EdgeInsets.fromLTRB(
+      edge(rect.left),
+      edge(rect.top),
+      edge(hint.size.width - rect.right),
+      edge(hint.size.height - rect.bottom),
+    );
   }
 
   void _scrollToBottom() {
@@ -85,7 +128,9 @@ class _ScrollHintState extends State<ScrollHint> {
   Widget build(BuildContext context) {
     final colors = BitcrColors.of(context);
     final background = widget.backgroundColor ?? colors.elevation50;
-    final band = widget.bottom + ScrollHint._arrowBand;
+    final viewport = _viewport;
+    final inset = viewport.bottom > 0 ? 0.0 : widget.bottom;
+    final band = inset + ScrollHint._arrowBand;
 
     Widget fade({required bool visible, required Widget child}) =>
         IgnorePointer(
@@ -107,9 +152,9 @@ class _ScrollHintState extends State<ScrollHint> {
         ),
         if (widget.showTopFade)
           Positioned(
-            left: 0,
-            right: 0,
-            top: 0,
+            left: viewport.left,
+            right: viewport.right,
+            top: viewport.top,
             height: ScrollHint.topFadeHeight,
             child: fade(
               visible: _isScrolled,
@@ -125,9 +170,9 @@ class _ScrollHintState extends State<ScrollHint> {
             ),
           ),
         Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
+          left: viewport.left,
+          right: viewport.right,
+          bottom: viewport.bottom,
           height: band + ScrollHint.fadeHeight,
           child: fade(
             visible: _hasMoreBelow,
@@ -152,9 +197,9 @@ class _ScrollHintState extends State<ScrollHint> {
           ),
         ),
         Positioned(
-          left: 0,
-          right: 0,
-          bottom: widget.bottom + 6,
+          left: viewport.left,
+          right: viewport.right,
+          bottom: viewport.bottom + inset + 6,
           child: Center(
             child: IgnorePointer(
               ignoring: !_hasMoreBelow,
