@@ -13,7 +13,11 @@ dependencies:
 
   lucide_icons_flutter: ^4.0.0
   flutter_svg: ^2.0.17
-  qr: ^3.0.2
+  # The QR encoder and the decoder that checks its output are pinned exactly:
+  # a code that scans to something other than what the screen meant to show
+  # sends money elsewhere, so a bump to either gets its source diff reviewed.
+  qr: 3.0.2
+  zxing2: 0.2.4
   pdf: ^3.13.1
   vector_math: ^2.1.4
 

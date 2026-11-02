@@ -7,9 +7,8 @@
 /// Frame format: `BCQR:<totalChunks>:<chunkIndex>:<payload>`
 library;
 
-/// Maximum characters per chunk payload. Kept conservative so each chunk's QR
-/// code stays small and quick to scan.
 const int kBcqrChunkSize = 500;
+const int kBcqrMaxChunks = 200;
 
 /// Splits [data] into chunked QR payloads with the BCQR protocol header.
 ///
@@ -72,9 +71,11 @@ BcqrChunk? parseBcqrChunk(String value) {
   final index = int.tryParse(value.substring(secondColon + 1, thirdColon));
 
   if (totalChunks == null || index == null) return null;
-  if (totalChunks <= 0 || index < 0 || index >= totalChunks) return null;
+  if (totalChunks <= 0 || totalChunks > kBcqrMaxChunks) return null;
+  if (index < 0 || index >= totalChunks) return null;
 
   final payload = value.substring(thirdColon + 1);
+  if (payload.length > kBcqrChunkSize) return null;
 
   return BcqrChunk(totalChunks: totalChunks, index: index, payload: payload);
 }
@@ -98,6 +99,11 @@ class BcqrAssembler {
   String? addChunk(BcqrChunk chunk) {
     // if we were collecting for a different total, start over
     if (_expectedTotal != null && _expectedTotal != chunk.totalChunks) {
+      reset();
+    }
+
+    final existing = _chunks[chunk.index];
+    if (existing != null && existing != chunk.payload) {
       reset();
     }
 
