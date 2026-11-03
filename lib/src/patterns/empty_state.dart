@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/radii.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
@@ -87,6 +89,7 @@ class EmptyState extends StatelessWidget {
   static const double defaultIllustrationTop = 209;
   static const double imageHeight = 72;
   static const double _subtitleWidth = 216;
+  static const double _bottomPadding = 24;
 
   @override
   Widget build(BuildContext context) {
@@ -169,9 +172,11 @@ class EmptyState extends StatelessWidget {
               );
 
         return SingleChildScrollView(
-          padding: const EdgeInsets.only(bottom: 24),
+          padding: const EdgeInsets.only(bottom: _bottomPadding),
           child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            constraints: BoxConstraints(
+              minHeight: math.max(0, constraints.maxHeight - _bottomPadding),
+            ),
             child: topInset == null
                 ? Center(child: content)
                 : Padding(
