@@ -40,6 +40,7 @@ class AppTextField extends StatefulWidget {
     this.autofocus = false,
     this.obscureText = false,
     this.keyboardType,
+    this.autofillHints,
     this.textInputAction,
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
@@ -75,6 +76,10 @@ class AppTextField extends StatefulWidget {
   final bool autofocus;
   final bool obscureText;
   final TextInputType? keyboardType;
+
+  /// What the platform may fill in or suggest, e.g. [AutofillHints.email]
+  /// makes the iOS keyboard offer the user's own address.
+  final Iterable<String>? autofillHints;
   final TextInputAction? textInputAction;
   final TextCapitalization textCapitalization;
   final List<TextInputFormatter>? inputFormatters;
@@ -343,6 +348,7 @@ class _AppTextFieldState extends State<AppTextField> {
       autofocus: widget.autofocus,
       obscureText: widget.obscureText,
       keyboardType: widget.keyboardType,
+      autofillHints: widget.autofillHints,
       textInputAction:
           widget.textInputAction ??
           (widget.maxLines == 1
