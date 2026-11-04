@@ -1,5 +1,6 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Shows that [child], a vertical scroll view, holds more than fits: the
@@ -38,20 +39,36 @@ class _ScrollHintState extends State<ScrollHint> {
   var _hasMoreBelow = false;
   var _isScrolled = false;
   var _viewport = EdgeInsets.zero;
+  var _animate = true;
 
   bool _onNotification(ScrollNotification notification) {
-    _update(notification.depth, notification.metrics, notification.context);
+    _update(
+      notification.depth,
+      notification.metrics,
+      notification.context,
+      animate: true,
+    );
 
     return false;
   }
 
   bool _onMetrics(ScrollMetricsNotification notification) {
-    _update(notification.depth, notification.metrics, notification.context);
+    _update(
+      notification.depth,
+      notification.metrics,
+      notification.context,
+      animate: false,
+    );
 
     return false;
   }
 
-  void _update(int depth, ScrollMetrics metrics, BuildContext? context) {
+  void _update(
+    int depth,
+    ScrollMetrics metrics,
+    BuildContext? context, {
+    required bool animate,
+  }) {
     if (depth != 0 || metrics.axis != Axis.vertical) return;
 
     final scrollable = context == null ? null : Scrollable.maybeOf(context);
@@ -64,7 +81,7 @@ class _ScrollHintState extends State<ScrollHint> {
     final hasMoreBelow = metrics.extentAfter > 1;
     final isScrolled = metrics.extentBefore > 0;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    void apply() {
       if (!mounted) return;
 
       final viewport = _measureViewport() ?? _viewport;
@@ -79,8 +96,19 @@ class _ScrollHintState extends State<ScrollHint> {
         _hasMoreBelow = hasMoreBelow;
         _isScrolled = isScrolled;
         _viewport = viewport;
+        _animate = animate;
       });
-    });
+    }
+
+    final phase = SchedulerBinding.instance.schedulerPhase;
+
+    if (!animate &&
+        (phase == SchedulerPhase.idle ||
+            phase == SchedulerPhase.postFrameCallbacks)) {
+      apply();
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) => apply());
+    }
   }
 
   EdgeInsets? _measureViewport() {
@@ -131,12 +159,13 @@ class _ScrollHintState extends State<ScrollHint> {
     final viewport = _viewport;
     final inset = viewport.bottom > 0 ? 0.0 : widget.bottom;
     final band = inset + ScrollHint._arrowBand;
+    final duration = _animate ? ScrollHint.duration : Duration.zero;
 
     Widget fade({required bool visible, required Widget child}) =>
         IgnorePointer(
           child: AnimatedOpacity(
             opacity: visible ? 1 : 0,
-            duration: ScrollHint.duration,
+            duration: duration,
             child: child,
           ),
         );
@@ -205,7 +234,7 @@ class _ScrollHintState extends State<ScrollHint> {
               ignoring: !_hasMoreBelow,
               child: AnimatedOpacity(
                 opacity: _hasMoreBelow ? 1 : 0,
-                duration: ScrollHint.duration,
+                duration: duration,
                 child: Semantics(
                   button: true,
                   label: widget.semanticLabel,

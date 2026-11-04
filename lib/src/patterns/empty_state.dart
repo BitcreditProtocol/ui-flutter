@@ -59,6 +59,10 @@ class EmptyStateAnchor extends InheritedWidget {
 /// app whose illustrations are SVG — or any other format this package should
 /// not need a decoder for — passes [illustration] and renders it itself. It is
 /// given the same [imageHeight] a bundled asset would get, so the two line up.
+///
+/// The subtitle wraps at [defaultSubtitleWidth]. Pass a wider [subtitleWidth],
+/// or [double.infinity] for the full width, where that column breaks a short
+/// sentence over too many lines.
 class EmptyState extends StatelessWidget {
   const EmptyState({
     super.key,
@@ -71,6 +75,7 @@ class EmptyState extends StatelessWidget {
     this.buttonIcon,
     this.onTap,
     this.illustrationTop = defaultIllustrationTop,
+    this.subtitleWidth = defaultSubtitleWidth,
   }) : assert(
          (asset == null) != (illustration == null),
          'Provide either asset or illustration, not both',
@@ -85,10 +90,11 @@ class EmptyState extends StatelessWidget {
   final IconData? buttonIcon;
   final VoidCallback? onTap;
   final double illustrationTop;
+  final double subtitleWidth;
 
   static const double defaultIllustrationTop = 209;
   static const double imageHeight = 72;
-  static const double _subtitleWidth = 216;
+  static const double defaultSubtitleWidth = 216;
   static const double _bottomPadding = 24;
 
   @override
@@ -118,7 +124,7 @@ class EmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           SizedBox(
-            width: _subtitleWidth,
+            width: subtitleWidth,
             child: Text(
               subtitle,
               textAlign: TextAlign.center,

@@ -1,5 +1,6 @@
 import 'package:bitcr_ui/bitcr_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Future<ScrollController> _pump(WidgetTester tester, {int lines = 60}) async {
@@ -38,6 +39,55 @@ double _arrowOpacity(WidgetTester tester) => tester
     .opacity;
 
 void main() {
+  testWidgets('content that shrinks to fit drops the hint at once', (
+    tester,
+  ) async {
+    final lines = ValueNotifier(60);
+    addTearDown(lines.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: BitcrTheme.light,
+        home: Scaffold(
+          body: ScrollHint(
+            child: SizedBox.expand(
+              child: SingleChildScrollView(
+                child: ValueListenableBuilder(
+                  valueListenable: lines,
+                  builder: (context, count, _) => Column(
+                    children: [for (var i = 0; i < count; i++) Text('line $i')],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    for (var i = 0; i < 3; i++) {
+      await tester.pump(ScrollHint.duration);
+    }
+
+    List<double> painted() => [
+      for (final opacity in tester.renderObjectList<RenderAnimatedOpacity>(
+        find.descendant(
+          of: find.byType(ScrollHint),
+          matching: find.byType(AnimatedOpacity),
+        ),
+      ))
+        opacity.opacity.value,
+    ];
+
+    expect(painted().skip(1), everyElement(1));
+
+    lines.value = 2;
+    await tester.pump(const Duration(milliseconds: 16));
+    await tester.pump(const Duration(milliseconds: 16));
+
+    // a fade-out over the shrunken page flashed the band and the arrow
+    expect(painted(), everyElement(0));
+  });
+
   testWidgets('the arrow shows while there is more below', (tester) async {
     await _pump(tester);
 
