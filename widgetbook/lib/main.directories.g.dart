@@ -75,6 +75,8 @@ import 'package:bitcr_ui_widgetbook/use_cases/settings_section_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_settings_section_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/settings_switch_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_settings_switch_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/signature_drawer_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_signature_drawer_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/skeleton_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_skeleton_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/swipeable_views_use_cases.dart'
@@ -537,6 +539,16 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Playground',
             builder: _bitcr_ui_widgetbook_use_cases_skeleton_use_cases
                 .skeletonPlayground,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'Spinner',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Default',
+            builder: _bitcr_ui_widgetbook_use_cases_signature_drawer_use_cases
+                .spinnerDefault,
           ),
         ],
       ),
@@ -1005,6 +1017,36 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Selected and unselected',
             builder: _bitcr_ui_widgetbook_use_cases_selection_drawer_use_cases
                 .selectionRowStates,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'SignatureDrawer',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Anonymous',
+            builder: _bitcr_ui_widgetbook_use_cases_signature_drawer_use_cases
+                .signatureDrawerAnonymous,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'On behalf of a company',
+            builder: _bitcr_ui_widgetbook_use_cases_signature_drawer_use_cases
+                .signatureDrawerCompany,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Open as a modal sheet',
+            builder: _bitcr_ui_widgetbook_use_cases_signature_drawer_use_cases
+                .signatureDrawerModal,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Personal',
+            builder: _bitcr_ui_widgetbook_use_cases_signature_drawer_use_cases
+                .signatureDrawerPersonal,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder: _bitcr_ui_widgetbook_use_cases_signature_drawer_use_cases
+                .signatureDrawerPlayground,
           ),
         ],
       ),
