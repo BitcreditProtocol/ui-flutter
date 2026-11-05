@@ -29,6 +29,10 @@ import 'package:bitcr_ui_widgetbook/use_cases/button_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_button_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/colors_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_colors_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/country_selector_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_country_selector_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/currency_selector_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_currency_selector_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/dropdown_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_dropdown_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/empty_state_use_cases.dart'
@@ -263,6 +267,31 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Sizes',
             builder:
                 _bitcr_ui_widgetbook_use_cases_button_use_cases.buttonSizes,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'CountrySelector',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Empty',
+            builder: _bitcr_ui_widgetbook_use_cases_country_selector_use_cases
+                .countrySelectorEmpty,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Near the bottom',
+            builder: _bitcr_ui_widgetbook_use_cases_country_selector_use_cases
+                .countrySelectorNearBottom,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder: _bitcr_ui_widgetbook_use_cases_country_selector_use_cases
+                .countrySelectorPlayground,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Selected',
+            builder: _bitcr_ui_widgetbook_use_cases_country_selector_use_cases
+                .countrySelectorSelected,
           ),
         ],
       ),
@@ -835,6 +864,21 @@ final directories = <_widgetbook.WidgetbookNode>[
         ],
       ),
       _widgetbook.WidgetbookComponent(
+        name: 'CurrencySelector',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Default',
+            builder: _bitcr_ui_widgetbook_use_cases_currency_selector_use_cases
+                .currencySelectorDefault,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Open as a modal sheet',
+            builder: _bitcr_ui_widgetbook_use_cases_currency_selector_use_cases
+                .currencySelectorModal,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
         name: 'Dropdown',
         useCases: [
           _widgetbook.WidgetbookUseCase(
@@ -1069,6 +1113,21 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Single frame',
             builder: _bitcr_ui_widgetbook_use_cases_animated_qr_code_use_cases
                 .animatedQrCodeSingleFrame,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'CurrencyBadge',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Badges',
+            builder: _bitcr_ui_widgetbook_use_cases_currency_selector_use_cases
+                .currencyBadges,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder: _bitcr_ui_widgetbook_use_cases_currency_selector_use_cases
+                .currencyBadgePlayground,
           ),
         ],
       ),
