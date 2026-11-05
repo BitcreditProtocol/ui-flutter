@@ -29,6 +29,8 @@ import 'package:bitcr_ui_widgetbook/use_cases/button_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_button_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/colors_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_colors_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/dropdown_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_dropdown_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/empty_state_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_empty_state_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/filter_chip_button_use_cases.dart'
@@ -63,10 +65,14 @@ import 'package:bitcr_ui_widgetbook/use_cases/selection_cards_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_selection_cards_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/selection_drawer_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_selection_drawer_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/separator_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_separator_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/settings_section_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_settings_section_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/settings_switch_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_settings_switch_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/skeleton_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_skeleton_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/swipeable_views_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_swipeable_views_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/switching_overlay_use_cases.dart'
@@ -386,6 +392,26 @@ final directories = <_widgetbook.WidgetbookNode>[
         ],
       ),
       _widgetbook.WidgetbookComponent(
+        name: 'Separator',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Between rows',
+            builder: _bitcr_ui_widgetbook_use_cases_separator_use_cases
+                .separatorBetweenRows,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Default',
+            builder: _bitcr_ui_widgetbook_use_cases_separator_use_cases
+                .separatorDefault,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder: _bitcr_ui_widgetbook_use_cases_separator_use_cases
+                .separatorPlayground,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
         name: 'SettingsSectionCard',
         useCases: [
           _widgetbook.WidgetbookUseCase(
@@ -462,6 +488,26 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Playground',
             builder: _bitcr_ui_widgetbook_use_cases_settings_switch_use_cases
                 .settingsSwitchPlayground,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'Skeleton',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Default',
+            builder: _bitcr_ui_widgetbook_use_cases_skeleton_use_cases
+                .skeletonDefault,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'List row',
+            builder: _bitcr_ui_widgetbook_use_cases_skeleton_use_cases
+                .skeletonListRow,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder: _bitcr_ui_widgetbook_use_cases_skeleton_use_cases
+                .skeletonPlayground,
           ),
         ],
       ),
@@ -785,6 +831,31 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'With trailing action',
             builder: _bitcr_ui_widgetbook_use_cases_bottom_drawer_use_cases
                 .bottomDrawerWithTrail,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'Dropdown',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Actions',
+            builder: _bitcr_ui_widgetbook_use_cases_dropdown_use_cases
+                .dropdownActions,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Disabled item',
+            builder: _bitcr_ui_widgetbook_use_cases_dropdown_use_cases
+                .dropdownDisabledItem,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder: _bitcr_ui_widgetbook_use_cases_dropdown_use_cases
+                .dropdownPlayground,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Wide with footer',
+            builder: _bitcr_ui_widgetbook_use_cases_dropdown_use_cases
+                .dropdownWideWithFooter,
           ),
         ],
       ),
