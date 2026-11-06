@@ -3,6 +3,7 @@ abstract final class BitcrFonts {
 
   static const String family = '$_package/Geist';
   static const String mono = '$_package/GeistMono';
+  static const String handwriting = '$_package/DeliciousHandrawn';
   static const String thin = '$_package/fonts/Geist-Thin.ttf';
   static const String extraLight = '$_package/fonts/Geist-ExtraLight.ttf';
   static const String light = '$_package/fonts/Geist-Light.ttf';
@@ -12,4 +13,6 @@ abstract final class BitcrFonts {
   static const String bold = '$_package/fonts/Geist-Bold.ttf';
   static const String extraBold = '$_package/fonts/Geist-ExtraBold.ttf';
   static const String black = '$_package/fonts/Geist-Black.ttf';
+  static const String handwritingRegular =
+      '$_package/fonts/DeliciousHandrawn-Regular.ttf';
 }
