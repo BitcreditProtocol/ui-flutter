@@ -39,8 +39,12 @@ import 'package:bitcr_ui_widgetbook/use_cases/empty_state_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_empty_state_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/filter_chip_button_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_filter_chip_button_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/form_controls_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_form_controls_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/identity_switcher_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_identity_switcher_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/indicators_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_indicators_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/navigate_back_button_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_navigate_back_button_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/page_transitions_use_cases.dart'
@@ -115,6 +119,31 @@ final directories = <_widgetbook.WidgetbookNode>[
             builder:
                 _bitcr_ui_widgetbook_use_cases_animated_trailing_icon_use_cases
                     .animatedTrailingIconTab,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'AppCheckbox',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'States',
+            builder: _bitcr_ui_widgetbook_use_cases_form_controls_use_cases
+                .appCheckboxStates,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'With a label',
+            builder: _bitcr_ui_widgetbook_use_cases_form_controls_use_cases
+                .appCheckboxWithLabel,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'AppRadio',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'States',
+            builder: _bitcr_ui_widgetbook_use_cases_form_controls_use_cases
+                .appRadioStates,
           ),
         ],
       ),
@@ -344,6 +373,21 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Short screen',
             builder: _bitcr_ui_widgetbook_use_cases_pull_to_refresh_use_cases
                 .pullToRefreshShort,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'RadioOptionGroup',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Identity type',
+            builder: _bitcr_ui_widgetbook_use_cases_form_controls_use_cases
+                .radioOptionGroupIdentity,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Without icons',
+            builder: _bitcr_ui_widgetbook_use_cases_form_controls_use_cases
+                .radioOptionGroupPlain,
           ),
         ],
       ),
@@ -639,6 +683,16 @@ final directories = <_widgetbook.WidgetbookNode>[
         ],
       ),
       _widgetbook.WidgetbookComponent(
+        name: 'DotIndicator',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder: _bitcr_ui_widgetbook_use_cases_indicators_use_cases
+                .dotIndicatorPlayground,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
         name: 'IdentityChip',
         useCases: [
           _widgetbook.WidgetbookUseCase(
@@ -724,6 +778,16 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'With actions',
             builder: _bitcr_ui_widgetbook_use_cases_screen_header_use_cases
                 .screenHeaderWithActions,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'StepIndicator',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder: _bitcr_ui_widgetbook_use_cases_indicators_use_cases
+                .stepIndicatorPlayground,
           ),
         ],
       ),
@@ -1174,6 +1238,16 @@ final directories = <_widgetbook.WidgetbookNode>[
         ],
       ),
       _widgetbook.WidgetbookComponent(
+        name: 'EmailBadge',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'States',
+            builder: _bitcr_ui_widgetbook_use_cases_indicators_use_cases
+                .emailBadgeStates,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
         name: 'EmptyState',
         useCases: [
           _widgetbook.WidgetbookUseCase(
@@ -1210,6 +1284,21 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'In a sized box',
             builder: _bitcr_ui_widgetbook_use_cases_qr_code_use_cases
                 .exactQrCodeSized,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'NetworkTag',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Playground',
+            builder: _bitcr_ui_widgetbook_use_cases_indicators_use_cases
+                .networkTagPlayground,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'States',
+            builder: _bitcr_ui_widgetbook_use_cases_indicators_use_cases
+                .networkTagStates,
           ),
         ],
       ),
