@@ -25,6 +25,8 @@ import 'package:bitcr_ui_widgetbook/use_cases/bottom_drawer_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_bottom_drawer_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/bottom_navigation_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_bottom_navigation_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/button_helpers_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_button_helpers_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/button_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_button_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/colors_use_cases.dart'
@@ -280,6 +282,11 @@ final directories = <_widgetbook.WidgetbookNode>[
                 _bitcr_ui_widgetbook_use_cases_button_use_cases.buttonOutline,
           ),
           _widgetbook.WidgetbookUseCase(
+            name: 'Outline and small styles',
+            builder: _bitcr_ui_widgetbook_use_cases_button_helpers_use_cases
+                .buttonHelperStyles,
+          ),
+          _widgetbook.WidgetbookUseCase(
             name: 'Playground',
             builder: _bitcr_ui_widgetbook_use_cases_button_use_cases
                 .buttonPlayground,
@@ -327,6 +334,16 @@ final directories = <_widgetbook.WidgetbookNode>[
         ],
       ),
       _widgetbook.WidgetbookComponent(
+        name: 'FieldInfoButton',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Next to a label',
+            builder: _bitcr_ui_widgetbook_use_cases_button_helpers_use_cases
+                .fieldInfoButtonDefault,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
         name: 'FilterBadge',
         useCases: [
           _widgetbook.WidgetbookUseCase(
@@ -353,6 +370,16 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Playground',
             builder: _bitcr_ui_widgetbook_use_cases_filter_chip_button_use_cases
                 .filterChipButtonPlayground,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'HuggingOutlinedButtons',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Around an empty state',
+            builder: _bitcr_ui_widgetbook_use_cases_button_helpers_use_cases
+                .huggingOutlinedButtonsDefault,
           ),
         ],
       ),

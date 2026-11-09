@@ -1,9 +1,9 @@
 import 'package:bitcr_ui/src/core/button.dart';
+import 'package:bitcr_ui/src/core/button_styles.dart';
 import 'package:bitcr_ui/src/core/separator.dart';
 import 'package:bitcr_ui/src/core/spinner.dart';
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/fonts.dart';
-import 'package:bitcr_ui/src/theme/radii.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -165,14 +165,7 @@ class _SignatureDrawerState extends State<SignatureDrawer> {
           const SizedBox(height: 12),
           Button(
             variant: ButtonVariant.outline,
-            style: ButtonStyle(
-              shape: WidgetStatePropertyAll(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(BitcrRadius.md),
-                  side: BorderSide(color: colors.divider300),
-                ),
-              ),
-            ),
+            style: outlineButtonStyle(context),
             onPressed: () => Navigator.of(context).pop(),
             child: Text(labels.cancel),
           ),
