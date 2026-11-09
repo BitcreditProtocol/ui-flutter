@@ -41,6 +41,8 @@ import 'package:bitcr_ui_widgetbook/use_cases/empty_state_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_empty_state_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/filter_chip_button_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_filter_chip_button_use_cases;
+import 'package:bitcr_ui_widgetbook/use_cases/flow_use_cases.dart'
+    as _bitcr_ui_widgetbook_use_cases_flow_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/form_controls_use_cases.dart'
     as _bitcr_ui_widgetbook_use_cases_form_controls_use_cases;
 import 'package:bitcr_ui_widgetbook/use_cases/identity_switcher_use_cases.dart'
@@ -819,6 +821,16 @@ final directories = <_widgetbook.WidgetbookNode>[
         ],
       ),
       _widgetbook.WidgetbookComponent(
+        name: 'StepTransition',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Forward and back',
+            builder: _bitcr_ui_widgetbook_use_cases_flow_use_cases
+                .stepTransitionDefault,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
         name: 'SwipeableViews',
         useCases: [
           _widgetbook.WidgetbookUseCase(
@@ -1250,6 +1262,21 @@ final directories = <_widgetbook.WidgetbookNode>[
         ],
       ),
       _widgetbook.WidgetbookComponent(
+        name: 'AppErrorView',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'With retry',
+            builder: _bitcr_ui_widgetbook_use_cases_flow_use_cases
+                .appErrorViewWithRetry,
+          ),
+          _widgetbook.WidgetbookUseCase(
+            name: 'Without retry',
+            builder: _bitcr_ui_widgetbook_use_cases_flow_use_cases
+                .appErrorViewWithoutRetry,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
         name: 'CurrencyBadge',
         useCases: [
           _widgetbook.WidgetbookUseCase(
@@ -1461,6 +1488,16 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'Two-digit index',
             builder: _bitcr_ui_widgetbook_use_cases_seed_word_use_cases
                 .seedWordTwoDigit,
+          ),
+        ],
+      ),
+      _widgetbook.WidgetbookComponent(
+        name: 'SuccessLayout',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Default',
+            builder: _bitcr_ui_widgetbook_use_cases_flow_use_cases
+                .successLayoutDefault,
           ),
         ],
       ),
