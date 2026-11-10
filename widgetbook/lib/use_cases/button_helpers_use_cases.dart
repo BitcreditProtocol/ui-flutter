@@ -64,6 +64,7 @@ Widget huggingOutlinedButtonsDefault(BuildContext context) {
   final hug = context.knobs.boolean(label: 'Hug', initialValue: true);
 
   final emptyState = EmptyState(
+    asset: 'assets/images/no_requests.png',
     title: 'No contacts yet',
     subtitle: 'Add a contact to send them bills.',
     buttonLabel: 'Add contact',
