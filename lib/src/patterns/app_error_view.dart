@@ -7,6 +7,7 @@ class AppErrorView extends StatefulWidget {
   const AppErrorView({
     super.key,
     required this.message,
+    this.details,
     this.retryLabel,
     this.onRetry,
     this.onRetryError,
@@ -16,6 +17,7 @@ class AppErrorView extends StatefulWidget {
        );
 
   final String message;
+  final Widget? details;
   final String? retryLabel;
   final FutureOr<void> Function()? onRetry;
   final void Function(Object error, StackTrace stack)? onRetryError;
@@ -34,6 +36,10 @@ class _AppErrorViewState extends State<AppErrorView> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(widget.message, textAlign: TextAlign.center),
+          if (widget.details case final details?) ...[
+            const SizedBox(height: 8),
+            details,
+          ],
           if (widget.onRetry != null)
             RefreshButton(
               label: widget.retryLabel,

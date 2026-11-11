@@ -41,6 +41,23 @@ Widget appErrorViewWithRetry(BuildContext context) => AppErrorView(
   onRetry: () => Future<void>.delayed(const Duration(seconds: 2)),
 );
 
+@widgetbook.UseCase(name: 'With details', type: AppErrorView)
+Widget appErrorViewWithDetails(BuildContext context) => AppErrorView(
+  message: 'Could not load your bills.',
+  details: Text(
+    context.knobs.string(
+      label: 'Details',
+      initialValue: 'The node did not answer in time.',
+    ),
+    textAlign: TextAlign.center,
+    style: context.bitcrText.textSmRegular(
+      color: BitcrColors.of(context).text200,
+    ),
+  ),
+  retryLabel: 'Try again',
+  onRetry: () => Future<void>.delayed(const Duration(seconds: 2)),
+);
+
 @widgetbook.UseCase(name: 'Without retry', type: AppErrorView)
 Widget appErrorViewWithoutRetry(BuildContext context) =>
     const AppErrorView(message: 'Could not load your bills.');

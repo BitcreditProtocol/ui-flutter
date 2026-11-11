@@ -20,7 +20,7 @@ class StepIndicator extends StatelessWidget {
     return Semantics(
       label: semanticLabel,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           for (var index = 0; index < steps; index++)
             Padding(

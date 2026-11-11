@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bitcr_ui/bitcr_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/app.dart';
@@ -28,6 +29,25 @@ void main() {
 
     expect(find.text('Could not load'), findsOneWidget);
     expect(find.byType(RefreshButton), findsNothing);
+  });
+
+  testWidgets('details sit between the message and the retry', (tester) async {
+    await pumpInApp(
+      tester,
+      AppErrorView(
+        message: 'Could not load',
+        details: const Text('The node is offline'),
+        retryLabel: 'Try again',
+        onRetry: () {},
+      ),
+    );
+
+    final message = tester.getCenter(find.text('Could not load')).dy;
+    final details = tester.getCenter(find.text('The node is offline')).dy;
+    final retry = tester.getCenter(find.text('Try again')).dy;
+
+    expect(message, lessThan(details));
+    expect(details, lessThan(retry));
   });
 
   testWidgets('shows the given label', (tester) async {

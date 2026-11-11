@@ -1265,6 +1265,11 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'AppErrorView',
         useCases: [
           _widgetbook.WidgetbookUseCase(
+            name: 'With details',
+            builder: _bitcr_ui_widgetbook_use_cases_flow_use_cases
+                .appErrorViewWithDetails,
+          ),
+          _widgetbook.WidgetbookUseCase(
             name: 'With retry',
             builder: _bitcr_ui_widgetbook_use_cases_flow_use_cases
                 .appErrorViewWithRetry,

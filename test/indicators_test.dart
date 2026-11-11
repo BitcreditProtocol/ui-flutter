@@ -28,6 +28,12 @@ void main() {
     expect(find.bySemanticsLabel('Step 2 of 4'), findsOneWidget);
   });
 
+  testWidgets('the step bar is only as wide as its segments', (tester) async {
+    await pumpInApp(tester, const StepIndicator(steps: 4, current: 1));
+
+    expect(tester.getSize(find.byType(StepIndicator)).width, 4 * (22 + 4));
+  });
+
   testWidgets('dots highlight the current page and report taps', (
     tester,
   ) async {
