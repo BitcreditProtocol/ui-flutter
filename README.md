@@ -149,10 +149,21 @@ only for artwork that ships inside the library.
 ## Continuous integration
 
 Pull requests and pushes to `main` run [Flutter CI](.github/workflows/ci.yml)
-on the stable Flutter channel. It analyzes both packages, runs the library's
-tests, checks that generated catalog entries are current, and builds the web
-catalog. The catalog uses its committed lockfile. The workflow only validates;
-it does not publish the library or deploy the catalog.
+on the Flutter version pinned in [.fvmrc](.fvmrc). It analyzes both packages,
+runs the library's tests, checks that generated catalog entries are current,
+builds the web catalog and deploys it to the Cloudflare Worker `ui-flutter`
+([wrangler.json](wrangler.json)): `main` goes live, pull requests get a preview
+URL. Needs the secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
+
+Locally, [FVM](https://fvm.app) reads the same `.fvmrc`. Bump it together with
+the wallet's `flutter_version`.
+
+Serve a release build locally as hosted:
+
+```bash
+(cd widgetbook && flutter build web --release --no-web-resources-cdn)
+npx wrangler@4.149.0 dev
+```
 
 [Dependabot](.github/dependabot.yml) checks both Dart packages on Mondays at
 08:30 Europe/Vienna, grouping patch and minor updates. Major updates remain
