@@ -18,6 +18,7 @@ void main() {
     'bold': BitcrFonts.bold,
     'extraBold': BitcrFonts.extraBold,
     'black': BitcrFonts.black,
+    'handwritingRegular': BitcrFonts.handwritingRegular,
   };
 
   TestWidgetsFlutterBinding.ensureInitialized();

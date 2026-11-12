@@ -172,7 +172,7 @@ same time. Assignments follow the [organization registry](https://github.com/Bit
 
 ## License
 
-Bitcredit code is MIT licensed. The bundled Geist fonts retain the SIL Open
-Font License 1.1. [LICENSE](LICENSE) includes both notices so consumers receive
+Bitcredit code is MIT licensed. The bundled Geist and Delicious Handrawn fonts
+retain the SIL Open Font License 1.1. [LICENSE](LICENSE) includes both notices so consumers receive
 the font license with the library.
 The font notice comes from [Geist's upstream license](https://github.com/vercel/geist-font/blob/10dc7658f13c38a474cde201bb09a4617267545b/OFL.txt).
