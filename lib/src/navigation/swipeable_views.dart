@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A horizontally swipeable pager for tab-bar screens, keeping the selected
 /// [index] and the page position in sync: swiping reports the new index, and

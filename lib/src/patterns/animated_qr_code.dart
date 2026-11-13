@@ -6,7 +6,7 @@ import 'package:bitcr_ui/src/patterns/qr_code.dart';
 import 'package:bitcr_ui/src/patterns/qr_matrix.dart';
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:flutter/foundation.dart' show compute;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 const Duration _kInitialFrameDuration = Duration(milliseconds: 200);
 const Duration _kFrameDurationStep = Duration(milliseconds: 100);

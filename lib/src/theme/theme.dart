@@ -1,7 +1,7 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/fonts.dart';
 import 'package:bitcr_ui/src/theme/page_transitions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Builds the [ThemeData] every Bitcredit app should use, so typography, the
 /// [BitcrColors] extension and the page transition are wired up identically in

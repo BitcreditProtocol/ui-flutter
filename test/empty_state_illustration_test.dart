@@ -4,7 +4,7 @@
 // instead, and it has to land at the same size a bundled asset would.
 
 import 'package:bitcr_ui/bitcr_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Future<void> _pump(WidgetTester tester, EmptyState emptyState) =>

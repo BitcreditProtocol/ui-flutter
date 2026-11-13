@@ -4,7 +4,7 @@
 import 'dart:async';
 
 import 'package:bitcr_ui/bitcr_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Pumps [child] and gives the encode isolate real time to land.

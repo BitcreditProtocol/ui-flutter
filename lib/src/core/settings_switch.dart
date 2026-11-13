@@ -1,5 +1,5 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The 36×20 toggle used in settings rows.
 /// A null [onChanged] is the disabled state — it dims the switch and stops
