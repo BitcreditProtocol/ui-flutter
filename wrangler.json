@@ -1,0 +1,9 @@
+{
+  "name": "ui-flutter",
+  "compatibility_date": "2026-10-01",
+  "previews": {},
+  "assets": {
+    "directory": "./widgetbook/build/web",
+    "not_found_handling": "single-page-application"
+  }
+}
