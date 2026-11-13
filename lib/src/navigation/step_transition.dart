@@ -1,5 +1,5 @@
 import 'package:bitcr_ui/src/theme/page_transitions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class StepTransition extends StatefulWidget {
   const StepTransition({required this.step, required this.child, super.key});

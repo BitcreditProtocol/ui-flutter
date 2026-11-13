@@ -3,7 +3,7 @@ import 'package:bitcr_ui/src/core/search.dart';
 import 'package:bitcr_ui/src/overlays/bottom_drawer.dart';
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:lucide_icons_flutter/lucide_icons_200.dart';
 
 /// Above this many options on screen, [SelectionDrawer] builds its rows

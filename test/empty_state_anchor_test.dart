@@ -6,7 +6,7 @@
 // height stops mattering.
 
 import 'package:bitcr_ui/bitcr_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// A screen body with a header of [headerHeight] above an anchored empty

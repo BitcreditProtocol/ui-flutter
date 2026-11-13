@@ -1,5 +1,5 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The type scale. Every style defaults its color to [BitcrColors.text300],
 /// so call sites only pass `color:` when they want a different token.

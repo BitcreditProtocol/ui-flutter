@@ -2,7 +2,7 @@
 // action tap, or when the app dismisses it through the returned controller.
 
 import 'package:bitcr_ui/bitcr_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Pumps a host with a real [Overlay] (via [MaterialApp]) and hands back the

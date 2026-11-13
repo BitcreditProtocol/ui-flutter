@@ -4,7 +4,7 @@ import 'package:bitcr_ui/src/patterns/animated_qr_code.dart';
 import 'package:bitcr_ui/src/patterns/qr_matrix.dart';
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:flutter/foundation.dart' show compute;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Drawn in place of a code that cannot be encoded, when the caller supplies

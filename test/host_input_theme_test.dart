@@ -5,7 +5,7 @@
 // inside the search field, and one straight across the passcode dots.
 
 import 'package:bitcr_ui/bitcr_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// A host theme like an app that fills and outlines every input by default.

@@ -2,7 +2,7 @@ import 'package:bitcr_ui/src/core/button.dart';
 import 'package:bitcr_ui/src/core/button_styles.dart';
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SuccessLayout extends StatelessWidget {
   const SuccessLayout({

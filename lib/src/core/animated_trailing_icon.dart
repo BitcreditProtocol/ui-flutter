@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A trailing [icon] that fades in and slides right as it appears, widening
 /// the row it sits in so a centred label shifts left to make room.

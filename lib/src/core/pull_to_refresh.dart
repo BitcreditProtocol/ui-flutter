@@ -1,5 +1,5 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Wraps a screen in the pull-down-to-refresh gesture.
 ///

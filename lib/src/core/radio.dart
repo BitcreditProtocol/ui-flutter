@@ -1,6 +1,6 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppRadio extends StatelessWidget {
   const AppRadio({super.key, required this.selected});
