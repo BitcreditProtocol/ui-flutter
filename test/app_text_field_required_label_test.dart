@@ -1,23 +1,27 @@
 // A required field's label ends in an asterisk that is drawn in the error
-// colour, so a mandatory field stands out; the label text itself stays grey.
+// colour while the field is empty, so a missing value stands out; once filled
+// it turns grey like the label, as the country selector does.
 
 import 'package:bitcr_ui/bitcr_ui.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> _pumpField(WidgetTester tester, {required bool isRequired}) =>
-    tester.pumpWidget(
-      MaterialApp(
-        theme: BitcrTheme.light,
-        home: Scaffold(
-          body: AppTextField(
-            controller: TextEditingController(),
-            label: 'Name',
-            isRequired: isRequired,
-          ),
-        ),
+Future<void> _pumpField(
+  WidgetTester tester, {
+  required bool isRequired,
+  String text = '',
+}) => tester.pumpWidget(
+  MaterialApp(
+    theme: BitcrTheme.light,
+    home: Scaffold(
+      body: AppTextField(
+        controller: TextEditingController(text: text),
+        label: 'Name',
+        isRequired: isRequired,
       ),
-    );
+    ),
+  ),
+);
 
 TextSpan _labelSpan(WidgetTester tester) {
   final text = tester.widget<Text>(find.textContaining('Name'));
@@ -25,17 +29,27 @@ TextSpan _labelSpan(WidgetTester tester) {
 }
 
 void main() {
-  testWidgets('a required label draws its asterisk in the error colour', (
+  testWidgets(
+    'an empty required field draws its asterisk in the error colour',
+    (tester) async {
+      await _pumpField(tester, isRequired: true);
+
+      final span = _labelSpan(tester);
+      expect(span.toPlainText(), 'Name*');
+
+      final asterisk = span.children!.single as TextSpan;
+      expect(asterisk.text, '*');
+      expect(asterisk.style?.color, BitcrColors.light.signalError);
+    },
+  );
+
+  testWidgets('a filled required field draws its asterisk in grey', (
     tester,
   ) async {
-    await _pumpField(tester, isRequired: true);
+    await _pumpField(tester, isRequired: true, text: 'Ada');
 
-    final span = _labelSpan(tester);
-    expect(span.toPlainText(), 'Name*');
-
-    final asterisk = span.children!.single as TextSpan;
-    expect(asterisk.text, '*');
-    expect(asterisk.style?.color, BitcrColors.light.signalError);
+    final asterisk = _labelSpan(tester).children!.single as TextSpan;
+    expect(asterisk.style?.color, BitcrColors.light.text200);
   });
 
   testWidgets('an optional label has no asterisk', (tester) async {

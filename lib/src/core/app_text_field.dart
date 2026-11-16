@@ -263,6 +263,7 @@ class _AppTextFieldState extends State<AppTextField> {
                           colors: colors,
                           textStyles: textStyles,
                           isFloating: _isFocused || hasValue,
+                          hasValue: hasValue,
                         ),
                       ),
                       if (trailingActions.isNotEmpty) ...[
@@ -299,6 +300,7 @@ class _AppTextFieldState extends State<AppTextField> {
     required BitcrColors colors,
     required BitcrTextStyles textStyles,
     required bool isFloating,
+    required bool hasValue,
   }) {
     final label = widget.label;
     if (label == null) return _field(context, showHint: true);
@@ -335,7 +337,9 @@ class _AppTextFieldState extends State<AppTextField> {
                     if (widget.isRequired)
                       TextSpan(
                         text: '*',
-                        style: TextStyle(color: colors.signalError),
+                        style: TextStyle(
+                          color: hasValue ? colors.text200 : colors.signalError,
+                        ),
                       ),
                   ],
                 ),
