@@ -328,7 +328,18 @@ class _AppTextFieldState extends State<AppTextField> {
                   : textStyles.textSmMedium(color: colors.text200),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              child: Text(widget.isRequired ? '$label*' : label),
+              child: Text.rich(
+                TextSpan(
+                  text: label,
+                  children: [
+                    if (widget.isRequired)
+                      TextSpan(
+                        text: '*',
+                        style: TextStyle(color: colors.signalError),
+                      ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
