@@ -5,7 +5,7 @@ import 'package:bitcr_ui/src/core/spinner.dart';
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/fonts.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SignatureDrawerLabels {
   const SignatureDrawerLabels({

@@ -1,5 +1,5 @@
 import 'package:bitcr_ui/src/patterns/seed_word.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The two-column recovery-phrase grid, shared by every screen that shows a
 /// mnemonic (onboarding backup, wallet creation, and the settings backup and

@@ -1,6 +1,6 @@
 import 'package:bitcr_ui/bitcr_ui.dart';
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -56,15 +56,45 @@ class _MouseDragScrollBehavior extends MaterialScrollBehavior {
   };
 }
 
+/// widgetbook's `materialAppBuilder` and `MaterialThemeAddon`, rebuilt on
+/// `material_ui`. widgetbook 3.25 still builds on the SDK's material library,
+/// whose `MaterialApp`, `Theme` and `ThemeData` are different classes from
+/// `material_ui`'s: under them the components would find no theme and no
+/// localizations. Swap back once widgetbook ships on `material_ui`.
+Widget _materialAppBuilder(BuildContext context, Widget child) {
+  return MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Material(child: child),
+  );
+}
+
+ThemeAddon<ThemeData> _materialThemeAddon(
+  List<WidgetbookTheme<ThemeData>> themes,
+) {
+  return ThemeAddon<ThemeData>(
+    themes: themes,
+    themeBuilder: (context, theme, child) => Theme(
+      data: theme,
+      child: ColoredBox(
+        color: theme.scaffoldBackgroundColor,
+        child: DefaultTextStyle(
+          style: theme.textTheme.bodyMedium!,
+          child: child,
+        ),
+      ),
+    ),
+  );
+}
+
 @widgetbook.App()
 class WidgetbookApp extends StatelessWidget {
   const WidgetbookApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Widgetbook.material(
+    return Widgetbook(
       // Below the app's own ScrollConfiguration, so it wins for the use case.
-      appBuilder: (context, child) => materialAppBuilder(
+      appBuilder: (context, child) => _materialAppBuilder(
         context,
         ScrollConfiguration(
           behavior: const _MouseDragScrollBehavior(),
@@ -80,12 +110,10 @@ class WidgetbookApp extends StatelessWidget {
           ...AndroidViewports.phones,
           ...IosViewports.tablets,
         ]),
-        MaterialThemeAddon(
-          themes: [
-            WidgetbookTheme(name: 'Light', data: BitcrTheme.light),
-            WidgetbookTheme(name: 'Dark', data: BitcrTheme.dark),
-          ],
-        ),
+        _materialThemeAddon([
+          WidgetbookTheme(name: 'Light', data: BitcrTheme.light),
+          WidgetbookTheme(name: 'Dark', data: BitcrTheme.dark),
+        ]),
         TextScaleAddon(min: 1, max: 2),
         AlignmentAddon(),
       ],

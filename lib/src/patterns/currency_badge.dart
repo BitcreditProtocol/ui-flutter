@@ -1,6 +1,6 @@
 import 'package:bitcr_ui/src/core/flags.dart';
 import 'package:bitcr_ui/src/theme/colors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class CurrencyBadge extends StatelessWidget {
   const CurrencyBadge({super.key, required this.code});

@@ -1,6 +1,6 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/text_styles.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The title row of a top-level screen, with optional [actions] on the far
 /// edge.

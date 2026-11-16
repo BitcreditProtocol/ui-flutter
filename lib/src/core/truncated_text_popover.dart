@@ -1,6 +1,6 @@
 import 'package:bitcr_ui/src/theme/colors.dart';
 import 'package:bitcr_ui/src/theme/radii.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:lucide_icons_flutter/lucide_icons_200.dart';
 
@@ -92,6 +92,7 @@ String _truncateWithSafeguard(String line, int maxLength, _TruncMode mode) {
 }
 
 enum _TruncMode { end, middle }
+
 enum TruncationMode { auto, end, middle }
 
 /// A text widget that truncates long strings and reveals the full content in a

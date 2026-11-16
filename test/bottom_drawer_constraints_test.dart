@@ -5,7 +5,7 @@
 // width, or every wallet drawer would shrink to material's 640px cap.
 
 import 'package:bitcr_ui/bitcr_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const Key _content = Key('drawer-content');

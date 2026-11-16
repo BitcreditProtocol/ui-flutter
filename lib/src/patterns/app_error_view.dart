@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bitcr_ui/src/core/refresh_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppErrorView extends StatefulWidget {
   const AppErrorView({

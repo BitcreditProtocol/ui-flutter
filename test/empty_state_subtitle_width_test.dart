@@ -2,7 +2,7 @@
 // in one or two lines took three. subtitleWidth lets a screen widen it.
 
 import 'package:bitcr_ui/bitcr_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _subtitle = 'Start creating a bill and distribute it to your contacts';
