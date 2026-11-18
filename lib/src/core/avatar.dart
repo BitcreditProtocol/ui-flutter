@@ -5,10 +5,16 @@ enum AvatarSize { xs, sm, md, lg, xl, chip, nav }
 
 enum AvatarKind { personal, company, anon }
 
-String avatarInitials(String name) {
-  final words = name.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty);
+final _alphanumeric = RegExp(r'[\p{L}\p{N}]', unicode: true);
 
-  return words.take(2).map((word) => word.substring(0, 1)).join().toUpperCase();
+String avatarInitials(String name) {
+  return name
+      .split(RegExp(r'\s+'))
+      .map((word) => _alphanumeric.firstMatch(word)?.group(0))
+      .whereType<String>()
+      .take(2)
+      .join()
+      .toUpperCase();
 }
 
 class Avatar extends StatelessWidget {
@@ -77,7 +83,7 @@ class Avatar extends StatelessWidget {
         : Border.all(color: borderColor ?? colors.divider75);
     final foreground = gradient != null || dark ? colors.white : colors.text300;
 
-    final placeholder = name.trim().isEmpty ? placeholderIcon : null;
+    final placeholder = avatarInitials(name).isEmpty ? placeholderIcon : null;
 
     final Widget fallback = kind == AvatarKind.anon || placeholder != null
         ? Icon(
