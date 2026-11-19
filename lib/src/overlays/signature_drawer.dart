@@ -34,6 +34,7 @@ Future<bool> showSignatureDrawer(
   String? location,
   String? companyName,
   bool isAnonymous = false,
+  Widget? preview,
   Future<bool> Function()? onConfirm,
 }) async {
   final isConfirmed = await showModalBottomSheet<bool>(
@@ -49,6 +50,7 @@ Future<bool> showSignatureDrawer(
       location: location,
       companyName: companyName,
       isAnonymous: isAnonymous,
+      preview: preview,
       onConfirm: onConfirm,
     ),
   );
@@ -66,6 +68,7 @@ class SignatureDrawer extends StatefulWidget {
     this.location,
     this.companyName,
     this.isAnonymous = false,
+    this.preview,
     this.onConfirm,
   });
 
@@ -76,6 +79,8 @@ class SignatureDrawer extends StatefulWidget {
   final String? location;
   final String? companyName;
   final bool isAnonymous;
+  final Widget? preview;
+
   final Future<bool> Function()? onConfirm;
 
   @override
@@ -100,7 +105,7 @@ class _SignatureDrawerState extends State<SignatureDrawer> {
         ? date
         : '$location, $date';
 
-    return Padding(
+    return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(
         20,
         24,
@@ -112,7 +117,12 @@ class _SignatureDrawerState extends State<SignatureDrawer> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(widget.title, style: text.textLgMedium(color: colors.text300)),
-          const SizedBox(height: 24),
+          if (widget.preview case final preview?) ...[
+            const SizedBox(height: 16),
+            preview,
+            const SizedBox(height: 16),
+          ] else
+            const SizedBox(height: 24),
           if (widget.companyName case final company?) ...[
             Text(labels.onBehalfOf, style: caption),
             const SizedBox(height: 4),
