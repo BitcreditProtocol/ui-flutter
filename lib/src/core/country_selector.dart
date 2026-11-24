@@ -7,9 +7,6 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:lucide_icons_flutter/lucide_icons_200.dart';
 
-const _panelBorder = Color(0x4D1B0F00);
-const _checkColor = Color(0xFF006F29);
-
 const _itemHeight = 40.0;
 const _itemGap = 4.0;
 
@@ -581,7 +578,7 @@ class _PanelState extends State<_Panel> {
         decoration: BoxDecoration(
           color: colors.elevation50,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: _panelBorder),
+          border: Border.all(color: colors.text300.withValues(alpha: 0.3)),
           boxShadow: const [
             BoxShadow(
               color: Color(0x1A000000),
@@ -604,7 +601,11 @@ class _PanelState extends State<_Panel> {
             Container(
               decoration: BoxDecoration(
                 color: searchBackground,
-                border: const Border(bottom: BorderSide(color: _panelBorder)),
+                border: Border(
+                  bottom: BorderSide(
+                    color: colors.text300.withValues(alpha: 0.3),
+                  ),
+                ),
               ),
               child: Stack(
                 alignment: Alignment.centerRight,
@@ -732,10 +733,10 @@ class _Item extends StatelessWidget {
               children: [
                 Opacity(
                   opacity: isSelected ? 1 : 0,
-                  child: const Icon(
+                  child: Icon(
                     LucideIcons200.check,
                     size: 16,
-                    color: _checkColor,
+                    color: colors.signalSuccess,
                   ),
                 ),
                 const SizedBox(width: 8),

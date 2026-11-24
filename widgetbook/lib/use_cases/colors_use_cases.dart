@@ -100,6 +100,7 @@ Widget colorsAllTokens(BuildContext context) {
           _Swatch(name: 'elevation250', color: c.elevation250),
           _Swatch(name: 'elevation300', color: c.elevation300),
           _Swatch(name: 'elevation350', color: c.elevation350),
+          _Swatch(name: 'elevation400', color: c.elevation400),
         ]),
         _group(context, 'Text', [
           _Swatch(name: 'text50', color: c.text50),

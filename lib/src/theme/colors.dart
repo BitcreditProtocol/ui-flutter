@@ -28,6 +28,7 @@ class BitcrColors extends ThemeExtension<BitcrColors> {
     required this.elevation250,
     required this.elevation300,
     required this.elevation350,
+    required this.elevation400,
     required this.baseActive,
     required this.baseInactive,
     required this.brand50,
@@ -70,6 +71,7 @@ class BitcrColors extends ThemeExtension<BitcrColors> {
   final Color elevation250;
   final Color elevation300;
   final Color elevation350;
+  final Color elevation400;
   final Color baseActive;
   final Color baseInactive;
   final Color brand50;
@@ -95,21 +97,22 @@ class BitcrColors extends ThemeExtension<BitcrColors> {
     elevation50: Color(0xFFFEFBF1),
     text50: Color(0xFFD6D2CA),
     text100: Color(0xFFC5C1B9),
-    text200: Color(0xFF8D8579),
+    text200: Color(0xFF766D60),
     text300: Color(0xFF1B0F00),
     text400: Color(0xFFF7931A),
     textActive: Color(0xFFFFFFFF),
     textInactive: Color(0xFFF1EDE4),
     divider50: Color(0xFFECE8DE),
-    divider75: Color(0xFFD9D5CC),
+    divider75: Color(0xFFDCD8CD),
     divider100: Color(0xFFD1CCC1),
     divider200: Color(0xFFBAB4A9),
     divider300: Color(0xFFA39D91),
     elevation100: Color(0xFFFAF7EF),
     elevation200: Color(0xFFF6F2E7),
     elevation250: Color(0xFFF2EDDF),
-    elevation300: Color(0xFFD1CCC1),
+    elevation300: Color(0xFFE8E4D9),
     elevation350: Color(0xFFE3D9CA),
+    elevation400: Color(0xFFD1CCC1),
     baseActive: Color(0xFF1B0F00),
     baseInactive: Color(0xFFD1CCC1),
     brand50: Color(0xFFFFF2E2),
@@ -151,6 +154,7 @@ class BitcrColors extends ThemeExtension<BitcrColors> {
     elevation250: Color(0xFF1F1F1F),
     elevation300: Color(0xFF242424),
     elevation350: Color(0xFF292929),
+    elevation400: Color(0xFF2E2E2E),
     baseActive: Color(0xFFFFF2E2),
     baseInactive: Color(0xFF606060),
     brand50: Color(0xFFFFF2E2),
@@ -195,6 +199,7 @@ class BitcrColors extends ThemeExtension<BitcrColors> {
     Color? elevation250,
     Color? elevation300,
     Color? elevation350,
+    Color? elevation400,
     Color? baseActive,
     Color? baseInactive,
     Color? brand50,
@@ -233,6 +238,7 @@ class BitcrColors extends ThemeExtension<BitcrColors> {
     elevation250: elevation250 ?? this.elevation250,
     elevation300: elevation300 ?? this.elevation300,
     elevation350: elevation350 ?? this.elevation350,
+    elevation400: elevation400 ?? this.elevation400,
     baseActive: baseActive ?? this.baseActive,
     baseInactive: baseInactive ?? this.baseInactive,
     brand50: brand50 ?? this.brand50,
@@ -276,6 +282,7 @@ class BitcrColors extends ThemeExtension<BitcrColors> {
       elevation250: Color.lerp(elevation250, other.elevation250, t)!,
       elevation300: Color.lerp(elevation300, other.elevation300, t)!,
       elevation350: Color.lerp(elevation350, other.elevation350, t)!,
+      elevation400: Color.lerp(elevation400, other.elevation400, t)!,
       baseActive: Color.lerp(baseActive, other.baseActive, t)!,
       baseInactive: Color.lerp(baseInactive, other.baseInactive, t)!,
       brand50: Color.lerp(brand50, other.brand50, t)!,

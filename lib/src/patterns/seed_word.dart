@@ -43,7 +43,7 @@ class SeedWord extends StatelessWidget {
               height: 30,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: colors.elevation300,
+                color: colors.elevation400,
                 borderRadius: BorderRadius.circular(BitcrRadius.xs),
               ),
               child: Text('${index + 1}', style: textStyle),
@@ -54,7 +54,7 @@ class SeedWord extends StatelessWidget {
                 child: Container(
                   height: 20,
                   decoration: BoxDecoration(
-                    color: colors.elevation300,
+                    color: colors.elevation400,
                     borderRadius: BorderRadius.circular(BitcrRadius.xs),
                   ),
                 ),

@@ -132,7 +132,7 @@ class _WordField extends StatelessWidget {
             height: 24,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: colors.elevation300,
+              color: colors.elevation400,
               borderRadius: BorderRadius.circular(BitcrRadius.xs),
             ),
             child: Text(
