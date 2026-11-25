@@ -1,12 +1,12 @@
 {
-    "name": "bitcr_ui_widgetbook",
-    "short_name": "bitcr_ui_widgetbook",
+    "name": "Bitcredit UI",
+    "short_name": "Bitcredit UI",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#000000",
+    "theme_color": "#000000",
+    "description": "Bitcredit UI component catalog.",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {
