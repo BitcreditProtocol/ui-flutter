@@ -26,16 +26,34 @@ class _SwipeableViewsState extends State<SwipeableViews> {
     initialPage: widget.index,
   );
 
+  /// The page a tab tap is sliding to, while that slide runs. Pages passed on
+  /// the way (Balances, between Activity and Requests) are not reported:
+  /// reporting one would select it and stop the slide there.
+  int? _slidingTo;
+
   @override
   void didUpdateWidget(covariant SwipeableViews oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.index == oldWidget.index || !_controller.hasClients) return;
 
-    _controller.animateToPage(
-      widget.index,
-      duration: SwipeableViews.duration,
-      curve: Curves.easeOut,
-    );
+    final target = widget.index;
+    _slidingTo = target;
+    // Completes when the slide ends or a drag interrupts it; a newer tap
+    // has already replaced the target.
+    _controller
+        .animateToPage(
+          target,
+          duration: SwipeableViews.duration,
+          curve: Curves.easeOut,
+        )
+        .whenComplete(() {
+          if (_slidingTo == target) _slidingTo = null;
+        });
+  }
+
+  void _onPageChanged(int page) {
+    if (_slidingTo != null) return;
+    widget.onIndexChanged(page);
   }
 
   @override
@@ -49,7 +67,7 @@ class _SwipeableViewsState extends State<SwipeableViews> {
     return PageView.builder(
       controller: _controller,
       itemCount: widget.children.length,
-      onPageChanged: widget.onIndexChanged,
+      onPageChanged: _onPageChanged,
       itemBuilder: (context, index) => widget.children[index],
     );
   }
